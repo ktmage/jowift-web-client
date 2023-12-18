@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import useResponsive from '../../hooks/useResponsive';
+import useResponsive from '../../../hooks/useResponsive';
 import { Link } from 'react-router-dom';
 
 interface MainLayoutProps {

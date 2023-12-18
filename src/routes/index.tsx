@@ -1,5 +1,5 @@
 import { Outlet, useRoutes } from 'react-router-dom';
-import MainLayout from '../components/Layouts/MainLayout';
+import { MainLayout } from '../components/Layouts';
 
 export default function AppRoutes() {
 	const routes = useRoutes([
