@@ -1,23 +1,29 @@
-import { Link, useRoutes } from 'react-router-dom';
+import { Outlet, useRoutes } from 'react-router-dom';
+import MainLayout from '../components/Layouts/MainLayout';
 
 export default function AppRoutes() {
 	const routes = useRoutes([
 		{
 			path: '/',
 			element: (
-				<>
-					<Link to={'hoge'}>hoge</Link>
-					<Link to={'fuga'}>fuga</Link>
-				</>
+				<MainLayout>
+					<Outlet />
+				</MainLayout>
 			),
-		},
-		{
-			path: '/hoge',
-			element: <>hoge page.</>,
-		},
-		{
-			path: '/fuga',
-			element: <>fuga page.</>,
+			children: [
+				{
+					path: '/',
+					element: <div>Home</div>,
+				},
+				{
+					path: '/about',
+					element: <div>About</div>,
+				},
+				{
+					path: '/contact',
+					element: <div>Contact</div>,
+				},
+			],
 		},
 	]);
 

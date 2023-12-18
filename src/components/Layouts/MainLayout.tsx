@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import useResponsive from '../../hooks/useResponsive';
+import { Link } from 'react-router-dom';
 
 interface MainLayoutProps {
 	children: React.ReactNode;
@@ -24,7 +25,14 @@ export default function MainLayout(props: MainLayoutProps) {
 				borderRight={isMobile ? 0 : isTablet ? 0 : 1}
 				borderColor={'divider'}
 			>
-				<div>Navigation</div>
+				<Box
+					display={'flex'}
+					flexDirection={'column'}
+				>
+					<Link to='/'>Home</Link>
+					<Link to='/about'>About</Link>
+					<Link to='/contact'>Contact</Link>
+				</Box>
 			</Box>
 			<Box
 				flexGrow={1}
