@@ -147,12 +147,9 @@ export default function NavigationPanel() {
 
 				{/* TODO: ハードコーディングすな。 */}
 				{/* calc( 画面の縦幅 - ( すべてのdividerの高さ + iconを表示するBoxの高さ + Tabの高さ * Tabの数 ) ) */}
-				<Box height={'calc(100vh - ( 2px + 94px +  60px * 5 ))'} />
-				<Divider
-					sx={{
-						display: 'block',
-						marginX: 2,
-					}}
+				<Tab
+					disabled
+					sx={{ height: 'calc(100vh - ( 1px + 94px +  60px * 5 ))' }}
 				/>
 				{panelItems.sub.map(
 					(
