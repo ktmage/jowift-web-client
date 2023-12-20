@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@emotion/react';
-import { lightTheme } from '../theme';
+import { lightTheme } from '@/theme';
 
 interface AppProviderProps {
 	children: React.ReactNode;

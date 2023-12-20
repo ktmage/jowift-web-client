@@ -1,5 +1,5 @@
 import { Box, Divider, Tab, Tabs } from '@mui/material';
-import { useResponsive } from '../../../../hooks';
+import { useResponsive } from '@/hooks';
 import { Link } from 'react-router-dom';
 import { panelItems } from './config';
 import usePanelRouteMatcher from './usePanelRouteMatcher';
