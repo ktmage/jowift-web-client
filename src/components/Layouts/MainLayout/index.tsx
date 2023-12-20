@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useResponsive } from '../../../hooks';
+import { useResponsive } from '@/hooks';
 import NavigationPanel from './NavigationPanel';
 
 interface MainLayoutProps {
