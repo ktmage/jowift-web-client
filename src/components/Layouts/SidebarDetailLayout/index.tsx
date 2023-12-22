@@ -31,7 +31,7 @@ export default function SidebarDetailLayout(props: SidebarDetailLayoutProps) {
 				sx={{
 					height: '100%',
 					width: '20px',
-					bgcolor: '#dddddd',
+					bgcolor: 'divider',
 				}}
 				onClick={toggleListOpen}
 			/>
