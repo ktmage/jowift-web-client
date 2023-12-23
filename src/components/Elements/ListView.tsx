@@ -9,10 +9,10 @@ interface ListViewProps {
 
 export default function ListView(props: ListViewProps) {
 	return (
-		<li>
+		<ul>
 			{props.items.map((item) => (
-				<div key={item.text}>{item.text}</div>
+				<li key={item.text}>{item.text}</li>
 			))}
-		</li>
+		</ul>
 	);
 }
