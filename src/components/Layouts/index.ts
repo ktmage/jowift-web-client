@@ -1,2 +1,3 @@
 export { default as MainLayout } from './MainLayout';
-export { default as SidebarDetailLayout } from './SidebarDetailLayout';
+export { default as NoteLayout } from './NoteLayout';
+export { default as TagLayout } from './TagLayout';

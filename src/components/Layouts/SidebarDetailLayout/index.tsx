@@ -3,6 +3,7 @@ import { Box, ButtonBase } from '@mui/material';
 import { useState } from 'react';
 
 interface SidebarDetailLayoutProps {
+	sidebar: React.ReactNode;
 	children: React.ReactNode;
 }
 
@@ -25,7 +26,7 @@ export default function SidebarDetailLayout(props: SidebarDetailLayoutProps) {
 					display: isListOpen ? 'block' : 'none',
 				}}
 			>
-				List
+				{props.sidebar}
 			</Box>
 			<ButtonBase
 				sx={{

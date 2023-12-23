@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
-import { MainLayout, SidebarDetailLayout } from '@/components/Layouts';
+import { MainLayout, NoteLayout, TagLayout } from '@/components/Layouts';
 
 export default function AppRoutes() {
 	const routes = useRoutes([
@@ -17,11 +17,11 @@ export default function AppRoutes() {
 				},
 				{
 					path: '/app/note',
-					element: <SidebarDetailLayout>note</SidebarDetailLayout>,
+					element: <NoteLayout>note</NoteLayout>,
 				},
 				{
 					path: '/app/tag',
-					element: <SidebarDetailLayout>tag</SidebarDetailLayout>,
+					element: <TagLayout>tag</TagLayout>,
 				},
 				{
 					path: '/app/account',
