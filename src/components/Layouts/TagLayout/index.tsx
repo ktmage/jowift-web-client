@@ -11,9 +11,9 @@ export default function TagLayout(props: TagLayoutProps) {
 			sidebar={
 				<ListView
 					items={[
-						{ text: 'Tag 1', to: '/tag/1' },
-						{ text: 'Tag 2', to: '/tag/2' },
-						{ text: 'Tag 3', to: '/tag/3' },
+						{ text: 'Tag 1', to: '/app/tag/1' },
+						{ text: 'Tag 2', to: '/app/tag/2' },
+						{ text: 'Tag 3', to: '/app/tag/3' },
 					]}
 				/>
 			}

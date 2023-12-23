@@ -11,9 +11,9 @@ export default function NoteLayout(props: NoteLayoutProps) {
 			sidebar={
 				<ListView
 					items={[
-						{ text: 'Note 1', to: '/note/1' },
-						{ text: 'Note 2', to: '/note/2' },
-						{ text: 'Note 3', to: '/note/3' },
+						{ text: 'Note 1', to: '/app/note/1' },
+						{ text: 'Note 2', to: '/app/note/2' },
+						{ text: 'Note 3', to: '/app/note/3' },
 					]}
 				/>
 			}
