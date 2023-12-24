@@ -19,6 +19,7 @@ export default function FormLayout(props: FormLayoutProps) {
 			display={'flex'}
 			flexDirection={'column'}
 			height={'100%'}
+			bgcolor={'background.paper'}
 		>
 			<Stack
 				display={disableHeader ? 'none' : 'flex'}
