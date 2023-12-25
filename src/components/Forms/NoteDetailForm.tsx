@@ -32,6 +32,12 @@ export default function NoteDetailForm() {
 		setIsChanged(tagsChanged || titleChanged || contentChanged);
 	}, [title, tags, content, mockNote.title, mockNote.tags, mockNote.content]);
 
+	const reset = () => {
+		setTitle(mockNote.title);
+		setTags(mockNote.tags);
+		setContent(mockNote.content);
+	};
+
 	return (
 		<FormLayout
 			headerItems={[
@@ -41,7 +47,7 @@ export default function NoteDetailForm() {
 				},
 				{
 					icon: <AutorenewIcon />,
-					onClick: () => console.log('reset'),
+					onClick: () => reset(),
 				},
 				{
 					icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
