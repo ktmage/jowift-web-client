@@ -1,7 +1,22 @@
+import { FormLayout } from '../Layouts';
+import SaveIcon from '@mui/icons-material/Save';
+import LockIcon from '@mui/icons-material/Lock';
+
 export default function NoteDetailForm() {
 	return (
-		<div>
-			<h1>Note Detail Form</h1>
-		</div>
+		<FormLayout
+			headerItems={[
+				{
+					icon: <SaveIcon />,
+					onClick: () => console.log('save'),
+				},
+				{
+					icon: <LockIcon />,
+					onClick: () => console.log('lock'),
+				},
+			]}
+		>
+			<>note detail</>
+		</FormLayout>
 	);
 }
