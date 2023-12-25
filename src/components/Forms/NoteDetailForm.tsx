@@ -1,6 +1,7 @@
 import { FormLayout } from '../Layouts';
 import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Autocomplete, TextField } from '@mui/material';
 import { useState } from 'react';
 
@@ -9,6 +10,8 @@ export default function NoteDetailForm() {
 	const [tags, setTags] = useState<string[]>([]);
 	const [content, setContent] = useState<string>('');
 	const tagOptions = ['tag1', 'tag2', 'tag3'];
+
+	const [isLocked, setIsLocked] = useState<boolean>(true);
 	return (
 		<FormLayout
 			headerItems={[
@@ -17,18 +20,22 @@ export default function NoteDetailForm() {
 					onClick: () => console.log('save'),
 				},
 				{
-					icon: <LockIcon />,
-					onClick: () => console.log('lock'),
+					icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
+					onClick: () => setIsLocked(!isLocked),
 				},
 			]}
 		>
 			<TextField
-				inputProps={{ sx: { fontSize: '1.5rem', fontWeight: 'bold' } }}
+				inputProps={{
+					sx: { fontSize: '1.5rem', fontWeight: 'bold' },
+					readOnly: isLocked,
+				}}
 				value={title}
 				placeholder='タイトル'
 				onChange={(e) => setTitle(e.target.value)}
 			/>
 			<Autocomplete
+				readOnly={isLocked}
 				multiple
 				options={tagOptions}
 				value={tags}
@@ -42,6 +49,7 @@ export default function NoteDetailForm() {
 				)}
 			/>
 			<TextField
+				inputProps={{ readOnly: isLocked }}
 				multiline
 				value={content}
 				placeholder='内容'
