@@ -2,6 +2,7 @@ import { FormLayout } from '../Layouts';
 import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { Autocomplete, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 
@@ -37,6 +38,10 @@ export default function NoteDetailForm() {
 				{
 					icon: <SaveIcon />,
 					onClick: () => (isChanged ? console.log('save') : console.log('no change')),
+				},
+				{
+					icon: <AutorenewIcon />,
+					onClick: () => console.log('reset'),
 				},
 				{
 					icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
