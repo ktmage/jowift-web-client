@@ -24,6 +24,11 @@ export default function TagDetailForm() {
 		setIsChanged(mockTag.name !== name);
 	}, [name, mockTag.name]);
 
+	// フォームの内容をリセットする。
+	const reset = () => {
+		setName(mockTag.name);
+	};
+
 	return (
 		<FormLayout
 			headerItems={[
@@ -33,7 +38,7 @@ export default function TagDetailForm() {
 				},
 				{
 					icon: <AutorenewIcon />,
-					onClick: () => {},
+					onClick: () => reset(),
 				},
 				{
 					icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
