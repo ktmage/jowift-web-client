@@ -4,7 +4,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function TagDetailForm() {
 	const mockTag = {
@@ -16,12 +16,20 @@ export default function TagDetailForm() {
 	// 編集ロックの状態を管理
 	const [isLocked, setIsLocked] = useState<boolean>(true);
 
+	// 変更があったかどうかを管理
+	const [isChanged, setIsChanged] = useState<boolean>(false);
+
+	// 参照元のデータと比較して変更があったかどうかを判定、変更があった場合はフラグを立てる。
+	useEffect(() => {
+		setIsChanged(mockTag.name !== name);
+	}, [name, mockTag.name]);
+
 	return (
 		<FormLayout
 			headerItems={[
 				{
 					icon: <SaveIcon />,
-					onClick: () => {},
+					onClick: () => (isChanged ? console.log('save') : console.log('no change')),
 				},
 				{
 					icon: <AutorenewIcon />,
