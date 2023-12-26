@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import { MainLayout, NoteLayout, TagLayout } from '@/components/Layouts';
-import { NoteCreateForm, NoteDetailForm, TagCreateForm } from '@/components/Forms';
+import { NoteCreateForm, NoteDetailForm, TagCreateForm, TagDetailForm } from '@/components/Forms';
 
 export default function AppRoutes() {
 	const routes = useRoutes([
@@ -37,6 +37,14 @@ export default function AppRoutes() {
 					element: (
 						<TagLayout>
 							<TagCreateForm />
+						</TagLayout>
+					),
+				},
+				{
+					path: '/app/tag/:id',
+					element: (
+						<TagLayout>
+							<TagDetailForm />
 						</TagLayout>
 					),
 				},
