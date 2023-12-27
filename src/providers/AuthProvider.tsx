@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import { API_URL } from '@/config';
 
 type AuthContextProps = {
@@ -12,6 +12,24 @@ export const AuthContext = createContext({} as AuthContextProps);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [isAuth, setIsAuth] = useState<boolean>(false);
 
+	// Sessionの確認
+	useEffect(() => {
+		fetch(`${API_URL}/auth`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+		})
+			.then((res) => {
+				if (res.ok) {
+					setIsAuth(true);
+				}
+				return res.json();
+			})
+			.then((data) => console.log(data))
+			.catch((err) => console.log(err));
+	}, []);
+
+	// ユーザー登録
 	const signUp = (name: string, email: string, password: string) => {
 		fetch(`${API_URL}/auth/signup`, {
 			method: 'POST',
@@ -25,6 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			.catch((err) => console.log(err));
 	};
 
+	// ログイン
 	const login = (email: string, password: string) => {
 		fetch(`${API_URL}/auth/login`, {
 			method: 'POST',
