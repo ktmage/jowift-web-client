@@ -1,68 +1,9 @@
-import { Navigate, Outlet, useRoutes } from 'react-router-dom';
-import { MainLayout, NoteLayout, TagLayout } from '@/components/Layouts';
-import { NoteCreateForm, NoteDetailForm, TagCreateForm, TagDetailForm } from '@/components/Forms';
+import { useRoutes } from 'react-router-dom';
+import protectedRoutes from './protected';
+// import publicRoutes from './public';
 
 export default function AppRoutes() {
-	const routes = useRoutes([
-		{
-			path: '/app',
-			element: (
-				<MainLayout>
-					<Outlet />
-				</MainLayout>
-			),
-			children: [
-				{
-					index: true,
-					element: <Navigate to='/app/note' />,
-				},
-				{
-					path: '/app/note',
-					element: (
-						<NoteLayout>
-							<NoteCreateForm />
-						</NoteLayout>
-					),
-				},
-				{
-					path: '/app/note/:id',
-					element: (
-						<NoteLayout>
-							<NoteDetailForm />
-						</NoteLayout>
-					),
-				},
-				{
-					path: '/app/tag',
-					element: (
-						<TagLayout>
-							<TagCreateForm />
-						</TagLayout>
-					),
-				},
-				{
-					path: '/app/tag/:id',
-					element: (
-						<TagLayout>
-							<TagDetailForm />
-						</TagLayout>
-					),
-				},
-				{
-					path: '/app/account',
-					element: <div>account</div>,
-				},
-				{
-					path: '/app/setting',
-					element: <div>setting</div>,
-				},
-				{
-					path: '/app/info',
-					element: <div>info</div>,
-				},
-			],
-		},
-	]);
-
+	const routes = useRoutes(protectedRoutes);
+	// const routes = useRoutes(publicRoutes);
 	return <>{routes}</>;
 }
