@@ -12,10 +12,6 @@ const protectedRoutes: RouteObject[] = [
 		),
 		children: [
 			{
-				index: true,
-				element: <Navigate to='/app/note' />,
-			},
-			{
 				path: '/app/note',
 				element: (
 					<NoteLayout>
@@ -63,7 +59,7 @@ const protectedRoutes: RouteObject[] = [
 	},
 	{
 		path: '*',
-		element: <div>404</div>,
+		element: <Navigate to='/app/note' />,
 	},
 ];
 
