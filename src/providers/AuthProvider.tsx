@@ -3,6 +3,7 @@ import { API_URL } from '@/config';
 
 type AuthContextProps = {
 	isAuth: boolean;
+	isLoading: boolean;
 	signUp: (name: string, email: string, password: string) => void;
 	login: (email: string, password: string) => void;
 };
@@ -10,6 +11,7 @@ type AuthContextProps = {
 export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [isAuth, setIsAuth] = useState<boolean>(false);
 
 	// Sessionの確認
@@ -23,6 +25,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 				if (res.ok) {
 					setIsAuth(true);
 				}
+				setIsLoading(false);
 				return res.json();
 			})
 			.then((data) => console.log(data))
@@ -66,6 +69,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		<AuthContext.Provider
 			value={{
 				isAuth,
+				isLoading,
 				signUp,
 				login,
 			}}
