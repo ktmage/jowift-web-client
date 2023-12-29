@@ -6,19 +6,5 @@ interface NoteLayoutProps {
 }
 
 export default function NoteLayout(props: NoteLayoutProps) {
-	return (
-		<SidebarDetailLayout
-			sidebar={
-				<ListView
-					items={[
-						{ text: 'Note 1', to: '/app/note/1' },
-						{ text: 'Note 2', to: '/app/note/2' },
-						{ text: 'Note 3', to: '/app/note/3' },
-					]}
-				/>
-			}
-		>
-			{props.children}
-		</SidebarDetailLayout>
-	);
+	return <SidebarDetailLayout sidebar={<ListView />}>{props.children}</SidebarDetailLayout>;
 }
