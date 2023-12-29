@@ -1,16 +1,9 @@
+import { useNoteList } from '@/hooks';
 import { Box, List, ListItemButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-interface ListViewItem {
-	text: string;
-	to: string;
-}
-
-interface ListViewProps {
-	items: ListViewItem[];
-}
-
-export default function ListView(props: ListViewProps) {
+export default function ListView() {
+	const { data } = useNoteList();
 	return (
 		<Box
 			bgcolor={'background.paper'}
@@ -23,13 +16,13 @@ export default function ListView(props: ListViewProps) {
 			}}
 		>
 			<List>
-				{props.items.map((item, index) => (
+				{data?.notes.map((note) => (
 					<ListItemButton
-						key={index}
+						key={note.id}
 						component={Link}
-						to={item.to}
+						to={'/app/note/' + note.id}
 					>
-						{item.text}
+						{note.title}
 					</ListItemButton>
 				))}
 			</List>
