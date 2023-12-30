@@ -1,4 +1,4 @@
-import { API_URL } from '@/config';
+import { API_URL, SWR_NOTE_DEDUPING_INTERVAL_MINUTES } from '@/config';
 import useSWR from 'swr';
 
 type Author = {
@@ -36,8 +36,8 @@ export default function useNote(noteId: string) {
 		}).then((res) => res.json());
 
 	const { data, error } = useSWR<{ note: Note }>(API_URL + '/note/' + noteId, fetcher, {
-		// 5分間は同じURLに対してリクエストを行わない
-		dedupingInterval: 1000 * 60 * 5,
+		// 指定した間隔内では同じURLに対してリクエストを行わない
+		dedupingInterval: 1000 * 60 * SWR_NOTE_DEDUPING_INTERVAL_MINUTES,
 	});
 
 	return { data, error };
