@@ -5,38 +5,40 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { Autocomplete, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useNote } from '@/hooks';
 
 export default function NoteDetailForm() {
-	// 仮のタグデータ
-	const mockTags = ['tag1', 'tag2', 'tag3'];
+	const { id } = useParams<{ id: string }>();
+	const { data } = useNote(id || '');
 
-	// 仮のノートデータ
-	const mockNote = {
-		title: 'テストタイトル',
-		tags: [mockTags[0], mockTags[2]],
-		content: 'テストコンテンツ',
-	};
-
-	const [title, setTitle] = useState<string>(mockNote.title);
-	const [tags, setTags] = useState<string[]>(mockNote.tags);
-	const [content, setContent] = useState<string>(mockNote.content);
+	const [title, setTitle] = useState<string>('');
+	const [tags, setTags] = useState<string[]>([]);
+	const [content, setContent] = useState<string>('');
 
 	const [isLocked, setIsLocked] = useState<boolean>(true);
 	const [isChanged, setIsChanged] = useState<boolean>(false);
 
+	// 初期化処理
+	const initialize = () => {
+		setTitle(data?.note.title || '');
+		setTags(data?.note.tags ? data.note.tags.map((tag) => tag.tag.name) : []);
+		setContent(data?.note.content || '');
+	};
+
+	// dataが変更されたら初期化処理を実行
+	useEffect(() => {
+		initialize();
+	}, [data]);
+
 	// 参照元のデータと比較して変更があったかどうかを判定、変更があった場合はフラグを立てる。
 	useEffect(() => {
-		const tagsChanged = JSON.stringify(mockNote.tags) !== JSON.stringify(tags);
-		const titleChanged = mockNote.title !== title;
-		const contentChanged = mockNote.content !== content;
+		const tagsChanged =
+			JSON.stringify(data?.note.tags.map((tag) => tag.tag.name)) !== JSON.stringify(tags);
+		const titleChanged = data?.note.title !== title;
+		const contentChanged = data?.note.content !== content;
 		setIsChanged(tagsChanged || titleChanged || contentChanged);
-	}, [title, tags, content, mockNote.title, mockNote.tags, mockNote.content]);
-
-	const reset = () => {
-		setTitle(mockNote.title);
-		setTags(mockNote.tags);
-		setContent(mockNote.content);
-	};
+	}, [title, tags, content, data?.note.title, data?.note.tags, data?.note.content]);
 
 	return (
 		<FormLayout
@@ -46,8 +48,9 @@ export default function NoteDetailForm() {
 					onClick: () => (isChanged ? console.log('save') : console.log('no change')),
 				},
 				{
+					// 任意のタイミングで初期化処理を実行
 					icon: <AutorenewIcon />,
-					onClick: () => reset(),
+					onClick: () => initialize(),
 				},
 				{
 					icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
@@ -67,7 +70,7 @@ export default function NoteDetailForm() {
 			<Autocomplete
 				readOnly={isLocked}
 				multiple
-				options={mockTags}
+				options={data?.note.tags.map((tag) => tag.tag.name) || []}
 				value={tags}
 				onChange={(e, value) => setTags(value)}
 				renderInput={(params) => (

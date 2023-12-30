@@ -1,4 +1,4 @@
-import { API_URL } from '@/config';
+import { API_URL, SWR_NOTE_LIST_REFRESH_INTERVAL_MINUTES } from '@/config';
 import useSWR from 'swr';
 
 type Author = {
@@ -34,7 +34,10 @@ export default function useNoteList() {
 			},
 		}).then((res) => res.json());
 
-	const { data, error } = useSWR<{ notes: NoteListItem[] }>(API_URL + '/note', fetcher);
+	const { data, error } = useSWR<{ notes: NoteListItem[] }>(API_URL + '/note', fetcher, {
+		// 一定間隔でデータを同期
+		refreshInterval: 1000 * 60 * SWR_NOTE_LIST_REFRESH_INTERVAL_MINUTES,
+	});
 
 	return { data, error };
 }
