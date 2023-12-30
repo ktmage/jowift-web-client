@@ -1,21 +1,19 @@
-import { ListView } from '@/components/Elements';
 import { ListDetailLayout } from '..';
+import { useTagList } from '@/hooks';
 
 interface TagLayoutProps {
 	children: React.ReactNode;
 }
 
 export default function TagLayout(props: TagLayoutProps) {
+	const { data } = useTagList();
 	return (
 		<ListDetailLayout
-			sidebar={
-				<ListView
-					items={[
-						{ text: 'Tag 1', to: '/app/tag/1' },
-						{ text: 'Tag 2', to: '/app/tag/2' },
-						{ text: 'Tag 3', to: '/app/tag/3' },
-					]}
-				/>
+			items={
+				data?.tags.map((tag) => ({
+					text: tag.name,
+					to: `/app/tag/${tag.id}`,
+				})) ?? []
 			}
 		>
 			{props.children}

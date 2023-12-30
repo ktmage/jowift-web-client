@@ -1,3 +1,4 @@
+import { useNoteList } from '@/hooks';
 import { ListDetailLayout } from '..';
 
 interface NoteLayoutProps {
@@ -5,13 +6,15 @@ interface NoteLayoutProps {
 }
 
 export default function NoteLayout(props: NoteLayoutProps) {
+	const { data } = useNoteList();
 	return (
 		<ListDetailLayout
-			items={[
-				{ text: 'Note 1', to: '/app/note/1' },
-				{ text: 'Note 2', to: '/app/note/2' },
-				{ text: 'Note 3', to: '/app/note/3' },
-			]}
+			items={
+				data?.notes.map((note) => ({
+					text: note.title,
+					to: `/app/note/${note.id}`,
+				})) ?? []
+			}
 		>
 			{props.children}
 		</ListDetailLayout>
