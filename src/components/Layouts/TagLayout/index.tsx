@@ -1,5 +1,5 @@
 import { ListView } from '@/components/Elements';
-import SidebarDetailLayout from '../SidebarDetailLayout';
+import { ListDetailLayout } from '..';
 
 interface TagLayoutProps {
 	children: React.ReactNode;
@@ -7,7 +7,7 @@ interface TagLayoutProps {
 
 export default function TagLayout(props: TagLayoutProps) {
 	return (
-		<SidebarDetailLayout
+		<ListDetailLayout
 			sidebar={
 				<ListView
 					items={[
@@ -19,6 +19,6 @@ export default function TagLayout(props: TagLayoutProps) {
 			}
 		>
 			{props.children}
-		</SidebarDetailLayout>
+		</ListDetailLayout>
 	);
 }

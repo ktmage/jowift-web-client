@@ -1,13 +1,19 @@
+import { ListView } from '@/components/Elements';
 import { useResponsive } from '@/hooks';
 import { Box, ButtonBase } from '@mui/material';
 import { useState } from 'react';
 
-interface SidebarDetailLayoutProps {
-	sidebar: React.ReactNode;
+type ListItem = {
+	text: string;
+	to: string;
+};
+
+interface ListDetailLayoutProps {
+	items: ListItem[];
 	children: React.ReactNode;
 }
 
-export default function SidebarDetailLayout(props: SidebarDetailLayoutProps) {
+export default function ListDetailLayout(props: ListDetailLayoutProps) {
 	const { isMobile, isTablet } = useResponsive();
 	const [isListOpen, setIsListOpen] = useState<boolean>(true);
 	const toggleListOpen = () => setIsListOpen(!isListOpen);
@@ -26,7 +32,7 @@ export default function SidebarDetailLayout(props: SidebarDetailLayoutProps) {
 					display: isListOpen ? 'block' : 'none',
 				}}
 			>
-				{props.sidebar}
+				<ListView items={props.items} />
 			</Box>
 			<ButtonBase
 				sx={{
