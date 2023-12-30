@@ -35,7 +35,10 @@ export default function useNote(noteId: string) {
 			},
 		}).then((res) => res.json());
 
-	const { data, error } = useSWR<{ note: Note }>(API_URL + '/note/' + noteId, fetcher);
+	const { data, error } = useSWR<{ note: Note }>(API_URL + '/note/' + noteId, fetcher, {
+		// 5分間は同じURLに対してリクエストを行わない
+		dedupingInterval: 1000 * 60 * 5,
+	});
 
 	return { data, error };
 }
