@@ -2,12 +2,12 @@ import { useResponsive } from '@/hooks';
 import { Box, ButtonBase } from '@mui/material';
 import { useState } from 'react';
 
-interface SidebarDetailLayoutProps {
+interface ListDetailLayoutProps {
 	sidebar: React.ReactNode;
 	children: React.ReactNode;
 }
 
-export default function SidebarDetailLayout(props: SidebarDetailLayoutProps) {
+export default function ListDetailLayout(props: ListDetailLayoutProps) {
 	const { isMobile, isTablet } = useResponsive();
 	const [isListOpen, setIsListOpen] = useState<boolean>(true);
 	const toggleListOpen = () => setIsListOpen(!isListOpen);

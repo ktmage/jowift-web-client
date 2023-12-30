@@ -1,10 +1,10 @@
 import { ListView } from '@/components/Elements';
-import SidebarDetailLayout from '../SidebarDetailLayout';
+import { ListDetailLayout } from '..';
 
 interface NoteLayoutProps {
 	children: React.ReactNode;
 }
 
 export default function NoteLayout(props: NoteLayoutProps) {
-	return <SidebarDetailLayout sidebar={<ListView />}>{props.children}</SidebarDetailLayout>;
+	return <ListDetailLayout sidebar={<ListView />}>{props.children}</ListDetailLayout>;
 }
