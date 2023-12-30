@@ -1,4 +1,4 @@
-import { API_URL } from '@/config';
+import { API_URL, SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES } from '@/config';
 import useSWR from 'swr';
 
 type TagListItem = {
@@ -19,7 +19,9 @@ export default function useTagList() {
 			},
 		}).then((res) => res.json());
 
-	const { data, error } = useSWR<{ tags: TagListItem[] }>(API_URL + '/tag', fetcher);
+	const { data, error } = useSWR<{ tags: TagListItem[] }>(API_URL + '/tag', fetcher, {
+		refreshInterval: 1000 * 60 * SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES,
+	});
 
 	return { data, error };
 }
