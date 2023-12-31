@@ -1,12 +1,6 @@
 import { API_URL, SWR_TAG_DEDUPING_INTERVAL_MINUTES } from '@/config';
 import useSWR from 'swr';
-
-type Tag = {
-	id: string;
-	name: string;
-	createdAt: string;
-	updatedAt: string;
-};
+import { Tag } from '@/types';
 
 export default function useTag(tagId: string) {
 	const fetcher = (url: string) =>
