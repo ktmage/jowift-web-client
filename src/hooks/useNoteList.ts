@@ -1,27 +1,6 @@
 import { API_URL, SWR_NOTE_LIST_REFRESH_INTERVAL_MINUTES } from '@/config';
 import useSWR from 'swr';
-
-type Author = {
-	name: string;
-};
-
-type Tag = {
-	id: string;
-	name: string;
-};
-
-type NoteTag = {
-	tag: Tag;
-};
-
-type NoteListItem = {
-	id: string;
-	title: string;
-	createdAt: string;
-	updatedAt: string;
-	author: Author;
-	tags: NoteTag[];
-};
+import { NoteListItem } from '@/types';
 
 export default function useNoteList() {
 	const fetcher = (url: string) =>
