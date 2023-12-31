@@ -1,28 +1,6 @@
 import { API_URL, SWR_NOTE_DEDUPING_INTERVAL_MINUTES } from '@/config';
 import useSWR from 'swr';
-
-type Author = {
-	name: string;
-};
-
-type Tag = {
-	id: string;
-	name: string;
-};
-
-type NoteTag = {
-	tag: Tag;
-};
-
-type Note = {
-	id: string;
-	title: string;
-	content: string;
-	createdAt: string;
-	updatedAt: string;
-	author: Author;
-	tags: NoteTag[];
-};
+import { Note } from '@/types';
 
 export default function useNote(noteId: string) {
 	const fetcher = (url: string) =>
