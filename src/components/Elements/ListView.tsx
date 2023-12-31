@@ -1,10 +1,6 @@
 import { Box, List, ListItemButton } from '@mui/material';
 import { Link } from 'react-router-dom';
-
-type ListItem = {
-	text: string;
-	to: string;
-};
+import { ListItem } from '@/types';
 
 type ListViewProps = {
 	items: ListItem[];

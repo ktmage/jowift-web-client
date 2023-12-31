@@ -2,11 +2,7 @@ import { ListView } from '@/components/Elements';
 import { useResponsive } from '@/hooks';
 import { Box, ButtonBase } from '@mui/material';
 import { useState } from 'react';
-
-type ListItem = {
-	text: string;
-	to: string;
-};
+import { ListItem } from '@/types';
 
 interface ListDetailLayoutProps {
 	items: ListItem[];

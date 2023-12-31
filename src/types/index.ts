@@ -1,19 +1,6 @@
-declare module '@mui/material/styles' {
-	interface Palette {
-		scrollbar: {
-			idol: string;
-			hover: string;
-			active: string;
-		};
-	}
-
-	interface PaletteOptions {
-		scrollbar?: {
-			idol: string;
-			hover: string;
-			active: string;
-		};
-	}
-}
-
-export {};
+export type { default as Note } from './Note.type';
+export type { default as Tag } from './Tag.type';
+export type { default as Author } from './Author.type';
+export type { default as NoteListItem } from './NoteListItem.type';
+export type { default as TagListItem } from './TagListItem.type';
+export type { default as ListItem } from './ListItem.type';
