@@ -1,12 +1,6 @@
 import { API_URL, SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES } from '@/config';
 import useSWR from 'swr';
-
-type TagListItem = {
-	id: string;
-	name: string;
-	createdAt: string;
-	updatedAt: string;
-};
+import { TagListItem } from '@/types';
 
 export default function useTagList() {
 	const fetcher = (url: string) =>
