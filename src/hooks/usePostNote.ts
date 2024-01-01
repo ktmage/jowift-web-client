@@ -1,12 +1,19 @@
 import { useState } from 'react';
 import { API_URL } from '@/config';
-import { Note } from '@/types';
 
 export default function usePostNote() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const postNote = async (data: Note) => {
+	const postNote = async ({
+		title,
+		content,
+		tagIds,
+	}: {
+		title: string;
+		content: string;
+		tagIds: string[];
+	}) => {
 		setIsLoading(true);
 		setError(null);
 
@@ -16,7 +23,11 @@ export default function usePostNote() {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(data),
+				body: JSON.stringify({
+					title,
+					content,
+					tagIds,
+				}),
 			});
 
 			if (!response.ok) {
