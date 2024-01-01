@@ -20,13 +20,15 @@ export default function usePostNote() {
 		try {
 			const response = await fetch(API_URL + '/note', {
 				method: 'POST',
+				mode: 'cors',
+				credentials: 'include',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
 					title,
 					content,
-					tagIds,
+					tagId: tagIds,
 				}),
 			});
 
