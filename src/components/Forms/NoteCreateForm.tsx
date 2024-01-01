@@ -1,19 +1,29 @@
 import { FormLayout } from '@/components/Layouts';
+import { usePostNote } from '@/hooks';
+import { Tag } from '@/types';
 import SaveIcon from '@mui/icons-material/Save';
-import { Autocomplete, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { useState } from 'react';
+import { MultipleTagSelector } from '../UI';
 
 export default function NoteCreateForm() {
 	const [title, setTitle] = useState<string>('');
-	const [tags, setTags] = useState<string[]>([]);
+	const [tags, setTags] = useState<Tag[]>([]);
 	const [content, setContent] = useState<string>('');
-	const tagOptions = ['tag1', 'tag2', 'tag3'];
+
+	const { postNote } = usePostNote();
+
 	return (
 		<FormLayout
 			headerItems={[
 				{
 					icon: <SaveIcon />,
-					onClick: () => console.log('save'),
+					onClick: () =>
+						postNote({
+							title,
+							content,
+							tagIds: tags.map((tag) => tag.id),
+						}),
 				},
 			]}
 		>
@@ -23,18 +33,9 @@ export default function NoteCreateForm() {
 				placeholder='タイトル'
 				onChange={(e) => setTitle(e.target.value)}
 			/>
-			<Autocomplete
-				multiple
-				options={tagOptions}
+			<MultipleTagSelector
 				value={tags}
-				onChange={(e, value) => setTags(value)}
-				renderInput={(params) => (
-					<TextField
-						{...params}
-						placeholder='タグ'
-						size='small'
-					/>
-				)}
+				setValue={setTags}
 			/>
 			<TextField
 				multiline
