@@ -2,15 +2,17 @@ import { TextField } from '@mui/material';
 import { FormLayout } from '../Layouts';
 import SaveIcon from '@mui/icons-material/Save';
 import { useState } from 'react';
+import { usePostTag } from '@/hooks';
 
 export default function TagCreateForm() {
 	const [name, setName] = useState<string>('');
+	const { postTag } = usePostTag();
 	return (
 		<FormLayout
 			headerItems={[
 				{
 					icon: <SaveIcon />,
-					onClick: () => console.log('save'),
+					onClick: () => postTag(name),
 				},
 			]}
 		>
