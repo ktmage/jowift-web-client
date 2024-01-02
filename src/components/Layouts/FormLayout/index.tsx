@@ -3,6 +3,7 @@ import { Box, IconButton, Stack } from '@mui/material';
 interface headerItems {
 	icon: React.ReactNode;
 	onClick: () => void;
+	disabled?: boolean;
 }
 
 interface FormLayoutProps {
@@ -31,6 +32,7 @@ export default function FormLayout(props: FormLayoutProps) {
 					<IconButton
 						key={index}
 						onClick={item.onClick}
+						disabled={item.disabled}
 					>
 						{item.icon}
 					</IconButton>
