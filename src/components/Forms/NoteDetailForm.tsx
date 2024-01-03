@@ -3,17 +3,19 @@ import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { Autocomplete, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNote } from '@/hooks';
+import { Tag } from '@/types';
+import { MultipleTagSelector } from '../UI';
 
 export default function NoteDetailForm() {
 	const { id } = useParams<{ id: string }>();
 	const { data } = useNote(id || '');
 
 	const [title, setTitle] = useState<string>('');
-	const [tags, setTags] = useState<string[]>([]);
+	const [tags, setTags] = useState<Tag[]>([]);
 	const [content, setContent] = useState<string>('');
 
 	const [isLocked, setIsLocked] = useState<boolean>(true);
@@ -22,7 +24,7 @@ export default function NoteDetailForm() {
 	// 初期化処理
 	const initialize = () => {
 		setTitle(data?.note.title || '');
-		setTags(data?.note.tags ? data.note.tags.map((tag) => tag.tag.name) : []);
+		setTags(data?.note.tags.map((tag) => tag.tag) || []);
 		setContent(data?.note.content || '');
 	};
 
@@ -67,19 +69,10 @@ export default function NoteDetailForm() {
 				placeholder='タイトル'
 				onChange={(e) => setTitle(e.target.value)}
 			/>
-			<Autocomplete
-				readOnly={isLocked}
-				multiple
-				options={data?.note.tags.map((tag) => tag.tag.name) || []}
+			<MultipleTagSelector
 				value={tags}
-				onChange={(e, value) => setTags(value)}
-				renderInput={(params) => (
-					<TextField
-						{...params}
-						placeholder='タグ'
-						size='small'
-					/>
-				)}
+				setValue={setTags}
+				readonly={isLocked}
 			/>
 			<TextField
 				inputProps={{ readOnly: isLocked }}
