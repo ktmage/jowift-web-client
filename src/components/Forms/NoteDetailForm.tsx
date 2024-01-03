@@ -36,7 +36,8 @@ export default function NoteDetailForm() {
 	// 参照元のデータと比較して変更があったかどうかを判定、変更があった場合はフラグを立てる。
 	useEffect(() => {
 		const tagsChanged =
-			JSON.stringify(data?.note.tags.map((tag) => tag.tag.name)) !== JSON.stringify(tags);
+			JSON.stringify(data?.note.tags.map((tag) => tag.tag.name)) !==
+			JSON.stringify(tags.map((tag) => tag.name));
 		const titleChanged = data?.note.title !== title;
 		const contentChanged = data?.note.content !== content;
 		setIsChanged(tagsChanged || titleChanged || contentChanged);
