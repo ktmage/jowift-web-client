@@ -13,24 +13,7 @@ interface NotificationContextProps {
 export const NotificationContext = createContext({} as NotificationContextProps);
 
 export const NotificationProvider = ({ children }: { children: ReactNode }) => {
-	const [notifications, setNotifications] = useState<Notification[]>([
-		{
-			severity: 'success',
-			message: 'test',
-		},
-		{
-			severity: 'success',
-			message: '送信を完了しました。',
-		},
-		{
-			severity: 'error',
-			message: '送信に失敗しました。',
-		},
-		{
-			severity: 'info',
-			message: 'test',
-		},
-	]);
+	const [notifications, setNotifications] = useState<Notification[]>([]);
 
 	const dispatchNotification = (notification: Notification) => {
 		setNotifications([...notifications, notification]);
