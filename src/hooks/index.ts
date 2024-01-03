@@ -6,3 +6,4 @@ export { default as useNoteList } from './useNoteList';
 export { default as useTag } from './useTag';
 export { default as usePostTag } from './usePostTag';
 export { default as useTagList } from './useTagList';
+export { default as useNotification } from './useNotification';
