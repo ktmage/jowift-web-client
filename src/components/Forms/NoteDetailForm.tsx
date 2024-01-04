@@ -5,7 +5,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useNote } from '@/hooks';
+import { useNote, useNoteList, usePutNote } from '@/hooks';
 import { Tag } from '@/types';
 import { MultipleTagSelector } from '../UI';
 
@@ -14,8 +14,8 @@ interface NoteDetailFormProps {
 }
 
 export default function NoteDetailForm(props: NoteDetailFormProps) {
-	// const { id } = useParams<{ id: string }>();
-	const { data } = useNote(props.id || '');
+	const { data, mutate: mutateNote } = useNote(props.id || '');
+	const { mutate: mutateNotes } = useNoteList();
 
 	const [title, setTitle] = useState<string>('');
 	const [tags, setTags] = useState<Tag[]>([]);
@@ -23,6 +23,21 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 
 	const [isLocked, setIsLocked] = useState<boolean>(true);
 	const [isChanged, setIsChanged] = useState<boolean>(false);
+
+	const { putNote } = usePutNote();
+
+	const handleSave = async () => {
+		await putNote(
+			{
+				title: title,
+				content: content,
+				tagIds: tags.map((tag) => tag.id),
+			},
+			props.id,
+		);
+		await mutateNotes();
+		await mutateNote();
+	};
 
 	// 初期化処理
 	const initialize = () => {
@@ -51,12 +66,14 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 			headerItems={[
 				{
 					icon: <SaveIcon />,
-					onClick: () => (isChanged ? console.log('save') : console.log('no change')),
+					onClick: () => handleSave(),
+					disabled: !isChanged,
 				},
 				{
 					// 任意のタイミングで初期化処理を実行
 					icon: <AutorenewIcon />,
 					onClick: () => initialize(),
+					disabled: !isChanged,
 				},
 				{
 					icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
