@@ -13,10 +13,14 @@ export default function useNote(noteId: string) {
 			},
 		}).then((res) => res.json());
 
-	const { data, error, mutate } = useSWR<{ note: Note }>(API_URL + '/note/' + noteId, fetcher, {
-		// 指定した間隔内では同じURLに対してリクエストを行わない
-		dedupingInterval: 1000 * 60 * SWR_NOTE_DEDUPING_INTERVAL_MINUTES,
-	});
+	const { data, isLoading, error, mutate } = useSWR<{ note: Note }>(
+		API_URL + '/note/' + noteId,
+		fetcher,
+		{
+			// 指定した間隔内では同じURLに対してリクエストを行わない
+			dedupingInterval: 1000 * 60 * SWR_NOTE_DEDUPING_INTERVAL_MINUTES,
+		},
+	);
 
-	return { data, error, mutate };
+	return { data, isLoading, error, mutate };
 }
