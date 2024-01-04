@@ -13,10 +13,10 @@ export default function useTag(tagId: string) {
 			},
 		}).then((res) => res.json());
 
-	const { data, error } = useSWR<{ tag: Tag }>(API_URL + '/tag/' + tagId, fetcher, {
+	const { data, error, mutate } = useSWR<{ tag: Tag }>(API_URL + '/tag/' + tagId, fetcher, {
 		// 指定した間隔内では同じURLに対してリクエストを行わない
 		dedupingInterval: 1000 * 60 * SWR_TAG_DEDUPING_INTERVAL_MINUTES,
 	});
 
-	return { data, error };
+	return { data, error, mutate };
 }
