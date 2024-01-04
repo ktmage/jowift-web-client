@@ -3,26 +3,45 @@ import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { Autocomplete, TextField } from '@mui/material';
+import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNote } from '@/hooks';
+import { useNote, useNoteList, usePutNote } from '@/hooks';
+import { Tag } from '@/types';
+import { MultipleTagSelector } from '../UI';
 
-export default function NoteDetailForm() {
-	const { id } = useParams<{ id: string }>();
-	const { data } = useNote(id || '');
+interface NoteDetailFormProps {
+	id: string;
+}
+
+export default function NoteDetailForm(props: NoteDetailFormProps) {
+	const { data, isLoading: isLoadingGet, mutate: mutateNote } = useNote(props.id || '');
+	const { mutate: mutateNotes } = useNoteList();
+	const { putNote, isLoading: isLoadingPut } = usePutNote();
 
 	const [title, setTitle] = useState<string>('');
-	const [tags, setTags] = useState<string[]>([]);
+	const [tags, setTags] = useState<Tag[]>([]);
 	const [content, setContent] = useState<string>('');
 
 	const [isLocked, setIsLocked] = useState<boolean>(true);
 	const [isChanged, setIsChanged] = useState<boolean>(false);
 
+	const handleSave = async () => {
+		await putNote(
+			{
+				title: title,
+				content: content,
+				tagIds: tags.map((tag) => tag.id),
+			},
+			props.id,
+		);
+		await mutateNotes();
+		await mutateNote();
+	};
+
 	// 初期化処理
 	const initialize = () => {
 		setTitle(data?.note.title || '');
-		setTags(data?.note.tags ? data.note.tags.map((tag) => tag.tag.name) : []);
+		setTags(data?.note.tags.map((tag) => tag.tag) || []);
 		setContent(data?.note.content || '');
 	};
 
@@ -34,60 +53,59 @@ export default function NoteDetailForm() {
 	// 参照元のデータと比較して変更があったかどうかを判定、変更があった場合はフラグを立てる。
 	useEffect(() => {
 		const tagsChanged =
-			JSON.stringify(data?.note.tags.map((tag) => tag.tag.name)) !== JSON.stringify(tags);
+			JSON.stringify(data?.note.tags.map((tag) => tag.tag.name)) !==
+			JSON.stringify(tags.map((tag) => tag.name));
 		const titleChanged = data?.note.title !== title;
 		const contentChanged = data?.note.content !== content;
 		setIsChanged(tagsChanged || titleChanged || contentChanged);
 	}, [title, tags, content, data?.note.title, data?.note.tags, data?.note.content]);
 
 	return (
-		<FormLayout
-			headerItems={[
-				{
-					icon: <SaveIcon />,
-					onClick: () => (isChanged ? console.log('save') : console.log('no change')),
-				},
-				{
-					// 任意のタイミングで初期化処理を実行
-					icon: <AutorenewIcon />,
-					onClick: () => initialize(),
-				},
-				{
-					icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
-					onClick: () => setIsLocked(!isLocked),
-				},
-			]}
-		>
-			<TextField
-				inputProps={{
-					sx: { fontSize: '1.5rem', fontWeight: 'bold' },
-					readOnly: isLocked,
-				}}
-				value={title}
-				placeholder='タイトル'
-				onChange={(e) => setTitle(e.target.value)}
-			/>
-			<Autocomplete
-				readOnly={isLocked}
-				multiple
-				options={data?.note.tags.map((tag) => tag.tag.name) || []}
-				value={tags}
-				onChange={(e, value) => setTags(value)}
-				renderInput={(params) => (
-					<TextField
-						{...params}
-						placeholder='タグ'
-						size='small'
-					/>
-				)}
-			/>
-			<TextField
-				inputProps={{ readOnly: isLocked }}
-				multiline
-				value={content}
-				placeholder='内容'
-				onChange={(e) => setContent(e.target.value)}
-			/>
-		</FormLayout>
+		<>
+			<Backdrop open={isLoadingGet || isLoadingPut}>
+				<CircularProgress />
+			</Backdrop>
+			<FormLayout
+				headerItems={[
+					{
+						icon: <SaveIcon />,
+						onClick: () => handleSave(),
+						disabled: !isChanged,
+					},
+					{
+						// 任意のタイミングで初期化処理を実行
+						icon: <AutorenewIcon />,
+						onClick: () => initialize(),
+						disabled: !isChanged,
+					},
+					{
+						icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
+						onClick: () => setIsLocked(!isLocked),
+					},
+				]}
+			>
+				<TextField
+					inputProps={{
+						sx: { fontSize: '1.5rem', fontWeight: 'bold' },
+						readOnly: isLocked,
+					}}
+					value={title}
+					placeholder={data ? 'タイトル' : ''}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+				<MultipleTagSelector
+					value={tags}
+					setValue={setTags}
+					readonly={isLocked}
+				/>
+				<TextField
+					inputProps={{ readOnly: isLocked }}
+					multiline
+					value={content}
+					placeholder={data ? '内容' : ''}
+					onChange={(e) => setContent(e.target.value)}
+				/>
+			</FormLayout>
+		</>
 	);
 }
