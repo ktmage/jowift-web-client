@@ -5,13 +5,16 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTag } from '@/hooks';
 
-export default function TagDetailForm() {
-	const mockTag = {
-		name: 'tag1',
-	};
+interface TagDetailFormProps {
+	id: string;
+}
 
-	const [name, setName] = useState<string>(mockTag.name);
+export default function TagDetailForm(props: TagDetailFormProps) {
+	const { data } = useTag(props.id || '');
+
+	const [name, setName] = useState<string>('');
 
 	// 編集ロックの状態を管理
 	const [isLocked, setIsLocked] = useState<boolean>(true);
@@ -19,15 +22,17 @@ export default function TagDetailForm() {
 	// 変更があったかどうかを管理
 	const [isChanged, setIsChanged] = useState<boolean>(false);
 
-	// 参照元のデータと比較して変更があったかどうかを判定、変更があった場合はフラグを立てる。
-	useEffect(() => {
-		setIsChanged(mockTag.name !== name);
-	}, [name, mockTag.name]);
-
-	// フォームの内容をリセットする。
-	const reset = () => {
-		setName(mockTag.name);
+	const initialize = () => {
+		setName(data?.tag.name || '');
 	};
+
+	useEffect(() => {
+		initialize();
+	}, [data]);
+
+	useEffect(() => {
+		setIsChanged(data?.tag.name !== name);
+	}, [name, data?.tag.name]);
 
 	return (
 		<FormLayout
@@ -38,7 +43,7 @@ export default function TagDetailForm() {
 				},
 				{
 					icon: <AutorenewIcon />,
-					onClick: () => reset(),
+					onClick: () => initialize(),
 				},
 				{
 					icon: isLocked ? <LockIcon /> : <LockOpenIcon />,

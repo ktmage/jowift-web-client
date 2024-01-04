@@ -5,14 +5,17 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useNote } from '@/hooks';
 import { Tag } from '@/types';
 import { MultipleTagSelector } from '../UI';
 
-export default function NoteDetailForm() {
-	const { id } = useParams<{ id: string }>();
-	const { data } = useNote(id || '');
+interface NoteDetailFormProps {
+	id: string;
+}
+
+export default function NoteDetailForm(props: NoteDetailFormProps) {
+	// const { id } = useParams<{ id: string }>();
+	const { data } = useNote(props.id || '');
 
 	const [title, setTitle] = useState<string>('');
 	const [tags, setTags] = useState<Tag[]>([]);
