@@ -3,7 +3,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { TextField } from '@mui/material';
+import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNote, useNoteList, usePutNote } from '@/hooks';
 import { Tag } from '@/types';
@@ -14,7 +14,7 @@ interface NoteDetailFormProps {
 }
 
 export default function NoteDetailForm(props: NoteDetailFormProps) {
-	const { data, mutate: mutateNote } = useNote(props.id || '');
+	const { data, isLoading, mutate: mutateNote } = useNote(props.id || '');
 	const { mutate: mutateNotes } = useNoteList();
 
 	const [title, setTitle] = useState<string>('');
@@ -62,46 +62,51 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 	}, [title, tags, content, data?.note.title, data?.note.tags, data?.note.content]);
 
 	return (
-		<FormLayout
-			headerItems={[
-				{
-					icon: <SaveIcon />,
-					onClick: () => handleSave(),
-					disabled: !isChanged,
-				},
-				{
-					// 任意のタイミングで初期化処理を実行
-					icon: <AutorenewIcon />,
-					onClick: () => initialize(),
-					disabled: !isChanged,
-				},
-				{
-					icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
-					onClick: () => setIsLocked(!isLocked),
-				},
-			]}
-		>
-			<TextField
-				inputProps={{
-					sx: { fontSize: '1.5rem', fontWeight: 'bold' },
-					readOnly: isLocked,
-				}}
-				value={title}
-				placeholder='タイトル'
-				onChange={(e) => setTitle(e.target.value)}
-			/>
-			<MultipleTagSelector
-				value={tags}
-				setValue={setTags}
-				readonly={isLocked}
-			/>
-			<TextField
-				inputProps={{ readOnly: isLocked }}
-				multiline
-				value={content}
-				placeholder='内容'
-				onChange={(e) => setContent(e.target.value)}
-			/>
-		</FormLayout>
+		<>
+			<Backdrop open={isLoading}>
+				<CircularProgress />
+			</Backdrop>
+			<FormLayout
+				headerItems={[
+					{
+						icon: <SaveIcon />,
+						onClick: () => handleSave(),
+						disabled: !isChanged,
+					},
+					{
+						// 任意のタイミングで初期化処理を実行
+						icon: <AutorenewIcon />,
+						onClick: () => initialize(),
+						disabled: !isChanged,
+					},
+					{
+						icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
+						onClick: () => setIsLocked(!isLocked),
+					},
+				]}
+			>
+				<TextField
+					inputProps={{
+						sx: { fontSize: '1.5rem', fontWeight: 'bold' },
+						readOnly: isLocked,
+					}}
+					value={title}
+					placeholder='タイトル'
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+				<MultipleTagSelector
+					value={tags}
+					setValue={setTags}
+					readonly={isLocked}
+				/>
+				<TextField
+					inputProps={{ readOnly: isLocked }}
+					multiline
+					value={content}
+					placeholder='内容'
+					onChange={(e) => setContent(e.target.value)}
+				/>
+			</FormLayout>
+		</>
 	);
 }
