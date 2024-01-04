@@ -14,8 +14,9 @@ interface NoteDetailFormProps {
 }
 
 export default function NoteDetailForm(props: NoteDetailFormProps) {
-	const { data, isLoading, mutate: mutateNote } = useNote(props.id || '');
+	const { data, isLoading: isLoadingGet, mutate: mutateNote } = useNote(props.id || '');
 	const { mutate: mutateNotes } = useNoteList();
+	const { putNote, isLoading: isLoadingPut } = usePutNote();
 
 	const [title, setTitle] = useState<string>('');
 	const [tags, setTags] = useState<Tag[]>([]);
@@ -23,8 +24,6 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 
 	const [isLocked, setIsLocked] = useState<boolean>(true);
 	const [isChanged, setIsChanged] = useState<boolean>(false);
-
-	const { putNote } = usePutNote();
 
 	const handleSave = async () => {
 		await putNote(
@@ -63,7 +62,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 
 	return (
 		<>
-			<Backdrop open={isLoading}>
+			<Backdrop open={isLoadingGet || isLoadingPut}>
 				<CircularProgress />
 			</Backdrop>
 			<FormLayout

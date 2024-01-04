@@ -12,9 +12,9 @@ interface TagDetailFormProps {
 }
 
 export default function TagDetailForm(props: TagDetailFormProps) {
-	const { data, isLoading, mutate: mutateTag } = useTag(props.id || '');
+	const { data, isLoading: isLoadingGet, mutate: mutateTag } = useTag(props.id || '');
 	const { mutate: mutateTagList } = useTagList();
-	const { putTag } = usePutTag();
+	const { putTag, isLoading: isLoadingPut } = usePutTag();
 
 	const [name, setName] = useState<string>('');
 
@@ -44,7 +44,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 
 	return (
 		<>
-			<Backdrop open={isLoading}>
+			<Backdrop open={isLoadingGet || isLoadingPut}>
 				<CircularProgress />
 			</Backdrop>
 			<FormLayout
