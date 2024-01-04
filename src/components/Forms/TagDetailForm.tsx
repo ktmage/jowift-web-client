@@ -71,7 +71,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 						readOnly: isLocked,
 					}}
 					value={name}
-					placeholder='タグの名前'
+					placeholder={data ? 'タグ名' : ''}
 					onChange={(e) => setName(e.target.value)}
 				/>
 			</FormLayout>

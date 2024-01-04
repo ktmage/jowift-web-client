@@ -90,7 +90,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 						readOnly: isLocked,
 					}}
 					value={title}
-					placeholder='タイトル'
+					placeholder={data ? 'タイトル' : ''}
 					onChange={(e) => setTitle(e.target.value)}
 				/>
 				<MultipleTagSelector
@@ -102,7 +102,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 					inputProps={{ readOnly: isLocked }}
 					multiline
 					value={content}
-					placeholder='内容'
+					placeholder={data ? '内容' : ''}
 					onChange={(e) => setContent(e.target.value)}
 				/>
 			</FormLayout>
