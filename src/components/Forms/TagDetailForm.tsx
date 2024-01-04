@@ -3,16 +3,18 @@ import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { TextField } from '@mui/material';
+import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useTag } from '@/hooks';
+import { usePutTag, useTag, useTagList } from '@/hooks';
 
 interface TagDetailFormProps {
 	id: string;
 }
 
 export default function TagDetailForm(props: TagDetailFormProps) {
-	const { data } = useTag(props.id || '');
+	const { data, isLoading, mutate: mutateTag } = useTag(props.id || '');
+	const { mutate: mutateTagList } = useTagList();
+	const { putTag } = usePutTag();
 
 	const [name, setName] = useState<string>('');
 
@@ -21,6 +23,12 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 
 	// 変更があったかどうかを管理
 	const [isChanged, setIsChanged] = useState<boolean>(false);
+
+	const handleSave = async () => {
+		await putTag(name, props.id);
+		await mutateTag();
+		await mutateTagList();
+	};
 
 	const initialize = () => {
 		setName(data?.tag.name || '');
@@ -35,31 +43,38 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 	}, [name, data?.tag.name]);
 
 	return (
-		<FormLayout
-			headerItems={[
-				{
-					icon: <SaveIcon />,
-					onClick: () => (isChanged ? console.log('save') : console.log('no change')),
-				},
-				{
-					icon: <AutorenewIcon />,
-					onClick: () => initialize(),
-				},
-				{
-					icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
-					onClick: () => setIsLocked(!isLocked),
-				},
-			]}
-		>
-			<TextField
-				inputProps={{
-					sx: { fontSize: '1.5rem', fontWeight: 'bold' },
-					readOnly: isLocked,
-				}}
-				value={name}
-				placeholder='タグの名前'
-				onChange={(e) => setName(e.target.value)}
-			/>
-		</FormLayout>
+		<>
+			<Backdrop open={isLoading}>
+				<CircularProgress />
+			</Backdrop>
+			<FormLayout
+				headerItems={[
+					{
+						icon: <SaveIcon />,
+						onClick: () => handleSave(),
+						disabled: !isChanged,
+					},
+					{
+						icon: <AutorenewIcon />,
+						onClick: () => initialize(),
+						disabled: !isChanged,
+					},
+					{
+						icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
+						onClick: () => setIsLocked(!isLocked),
+					},
+				]}
+			>
+				<TextField
+					inputProps={{
+						sx: { fontSize: '1.5rem', fontWeight: 'bold' },
+						readOnly: isLocked,
+					}}
+					value={name}
+					placeholder='タグの名前'
+					onChange={(e) => setName(e.target.value)}
+				/>
+			</FormLayout>
+		</>
 	);
 }
