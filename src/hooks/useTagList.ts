@@ -16,6 +16,7 @@ export default function useTagList() {
 	const { data, error } = useSWR<{ tags: TagListItem[] }>(API_URL + '/tag', fetcher, {
 		// 一定間隔でデータを同期
 		refreshInterval: 1000 * 60 * SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES,
+		revalidateIfStale: false,
 	});
 
 	return { data, error };
