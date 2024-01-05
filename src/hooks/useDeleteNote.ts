@@ -14,7 +14,7 @@ export default function useDeleteNote() {
 
 		try {
 			const response = await fetch(API_URL + '/note/' + id, {
-				method: 'PUT',
+				method: 'DELETE',
 				mode: 'cors',
 				credentials: 'include',
 				headers: {
