@@ -84,4 +84,18 @@ export default class NoteRepository {
 		const json = await response.json();
 		return json;
 	}
+
+	async delete(id: string): Promise<void> {
+		const response = await fetch(API_URL + '/note/' + id, {
+			method: 'DELETE',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		if (!response.ok) {
+			throw new Error('Failed to fetch');
+		}
+	}
 }
