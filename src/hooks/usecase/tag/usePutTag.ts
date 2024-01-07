@@ -2,20 +2,31 @@ import { Tag } from '@/models';
 import { TagRepository } from '@/repositories';
 import { useState } from 'react';
 import useNotification from '../../useNotification';
+import useTag from './useTag';
+import useTagList from './useTagList';
 
-export default function usePutTag() {
+export default function usePutTag(id: string) {
 	const [tag, setTag] = useState<Tag | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 	const tagRepository = new TagRepository();
 	const { dispatchNotification } = useNotification();
 
-	const putTag = async (id: string, name: string) => {
+	const { mutate: mutateTag } = useTag(id);
+	const { mutate: mutateTagList } = useTagList();
+
+	const effect = async () => {
+		await mutateTag();
+		await mutateTagList();
+	};
+
+	const putTag = async (name: string) => {
 		setIsLoading(true);
 		try {
 			const result = await tagRepository.put(id, name);
 			setTag(result);
 			setError(null);
+			await effect();
 			dispatchNotification({
 				severity: 'success',
 				message: '送信に成功しました。',

@@ -7,16 +7,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useDeleteTag, usePutTag, useTag, useTagList } from '@/hooks';
+import { useDeleteTag, usePutTag, useTag } from '@/hooks';
 
 interface TagDetailFormProps {
 	id: string;
 }
 
 export default function TagDetailForm(props: TagDetailFormProps) {
-	const { data, isLoading: isLoadingGet, mutate: mutateTag } = useTag(props.id || '');
-	const { mutate: mutateTagList } = useTagList();
-	const { putTag, isLoading: isLoadingPut } = usePutTag();
+	const { data, isLoading: isLoadingGet } = useTag(props.id || '');
+	const { putTag, isLoading: isLoadingPut } = usePutTag(props.id);
 	const { deleteTag, isLoading: isLoadingDelete } = useDeleteTag();
 
 	const [name, setName] = useState<string>('');
@@ -26,12 +25,6 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 
 	// 変更があったかどうかを管理
 	const [isChanged, setIsChanged] = useState<boolean>(false);
-
-	const handleSave = async () => {
-		await putTag(props.id, name);
-		await mutateTag();
-		await mutateTagList();
-	};
 
 	const initialize = () => {
 		setName(data?.name || '');
@@ -54,7 +47,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 				headerItems={[
 					{
 						icon: <SaveIcon />,
-						onClick: () => handleSave(),
+						onClick: () => putTag(name),
 						disabled: !isChanged,
 					},
 					{
