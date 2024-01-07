@@ -24,7 +24,7 @@ export default function useDeleteTag() {
 		try {
 			await tagRepository.delete(id);
 			setError(null);
-			effect();
+			await effect();
 			dispatchNotification({
 				severity: 'success',
 				message: '削除に成功しました。',
