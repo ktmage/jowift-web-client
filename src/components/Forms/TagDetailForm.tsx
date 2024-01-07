@@ -31,7 +31,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 	};
 
 	const initialize = () => {
-		setName(data?.tag.name || '');
+		setName(data?.name || '');
 	};
 
 	useEffect(() => {
@@ -39,8 +39,8 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 	}, [data]);
 
 	useEffect(() => {
-		setIsChanged(data?.tag.name !== name);
-	}, [name, data?.tag.name]);
+		setIsChanged(data?.name !== name);
+	}, [name, data?.name]);
 
 	return (
 		<>
