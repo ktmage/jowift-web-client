@@ -8,7 +8,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDeleteTag, usePutTag, useTag, useTagList } from '@/hooks';
-import { useNavigate } from 'react-router-dom';
 
 interface TagDetailFormProps {
 	id: string;
@@ -19,8 +18,6 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 	const { mutate: mutateTagList } = useTagList();
 	const { putTag, isLoading: isLoadingPut } = usePutTag();
 	const { deleteTag, isLoading: isLoadingDelete } = useDeleteTag();
-
-	const Navigate = useNavigate();
 
 	const [name, setName] = useState<string>('');
 
@@ -34,12 +31,6 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 		await putTag(props.id, name);
 		await mutateTag();
 		await mutateTagList();
-	};
-
-	const handleDelete = async () => {
-		await deleteTag(props.id);
-		await mutateTagList();
-		Navigate('/app/tag');
 	};
 
 	const initialize = () => {
@@ -73,7 +64,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 					},
 					{
 						icon: <DeleteIcon />,
-						onClick: () => handleDelete(),
+						onClick: () => deleteTag(props.id),
 					},
 					{
 						icon: isLocked ? <LockIcon /> : <LockOpenIcon />,

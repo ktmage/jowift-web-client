@@ -1,6 +1,8 @@
 import { TagRepository } from '@/repositories';
 import { useState } from 'react';
 import useNotification from '../../useNotification';
+import useTagList from './useTagList';
+import { useNavigate } from 'react-router-dom';
 
 export default function useDeleteTag() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -8,11 +10,21 @@ export default function useDeleteTag() {
 	const tagRepository = new TagRepository();
 	const { dispatchNotification } = useNotification();
 
+	const { mutate: mutateTagList } = useTagList();
+	const Navigate = useNavigate();
+
+	// 削除の副作用
+	const effect = async () => {
+		await mutateTagList();
+		Navigate('/app/tag');
+	};
+
 	const deleteTag = async (id: string) => {
 		setIsLoading(true);
 		try {
 			await tagRepository.delete(id);
 			setError(null);
+			effect();
 			dispatchNotification({
 				severity: 'success',
 				message: '削除に成功しました。',
