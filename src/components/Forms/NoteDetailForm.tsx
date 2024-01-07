@@ -16,9 +16,9 @@ interface NoteDetailFormProps {
 }
 
 export default function NoteDetailForm(props: NoteDetailFormProps) {
-	const { data, isLoading: isLoadingGet, mutate: mutateNote } = useNote(props.id || '');
+	const { data, isLoading: isLoadingGet } = useNote(props.id || '');
 	const { mutate: mutateNotes } = useNoteList();
-	const { putNote, isLoading: isLoadingPut } = usePutNote();
+	const { putNote, isLoading: isLoadingPut } = usePutNote(props.id);
 	const { deleteNote, isLoading: isLoadingDelete } = useDeleteNote();
 
 	const Navigate = useNavigate();
@@ -29,19 +29,6 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 
 	const [isLocked, setIsLocked] = useState<boolean>(true);
 	const [isChanged, setIsChanged] = useState<boolean>(false);
-
-	const handleSave = async () => {
-		await putNote(
-			{
-				title: title,
-				content: content,
-				tagIds: tags.map((tag) => tag.id),
-			},
-			props.id,
-		);
-		await mutateNotes();
-		await mutateNote();
-	};
 
 	const handleDelete = async () => {
 		await deleteNote(props.id);
@@ -80,7 +67,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 				headerItems={[
 					{
 						icon: <SaveIcon />,
-						onClick: () => handleSave(),
+						onClick: () => putNote({ title, content, tags }),
 						disabled: !isChanged,
 					},
 					{
