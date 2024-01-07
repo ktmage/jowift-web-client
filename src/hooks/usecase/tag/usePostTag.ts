@@ -1,4 +1,3 @@
-import { Tag } from '@/models';
 import { TagRepository } from '@/repositories';
 import { useState } from 'react';
 import useNotification from '../../useNotification';
@@ -6,7 +5,6 @@ import useTagList from './useTagList';
 import { useNavigate } from 'react-router-dom';
 
 export default function usePostTag() {
-	const [tag, setTag] = useState<Tag | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 	const tagRepository = new TagRepository();
@@ -24,7 +22,6 @@ export default function usePostTag() {
 		setIsLoading(true);
 		try {
 			const result = await tagRepository.post(name);
-			setTag(result);
 			setError(null);
 			console.log(result);
 			await effect(result.id);
@@ -44,5 +41,5 @@ export default function usePostTag() {
 		}
 	};
 
-	return { postTag, tag, isLoading, error };
+	return { postTag, isLoading, error };
 }
