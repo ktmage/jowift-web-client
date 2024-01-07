@@ -22,4 +22,28 @@ export default class NoteRepository {
 			json.note.tags.map((tag: { tag: Tag }) => new Tag(tag.tag.id, tag.tag.name)),
 		);
 	}
+
+	async getAll(): Promise<Note[]> {
+		const response = await fetch(API_URL + '/note', {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		if (!response.ok) {
+			throw new Error('Failed to fetch');
+		}
+		const json = await response.json();
+		return json.notes.map(
+			(note: Note) =>
+				new Note(
+					note.id,
+					note.title,
+					note.content,
+					note.tags.map((tag: Tag) => new Tag(tag.id, tag.name)),
+				),
+		);
+	}
 }
