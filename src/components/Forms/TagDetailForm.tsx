@@ -3,9 +3,12 @@ import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { usePutTag, useTag, useTagList } from '@/hooks';
+import { useDeleteTag, usePutTag, useTag, useTagList } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
 
 interface TagDetailFormProps {
 	id: string;
@@ -15,6 +18,9 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 	const { data, isLoading: isLoadingGet, mutate: mutateTag } = useTag(props.id || '');
 	const { mutate: mutateTagList } = useTagList();
 	const { putTag, isLoading: isLoadingPut } = usePutTag();
+	const { deleteTag, isLoading: isLoadingDelete } = useDeleteTag();
+
+	const Navigate = useNavigate();
 
 	const [name, setName] = useState<string>('');
 
@@ -28,6 +34,12 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 		await putTag(props.id, name);
 		await mutateTag();
 		await mutateTagList();
+	};
+
+	const handleDelete = async () => {
+		await deleteTag(props.id);
+		await mutateTagList();
+		Navigate('/app/tag');
 	};
 
 	const initialize = () => {
@@ -44,7 +56,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 
 	return (
 		<>
-			<Backdrop open={isLoadingGet || isLoadingPut}>
+			<Backdrop open={isLoadingGet || isLoadingPut || isLoadingDelete}>
 				<CircularProgress />
 			</Backdrop>
 			<FormLayout
@@ -58,6 +70,10 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 						icon: <AutorenewIcon />,
 						onClick: () => initialize(),
 						disabled: !isChanged,
+					},
+					{
+						icon: <DeleteIcon />,
+						onClick: () => handleDelete(),
 					},
 					{
 						icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
