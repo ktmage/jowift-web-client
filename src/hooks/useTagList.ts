@@ -1,23 +1,16 @@
-import { API_URL, SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES } from '@/config';
+import TagRepository from '@/repositories/TagRepository';
+import Tag from '@/models/Tag';
 import useSWR from 'swr';
-import { TagListItem } from '@/types';
+import { SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES } from '@/config';
+import CacheKeyGenerator from '@/util/CacheKeyGenerator';
 
 export default function useTagList() {
-	const fetcher = (url: string) =>
-		fetch(url, {
-			method: 'GET',
-			mode: 'cors',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => res.json());
+	const tagRepository = new TagRepository();
 
-	const { data, isLoading, error, mutate } = useSWR<{ tags: TagListItem[] }>(
-		API_URL + '/tag',
-		fetcher,
+	const { data, isLoading, error, mutate } = useSWR<Tag[]>(
+		CacheKeyGenerator.generateTagListKey,
+		() => tagRepository.getAll(),
 		{
-			// 一定間隔でデータを同期
 			refreshInterval: 1000 * 60 * SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES,
 			revalidateIfStale: false,
 		},
