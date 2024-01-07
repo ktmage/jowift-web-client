@@ -6,10 +6,9 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useDeleteNote, useNote, useNoteList, usePutNote } from '@/hooks';
+import { useDeleteNote, useNote, usePutNote } from '@/hooks';
 import { Tag } from '@/models';
 import { MultipleTagSelector } from '../UI';
-import { useNavigate } from 'react-router-dom';
 
 interface NoteDetailFormProps {
 	id: string;
@@ -17,11 +16,8 @@ interface NoteDetailFormProps {
 
 export default function NoteDetailForm(props: NoteDetailFormProps) {
 	const { data, isLoading: isLoadingGet } = useNote(props.id || '');
-	const { mutate: mutateNotes } = useNoteList();
 	const { putNote, isLoading: isLoadingPut } = usePutNote(props.id);
-	const { deleteNote, isLoading: isLoadingDelete } = useDeleteNote();
-
-	const Navigate = useNavigate();
+	const { deleteNote, isLoading: isLoadingDelete } = useDeleteNote(props.id);
 
 	const [title, setTitle] = useState<string>('');
 	const [tags, setTags] = useState<Tag[]>([]);
@@ -29,12 +25,6 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 
 	const [isLocked, setIsLocked] = useState<boolean>(true);
 	const [isChanged, setIsChanged] = useState<boolean>(false);
-
-	const handleDelete = async () => {
-		await deleteNote(props.id);
-		await mutateNotes();
-		Navigate('/app/note');
-	};
 
 	// 初期化処理
 	const initialize = () => {
@@ -78,7 +68,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 					},
 					{
 						icon: <DeleteIcon />,
-						onClick: () => handleDelete(),
+						onClick: () => deleteNote(),
 					},
 					{
 						icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
