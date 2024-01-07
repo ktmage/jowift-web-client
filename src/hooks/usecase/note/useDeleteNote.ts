@@ -1,47 +1,40 @@
+import { NoteRepository } from '@/repositories';
 import { useState } from 'react';
-import { API_URL } from '@/config';
 import useNotification from '../../useNotification';
+import useNoteList from './useNoteList';
+import { useNavigate } from 'react-router-dom';
 
-export default function useDeleteNote() {
+export default function useDeleteNote(id: string) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [error, setError] = useState<string | null>(null);
-
+	const [error, setError] = useState<Error | null>(null);
+	const noteRepository = new NoteRepository();
 	const { dispatchNotification } = useNotification();
 
-	const deleteNote = async (id: string) => {
+	const { mutate: mutateNoteList } = useNoteList();
+	const Navigate = useNavigate();
+
+	// 削除の副作用
+	const effect = async () => {
+		await mutateNoteList();
+		Navigate('/app/note');
+	};
+
+	const deleteNote = async () => {
 		setIsLoading(true);
-		setError(null);
-
 		try {
-			const response = await fetch(API_URL + '/note/' + id, {
-				method: 'DELETE',
-				mode: 'cors',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ noteId: id }),
-			});
-
-			if (!response.ok) {
-				dispatchNotification({
-					severity: 'error',
-					message: '削除に失敗しました。',
-				});
-				throw new Error('Failed to post note');
-			}
+			await noteRepository.delete(id);
+			setError(null);
+			await effect();
 			dispatchNotification({
 				severity: 'success',
 				message: '削除に成功しました。',
 			});
-			const result = await response.json();
-			return result;
-		} catch (err) {
-			if (err instanceof Error) {
-				setError(err.message);
-			} else {
-				setError('An unknown error occurred');
-			}
+		} catch (e) {
+			dispatchNotification({
+				severity: 'error',
+				message: '削除に失敗しました。',
+			});
+			setError(e as Error);
 		} finally {
 			setIsLoading(false);
 		}
