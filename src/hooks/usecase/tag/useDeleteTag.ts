@@ -4,7 +4,7 @@ import useNotification from '../../useNotification';
 import useTagList from './useTagList';
 import { useNavigate } from 'react-router-dom';
 
-export default function useDeleteTag() {
+export default function useDeleteTag(id: string) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 	const tagRepository = new TagRepository();
@@ -19,7 +19,7 @@ export default function useDeleteTag() {
 		Navigate('/app/tag');
 	};
 
-	const deleteTag = async (id: string) => {
+	const deleteTag = async () => {
 		setIsLoading(true);
 		try {
 			await tagRepository.delete(id);

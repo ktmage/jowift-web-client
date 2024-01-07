@@ -16,7 +16,7 @@ interface TagDetailFormProps {
 export default function TagDetailForm(props: TagDetailFormProps) {
 	const { data, isLoading: isLoadingGet } = useTag(props.id || '');
 	const { putTag, isLoading: isLoadingPut } = usePutTag(props.id);
-	const { deleteTag, isLoading: isLoadingDelete } = useDeleteTag();
+	const { deleteTag, isLoading: isLoadingDelete } = useDeleteTag(props.id);
 
 	const [name, setName] = useState<string>('');
 
@@ -57,7 +57,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 					},
 					{
 						icon: <DeleteIcon />,
-						onClick: () => deleteTag(props.id),
+						onClick: () => deleteTag(),
 					},
 					{
 						icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
