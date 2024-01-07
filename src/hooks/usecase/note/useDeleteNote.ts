@@ -1,53 +1,38 @@
 import { useState } from 'react';
 import { API_URL } from '@/config';
-import useNotification from './useNotification';
+import useNotification from '../../useNotification';
 
-export default function usePutNote() {
+export default function useDeleteNote() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 
 	const { dispatchNotification } = useNotification();
 
-	const putNote = async (
-		{
-			title,
-			content,
-			tagIds,
-		}: {
-			title: string;
-			content: string;
-			tagIds: string[];
-		},
-		id: string,
-	) => {
+	const deleteNote = async (id: string) => {
 		setIsLoading(true);
 		setError(null);
 
 		try {
 			const response = await fetch(API_URL + '/note/' + id, {
-				method: 'PUT',
+				method: 'DELETE',
 				mode: 'cors',
 				credentials: 'include',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({
-					title,
-					content,
-					tagId: tagIds,
-				}),
+				body: JSON.stringify({ noteId: id }),
 			});
 
 			if (!response.ok) {
 				dispatchNotification({
 					severity: 'error',
-					message: '更新に失敗しました。',
+					message: '削除に失敗しました。',
 				});
 				throw new Error('Failed to post note');
 			}
 			dispatchNotification({
 				severity: 'success',
-				message: '更新に成功しました。',
+				message: '削除に成功しました。',
 			});
 			const result = await response.json();
 			return result;
@@ -62,5 +47,5 @@ export default function usePutNote() {
 		}
 	};
 
-	return { putNote, isLoading, error };
+	return { deleteNote, isLoading, error };
 }

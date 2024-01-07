@@ -1,7 +1,7 @@
 import { Tag } from '@/models';
 import { TagRepository } from '@/repositories';
 import { useState } from 'react';
-import useNotification from './useNotification';
+import useNotification from '../../useNotification';
 
 export default function usePutTag() {
 	const [tag, setTag] = useState<Tag | null>(null);

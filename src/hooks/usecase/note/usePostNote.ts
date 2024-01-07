@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { API_URL } from '@/config';
-import useNotification from './useNotification';
+import useNotification from '../../useNotification';
 
 export default function usePostNote() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);

@@ -1,29 +1,26 @@
-import { Tag } from '@/models';
 import { TagRepository } from '@/repositories';
 import { useState } from 'react';
-import useNotification from './useNotification';
+import useNotification from '../../useNotification';
 
-export default function usePostTag() {
-	const [tag, setTag] = useState<Tag | null>(null);
+export default function useDeleteTag() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 	const tagRepository = new TagRepository();
 	const { dispatchNotification } = useNotification();
 
-	const postTag = async (name: string) => {
+	const deleteTag = async (id: string) => {
 		setIsLoading(true);
 		try {
-			const result = await tagRepository.post(name);
-			setTag(result);
+			await tagRepository.delete(id);
 			setError(null);
 			dispatchNotification({
 				severity: 'success',
-				message: '送信に成功しました。',
+				message: '削除に成功しました。',
 			});
 		} catch (e) {
 			dispatchNotification({
 				severity: 'error',
-				message: '送信に失敗しました。',
+				message: '削除に失敗しました。',
 			});
 			setError(e as Error);
 		} finally {
@@ -31,5 +28,5 @@ export default function usePostTag() {
 		}
 	};
 
-	return { postTag, tag, isLoading, error };
+	return { deleteTag, isLoading, error };
 }
