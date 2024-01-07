@@ -1,4 +1,3 @@
-import { Tag } from '@/models';
 import { TagRepository } from '@/repositories';
 import { useState } from 'react';
 import useNotification from '../../useNotification';
@@ -6,7 +5,6 @@ import useTag from './useTag';
 import useTagList from './useTagList';
 
 export default function usePutTag(id: string) {
-	const [tag, setTag] = useState<Tag | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 	const tagRepository = new TagRepository();
@@ -23,8 +21,7 @@ export default function usePutTag(id: string) {
 	const putTag = async (name: string) => {
 		setIsLoading(true);
 		try {
-			const result = await tagRepository.put(id, name);
-			setTag(result);
+			await tagRepository.put(id, name);
 			setError(null);
 			await effect();
 			dispatchNotification({
@@ -42,5 +39,5 @@ export default function usePutTag(id: string) {
 		}
 	};
 
-	return { putTag, tag, isLoading, error };
+	return { putTag, isLoading, error };
 }

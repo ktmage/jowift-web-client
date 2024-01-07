@@ -51,7 +51,7 @@ export default class TagRepository {
 		return json;
 	}
 
-	async put(id: string, name: string): Promise<Tag> {
+	async put(id: string, name: string): Promise<void> {
 		const response = await fetch(API_URL + '/tag/' + id, {
 			method: 'PUT',
 			mode: 'cors',
@@ -64,8 +64,6 @@ export default class TagRepository {
 		if (!response.ok) {
 			throw new Error('Failed to fetch');
 		}
-		const json = await response.json();
-		return new Tag(json.id, json.name);
 	}
 
 	async delete(id: string): Promise<void> {
