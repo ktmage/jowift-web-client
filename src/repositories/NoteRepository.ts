@@ -67,4 +67,21 @@ export default class NoteRepository {
 		const json = await response.json();
 		return json;
 	}
+
+	async put(id: string, title: string, content: string, tagIds: string[]): Promise<Note> {
+		const response = await fetch(API_URL + '/note/' + id, {
+			method: 'PUT',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ title, content, tagId: tagIds }),
+		});
+		if (!response.ok) {
+			throw new Error('Failed to fetch');
+		}
+		const json = await response.json();
+		return json;
+	}
 }
