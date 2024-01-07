@@ -48,7 +48,7 @@ export default class TagRepository {
 			throw new Error('Failed to fetch');
 		}
 		const json = await response.json();
-		return new Tag(json.tag.id, json.tag.name);
+		return json;
 	}
 
 	async put(id: string, name: string): Promise<Tag> {
