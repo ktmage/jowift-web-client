@@ -23,14 +23,12 @@ export default function usePostTag() {
 		try {
 			const result = await tagRepository.post(name);
 			setError(null);
-			console.log(result);
 			await effect(result.id);
 			dispatchNotification({
 				severity: 'success',
 				message: '送信に成功しました。',
 			});
 		} catch (e) {
-			console.log(e);
 			dispatchNotification({
 				severity: 'error',
 				message: '送信に失敗しました。',
