@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDeleteNote, useNote, useNoteList, usePutNote } from '@/hooks';
-import { Tag } from '@/types';
+import { Tag } from '@/models';
 import { MultipleTagSelector } from '../UI';
 import { useNavigate } from 'react-router-dom';
 
@@ -51,9 +51,9 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 
 	// 初期化処理
 	const initialize = () => {
-		setTitle(data?.note.title || '');
-		setTags(data?.note.tags.map((tag) => tag.tag) || []);
-		setContent(data?.note.content || '');
+		setTitle(data?.title || '');
+		setTags(data?.tags.map((tag) => tag) || []);
+		setContent(data?.content || '');
 	};
 
 	// dataが変更されたら初期化処理を実行
@@ -64,12 +64,12 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 	// 参照元のデータと比較して変更があったかどうかを判定、変更があった場合はフラグを立てる。
 	useEffect(() => {
 		const tagsChanged =
-			JSON.stringify(data?.note.tags.map((tag) => tag.tag.name)) !==
+			JSON.stringify(data?.tags.map((tag) => tag.name)) !==
 			JSON.stringify(tags.map((tag) => tag.name));
-		const titleChanged = data?.note.title !== title;
-		const contentChanged = data?.note.content !== content;
+		const titleChanged = data?.title !== title;
+		const contentChanged = data?.content !== content;
 		setIsChanged(tagsChanged || titleChanged || contentChanged);
-	}, [title, tags, content, data?.note.title, data?.note.tags, data?.note.content]);
+	}, [title, tags, content, data?.title, data?.tags, data?.content]);
 
 	return (
 		<>
