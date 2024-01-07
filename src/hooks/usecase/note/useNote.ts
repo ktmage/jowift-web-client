@@ -1,24 +1,16 @@
-import { API_URL, SWR_NOTE_DEDUPING_INTERVAL_MINUTES } from '@/config';
+import { Note } from '@/models';
+import { NoteRepository } from '@/repositories';
+import CacheKeyGenerator from '@/util/CacheKeyGenerator';
 import useSWR from 'swr';
-import { Note } from '@/types';
 
-export default function useNote(noteId: string) {
-	const fetcher = (url: string) =>
-		fetch(url, {
-			method: 'GET',
-			mode: 'cors',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => res.json());
+export default function useNote(id: string) {
+	const repository = new NoteRepository();
 
-	const { data, isLoading, error, mutate } = useSWR<{ note: Note }>(
-		API_URL + '/note/' + noteId,
-		fetcher,
+	const { data, isLoading, error, mutate } = useSWR<Note>(
+		CacheKeyGenerator.generateNoteKey(id),
+		() => repository.get(id),
 		{
-			// 指定した間隔内では同じURLに対してリクエストを行わない
-			dedupingInterval: 1000 * 60 * SWR_NOTE_DEDUPING_INTERVAL_MINUTES,
+			dedupingInterval: 1000 * 60 * 5,
 		},
 	);
 
