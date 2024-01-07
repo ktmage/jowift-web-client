@@ -16,20 +16,17 @@ export default function usePostTag() {
 			const result = await tagRepository.post(name);
 			setTag(result);
 			setError(null);
+			dispatchNotification({
+				severity: 'success',
+				message: '送信に成功しました。',
+			});
 		} catch (e) {
+			dispatchNotification({
+				severity: 'error',
+				message: '送信に失敗しました。',
+			});
 			setError(e as Error);
 		} finally {
-			if (error) {
-				dispatchNotification({
-					severity: 'error',
-					message: '送信に失敗しました。',
-				});
-			} else {
-				dispatchNotification({
-					severity: 'success',
-					message: '送信に成功しました。',
-				});
-			}
 			setIsLoading(false);
 		}
 	};
