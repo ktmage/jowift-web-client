@@ -1,23 +1,16 @@
-import { API_URL, SWR_TAG_DEDUPING_INTERVAL_MINUTES } from '@/config';
+import TagRepository from '@/repositories/TagRepository';
+import Tag from '@/models/Tag';
 import useSWR from 'swr';
-import { Tag } from '@/types';
+import { SWR_TAG_DEDUPING_INTERVAL_MINUTES } from '@/config';
+import CacheKeyGenerator from '@/util/CacheKeyGenerator';
 
-export default function useTag(tagId: string) {
-	const fetcher = (url: string) =>
-		fetch(url, {
-			method: 'GET',
-			mode: 'cors',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => res.json());
+export default function useTag(id: string) {
+	const tagRepository = new TagRepository();
 
-	const { data, isLoading, error, mutate } = useSWR<{ tag: Tag }>(
-		API_URL + '/tag/' + tagId,
-		fetcher,
+	const { data, isLoading, error, mutate } = useSWR<Tag>(
+		CacheKeyGenerator.generateTagKey(id),
+		() => tagRepository.get(id),
 		{
-			// 指定した間隔内では同じURLに対してリクエストを行わない
 			dedupingInterval: 1000 * 60 * SWR_TAG_DEDUPING_INTERVAL_MINUTES,
 		},
 	);
