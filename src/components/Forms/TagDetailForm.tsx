@@ -25,7 +25,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 	const [isChanged, setIsChanged] = useState<boolean>(false);
 
 	const handleSave = async () => {
-		await putTag(name, props.id);
+		await putTag(props.id, name);
 		await mutateTag();
 		await mutateTagList();
 	};
