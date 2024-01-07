@@ -68,7 +68,7 @@ export default class NoteRepository {
 		return json;
 	}
 
-	async put(id: string, title: string, content: string, tagIds: string[]): Promise<Note> {
+	async put(id: string, title: string, content: string, tagIds: string[]): Promise<void> {
 		const response = await fetch(API_URL + '/note/' + id, {
 			method: 'PUT',
 			mode: 'cors',
@@ -81,8 +81,6 @@ export default class NoteRepository {
 		if (!response.ok) {
 			throw new Error('Failed to fetch');
 		}
-		const json = await response.json();
-		return json;
 	}
 
 	async delete(id: string): Promise<void> {
