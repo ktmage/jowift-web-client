@@ -10,7 +10,7 @@ export default function TagLayout(props: TagLayoutProps) {
 	return (
 		<ListDetailLayout
 			items={
-				data?.tags.map((tag) => ({
+				data?.map((tag) => ({
 					text: tag.name,
 					to: `/app/tag/${tag.id}`,
 				})) ?? []

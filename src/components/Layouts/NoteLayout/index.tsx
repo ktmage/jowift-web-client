@@ -10,7 +10,7 @@ export default function NoteLayout(props: NoteLayoutProps) {
 	return (
 		<ListDetailLayout
 			items={
-				data?.notes.map((note) => ({
+				data?.map((note) => ({
 					text: note.title,
 					to: `/app/note/${note.id}`,
 				})) ?? []

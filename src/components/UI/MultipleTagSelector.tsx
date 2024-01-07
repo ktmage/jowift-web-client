@@ -1,5 +1,5 @@
 import { useTagList } from '@/hooks';
-import { Tag } from '@/types';
+import { Tag } from '@/models';
 import { Autocomplete, TextField } from '@mui/material';
 import React from 'react';
 
@@ -16,7 +16,7 @@ export default function MultipleTagSelector(props: MultipleTagSelectorProps) {
 
 	// valueと同じidを持つタグをTagsから探して返す。
 	const getTagsFromValues = (values: Tag[]): Tag[] => {
-		const availableTags = data?.tags ?? [];
+		const availableTags = data ?? [];
 		return values.map((value) => availableTags.find((tag) => tag.id === value.id) || value);
 	};
 
@@ -24,7 +24,7 @@ export default function MultipleTagSelector(props: MultipleTagSelectorProps) {
 		<Autocomplete
 			multiple
 			readOnly={readonly}
-			options={data?.tags ? data.tags : []}
+			options={data ? data : []}
 			getOptionLabel={(option) => option.name}
 			value={getTagsFromValues(value)}
 			onChange={(e, value) => setValue(value)}

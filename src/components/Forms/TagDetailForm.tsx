@@ -3,18 +3,20 @@ import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { usePutTag, useTag, useTagList } from '@/hooks';
+import { useDeleteTag, usePutTag, useTag } from '@/hooks';
 
 interface TagDetailFormProps {
 	id: string;
 }
 
 export default function TagDetailForm(props: TagDetailFormProps) {
-	const { data, isLoading: isLoadingGet, mutate: mutateTag } = useTag(props.id || '');
-	const { mutate: mutateTagList } = useTagList();
-	const { putTag, isLoading: isLoadingPut } = usePutTag();
+	const { data, isLoading: isLoadingGet } = useTag(props.id || '');
+	const { putTag, isLoading: isLoadingPut } = usePutTag(props.id);
+	const { deleteTag, isLoading: isLoadingDelete } = useDeleteTag(props.id);
 
 	const [name, setName] = useState<string>('');
 
@@ -24,14 +26,8 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 	// 変更があったかどうかを管理
 	const [isChanged, setIsChanged] = useState<boolean>(false);
 
-	const handleSave = async () => {
-		await putTag(name, props.id);
-		await mutateTag();
-		await mutateTagList();
-	};
-
 	const initialize = () => {
-		setName(data?.tag.name || '');
+		setName(data?.name || '');
 	};
 
 	useEffect(() => {
@@ -39,25 +35,29 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 	}, [data]);
 
 	useEffect(() => {
-		setIsChanged(data?.tag.name !== name);
-	}, [name, data?.tag.name]);
+		setIsChanged(data?.name !== name);
+	}, [name, data?.name]);
 
 	return (
 		<>
-			<Backdrop open={isLoadingGet || isLoadingPut}>
+			<Backdrop open={isLoadingGet || isLoadingPut || isLoadingDelete}>
 				<CircularProgress />
 			</Backdrop>
 			<FormLayout
 				headerItems={[
 					{
 						icon: <SaveIcon />,
-						onClick: () => handleSave(),
+						onClick: () => putTag(name),
 						disabled: !isChanged,
 					},
 					{
 						icon: <AutorenewIcon />,
 						onClick: () => initialize(),
 						disabled: !isChanged,
+					},
+					{
+						icon: <DeleteIcon />,
+						onClick: () => deleteTag(),
 					},
 					{
 						icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
