@@ -12,4 +12,5 @@ export { default as useNoteList } from './useNoteList';
 export { default as useTag } from './useTag';
 export { default as usePostTag } from './usePostTag';
 export { default as usePutTag } from './usePutTag';
+export { default as useDeleteTag } from './useDeleteTag';
 export { default as useTagList } from './useTagList';

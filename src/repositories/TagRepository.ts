@@ -67,4 +67,18 @@ export default class TagRepository {
 		const json = await response.json();
 		return new Tag(json.id, json.name);
 	}
+
+	async delete(id: string): Promise<void> {
+		const response = await fetch(API_URL + '/tag/' + id, {
+			method: 'DELETE',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		if (!response.ok) {
+			throw new Error('Failed to fetch');
+		}
+	}
 }
