@@ -17,4 +17,20 @@ export default class TagRepository {
 		const json = await response.json();
 		return new Tag(json.tag.id, json.tag.name);
 	}
+
+	async getAll(): Promise<Tag[]> {
+		const response = await fetch(API_URL + '/tag', {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		if (!response.ok) {
+			throw new Error('Failed to fetch');
+		}
+		const json = await response.json();
+		return json.tags.map((tag: Tag) => new Tag(tag.id, tag.name));
+	}
 }
