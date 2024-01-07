@@ -1,6 +1,6 @@
 export default class Tag {
-	private _id: number;
-	get id(): number {
+	private _id: string;
+	get id(): string {
 		return this._id;
 	}
 
@@ -9,7 +9,7 @@ export default class Tag {
 		return this._name;
 	}
 
-	constructor(id: number, name: string) {
+	constructor(id: string, name: string) {
 		this._id = id;
 		this._name = name;
 	}
