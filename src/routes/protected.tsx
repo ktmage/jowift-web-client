@@ -1,5 +1,5 @@
 import { Navigate, RouteObject } from 'react-router-dom';
-import { Main, NoteCreate, NoteDetail, TagCreate, TagDetail } from './elements';
+import { Main, NoteCreate, NoteDetail, Setting, TagCreate, TagDetail } from './elements';
 
 const protectedRoutes: RouteObject[] = [
 	{
@@ -28,7 +28,7 @@ const protectedRoutes: RouteObject[] = [
 			},
 			{
 				path: '/app/setting',
-				element: <div>setting</div>,
+				element: <Setting />,
 			},
 			{
 				path: '/app/info',
