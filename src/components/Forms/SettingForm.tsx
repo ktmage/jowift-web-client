@@ -8,7 +8,6 @@ import {
 	Switch,
 } from '@mui/material';
 import { FormLayout } from '../Layouts';
-import SaveIcon from '@mui/icons-material/Save';
 import { useSetting } from '@/hooks';
 
 export default function SettingForm() {
@@ -82,12 +81,8 @@ export default function SettingForm() {
 				<CircularProgress />
 			</Backdrop>
 			<FormLayout
-				headerItems={[
-					{
-						icon: <SaveIcon />,
-						onClick: () => console.log('save'),
-					},
-				]}
+				disableHeader
+				headerItems={[]}
 			>
 				<SelectItem
 					id='theme'
