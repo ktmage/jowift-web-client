@@ -8,7 +8,6 @@ import {
 	Switch,
 } from '@mui/material';
 import { FormLayout } from '../Layouts';
-import SaveIcon from '@mui/icons-material/Save';
 import { useSetting } from '@/hooks';
 
 export default function SettingForm() {
@@ -74,7 +73,7 @@ export default function SettingForm() {
 		/>
 	);
 
-	const { theme, language, notification, updateSettings } = useSetting();
+	const { themeConfig, languageConfig, isHappinessConfig } = useSetting();
 
 	return (
 		<>
@@ -82,52 +81,28 @@ export default function SettingForm() {
 				<CircularProgress />
 			</Backdrop>
 			<FormLayout
-				headerItems={[
-					{
-						icon: <SaveIcon />,
-						onClick: () => console.log('save'),
-					},
-				]}
+				disableHeader
+				headerItems={[]}
 			>
-				<SwitchItem
-					id='darkMode'
-					label='Enable notifications'
-					checked={notification.enabled}
-					onChange={(e) =>
-						updateSettings({ notification: { enabled: e.target.checked } })
-					}
-				/>
-
 				<SelectItem
 					id='theme'
 					label='Theme'
-					value={theme.selected}
-					onChange={(e) =>
-						updateSettings({
-							theme: {
-								selected: e.target.value,
-								options: theme.options,
-								default: theme.default,
-							},
-						})
-					}
-					SelectValues={theme.options}
+					value={themeConfig.value}
+					onChange={(e) => themeConfig.setValue(e.target.value as 'light' | 'dark')}
+					SelectValues={themeConfig.options}
 				/>
-
 				<SelectItem
 					id='language'
 					label='Language'
-					value={language.selected}
-					onChange={(e) =>
-						updateSettings({
-							language: {
-								selected: e.target.value,
-								options: language.options,
-								default: language.default,
-							},
-						})
-					}
-					SelectValues={language.options}
+					value={languageConfig.value}
+					onChange={(e) => languageConfig.setValue(e.target.value as 'en' | 'jp')}
+					SelectValues={languageConfig.options}
+				/>
+				<SwitchItem
+					id='isHappiness'
+					label='Happiness'
+					checked={isHappinessConfig.value}
+					onChange={(e) => isHappinessConfig.setValue(e.target.checked)}
 				/>
 			</FormLayout>
 		</>

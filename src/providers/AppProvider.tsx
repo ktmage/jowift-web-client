@@ -2,7 +2,7 @@ import { ThemeProvider } from '@emotion/react';
 import { lightTheme } from '@/theme';
 import { AuthProvider } from './AuthProvider';
 import { NotificationProvider } from './NotificationProvider';
-import { SettingProvider } from './SettingProvider';
+import { SettingProvider } from './LocalStorageProvider';
 
 interface AppProviderProps {
 	children: React.ReactNode;
