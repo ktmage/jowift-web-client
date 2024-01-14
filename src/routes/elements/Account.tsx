@@ -1,3 +1,9 @@
+import { AccountLayout } from '@/components/Layouts';
+
 export default function Account() {
-	return <div>account</div>;
+	return (
+		<AccountLayout>
+			<>account</>
+		</AccountLayout>
+	);
 }
