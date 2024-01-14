@@ -1,8 +1,7 @@
-import { ThemeProvider } from '@emotion/react';
-import { lightTheme } from '@/theme';
 import { AuthProvider } from './AuthProvider';
 import { NotificationProvider } from './NotificationProvider';
 import { SettingProvider } from './LocalStorageProvider';
+import ThemeProvider from './ThemeProvider';
 
 interface AppProviderProps {
 	children: React.ReactNode;
@@ -11,7 +10,7 @@ interface AppProviderProps {
 export default function AppProvider(props: AppProviderProps) {
 	return (
 		<SettingProvider>
-			<ThemeProvider theme={lightTheme}>
+			<ThemeProvider>
 				<AuthProvider>
 					<NotificationProvider>{props.children}</NotificationProvider>
 				</AuthProvider>
