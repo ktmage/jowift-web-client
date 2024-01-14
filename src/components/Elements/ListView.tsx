@@ -1,4 +1,4 @@
-import { Box, List, ListItemButton } from '@mui/material';
+import { Box, List, ListItemButton, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { ListItem } from '@/types';
 
@@ -25,7 +25,12 @@ export default function ListView(props: ListViewProps) {
 						component={Link}
 						to={item.to}
 					>
-						{item.text}
+						<Typography
+							color='text.primary'
+							variant='subtitle1'
+						>
+							{item.text}
+						</Typography>
 					</ListItemButton>
 				))}
 			</List>
