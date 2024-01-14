@@ -7,6 +7,7 @@ interface ImportMetaEnv {
 	readonly VITE_SWR_NOTE_LIST_REFRESH_INTERVAL_MINUTES: number;
 	readonly VITE_SWR_TAG_DEDUPING_INTERVAL_MINUTES: number;
 	readonly VITE_SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES: number;
+	readonly VITE_SWR_USER_DEDUPING_INTERVAL_MINUTES: number;
 }
 
 interface ImportMeta {
