@@ -10,7 +10,7 @@ const darkTheme = createTheme({
 		background: {
 			paper: '#2a2929',
 		},
-		divider: '#121212',
+		divider: '#191919',
 		scrollbar: {
 			idol: '#dddddd',
 			hover: '#cccccc',
@@ -45,7 +45,7 @@ const darkTheme = createTheme({
 				},
 				// スクロールバーの掴むやつ
 				'::-webkit-scrollbar-thumb': {
-					backgroundColor: '#dddddd',
+					backgroundColor: '#191919',
 					borderRight: '5px solid transparent',
 					borderLeft: '5px solid transparent',
 					borderTop: '5px solid transparent',
@@ -54,10 +54,10 @@ const darkTheme = createTheme({
 					backgroundClip: 'padding-box',
 				},
 				'::-webkit-scrollbar-thumb:hover': {
-					backgroundColor: '#cccccc',
+					backgroundColor: '#1b1b1b',
 				},
 				'::-webkit-scrollbar-thumb:active': {
-					backgroundColor: '#e6e6e6',
+					backgroundColor: '#1b1b1b',
 				},
 			},
 		},
