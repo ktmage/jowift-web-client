@@ -16,3 +16,4 @@ export { default as usePostTag } from './usecase/tag/usePostTag';
 export { default as usePutTag } from './usecase/tag/usePutTag';
 export { default as useDeleteTag } from './usecase/tag/useDeleteTag';
 export { default as useTagList } from './usecase/tag/useTagList';
+export { default as useUser } from './usecase/user/useUser';
