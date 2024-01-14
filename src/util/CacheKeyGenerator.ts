@@ -14,4 +14,8 @@ export default class CacheKeyGenerator {
 	static generateNoteListKey(): string {
 		return 'notes';
 	}
+
+	static generateUserKey(): string {
+		return 'user';
+	}
 }

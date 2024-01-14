@@ -1,16 +1,19 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { API_URL } from '@/config';
+import { useNotification } from '@/hooks';
 
 type AuthContextProps = {
 	isAuth: boolean;
 	isLoading: boolean;
 	signUp: (name: string, email: string, password: string) => void;
 	login: (email: string, password: string) => void;
+	logout: () => void;
 };
 
 export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+	const { dispatchNotification } = useNotification();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [isAuth, setIsAuth] = useState<boolean>(false);
 
@@ -40,10 +43,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			credentials: 'include',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ name, email, password }),
-		})
-			.then((res) => res.json())
-			.then((data) => console.log(data))
-			.catch((err) => console.log(err));
+		}).then((res) => {
+			if (res.ok) {
+				dispatchNotification({
+					severity: 'success',
+					message: 'ユーザー登録が完了しました。',
+				});
+			} else {
+				dispatchNotification({
+					severity: 'error',
+					message: 'ユーザー登録に失敗しました。',
+				});
+			}
+			return res.json();
+		});
 	};
 
 	// ログイン
@@ -54,15 +67,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			credentials: 'include',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ email, password }),
-		})
-			.then((res) => {
-				if (res.ok) {
-					setIsAuth(true);
-				}
-				return res.json();
-			})
-			.then((data) => console.log(data))
-			.catch((err) => console.log(err));
+		}).then((res) => {
+			if (res.ok) {
+				setIsAuth(true);
+				dispatchNotification({ severity: 'success', message: 'ログインしました。' });
+			} else {
+				dispatchNotification({ severity: 'error', message: 'ログインに失敗しました。' });
+			}
+
+			return res.json();
+		});
+	};
+
+	const logout = () => {
+		fetch(`${API_URL}/auth/logout`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+		}).then((res) => {
+			if (res.ok) {
+				setIsAuth(false);
+				dispatchNotification({ severity: 'success', message: 'ログアウトしました。' });
+			} else {
+				dispatchNotification({ severity: 'error', message: 'ログアウトに失敗しました。' });
+			}
+			return res.json();
+		});
 	};
 
 	return (
@@ -72,6 +102,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 				isLoading,
 				signUp,
 				login,
+				logout,
 			}}
 		>
 			{children}

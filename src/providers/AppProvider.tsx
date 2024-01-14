@@ -11,9 +11,9 @@ export default function AppProvider(props: AppProviderProps) {
 	return (
 		<SettingProvider>
 			<ThemeProvider>
-				<AuthProvider>
-					<NotificationProvider>{props.children}</NotificationProvider>
-				</AuthProvider>
+				<NotificationProvider>
+					<AuthProvider>{props.children}</AuthProvider>
+				</NotificationProvider>
 			</ThemeProvider>
 		</SettingProvider>
 	);
