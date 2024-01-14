@@ -1,7 +1,10 @@
+import { InformationForm } from '@/components/Forms';
+import { InformationLayout } from '@/components/Layouts';
+
 export default function Information() {
 	return (
-		<div>
-			<h1>Information</h1>
-		</div>
+		<InformationLayout>
+			<InformationForm />
+		</InformationLayout>
 	);
 }
