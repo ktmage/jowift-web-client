@@ -70,7 +70,7 @@ export default function NavigationPanel() {
 				{/* calc( 画面の縦幅 - ( すべてのdividerの高さ + iconを表示するBoxの高さ + Tabの高さ * Tabの数 ) ) */}
 				<Tab
 					disabled
-					sx={{ height: 'calc(100vh - ( 1px + 94px +  60px * 5 ))' }}
+					sx={{ height: 'calc(100vh - ( 1px + 94px +  60px * 4 ))' }}
 				/>
 				{panelItems.sub.map(
 					(

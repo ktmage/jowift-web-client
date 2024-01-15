@@ -1,7 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 import {
 	Account,
-	Information,
+	// Information,
 	Main,
 	NoteCreate,
 	NoteDetail,
@@ -39,10 +39,10 @@ const protectedRoutes: RouteObject[] = [
 				path: '/app/setting',
 				element: <Setting />,
 			},
-			{
-				path: '/app/info',
-				element: <Information />,
-			},
+			// {
+			// 	path: '/app/info',
+			// 	element: <Information />,
+			// },
 		],
 	},
 	{
