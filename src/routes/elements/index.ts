@@ -5,3 +5,4 @@ export { default as TagDetail } from './TagDetail';
 export { default as TagCreate } from './TagCreate';
 export { default as Setting } from './Setting';
 export { default as Account } from './Account';
+export { default as Information } from './Information';

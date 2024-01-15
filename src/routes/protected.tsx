@@ -1,5 +1,14 @@
 import { Navigate, RouteObject } from 'react-router-dom';
-import { Account, Main, NoteCreate, NoteDetail, Setting, TagCreate, TagDetail } from './elements';
+import {
+	Account,
+	// Information,
+	Main,
+	NoteCreate,
+	NoteDetail,
+	Setting,
+	TagCreate,
+	TagDetail,
+} from './elements';
 
 const protectedRoutes: RouteObject[] = [
 	{
@@ -30,10 +39,10 @@ const protectedRoutes: RouteObject[] = [
 				path: '/app/setting',
 				element: <Setting />,
 			},
-			{
-				path: '/app/info',
-				element: <div>info</div>,
-			},
+			// {
+			// 	path: '/app/info',
+			// 	element: <Information />,
+			// },
 		],
 	},
 	{
