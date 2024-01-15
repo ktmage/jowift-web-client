@@ -43,10 +43,5 @@
       "eslint --fix",
       "prettier --write"
     ]
-  },
-  "overrides": {
-    "vite": {
-      "rollup": "npm:@rollup/wasm-node"
-    }
   }
 }
