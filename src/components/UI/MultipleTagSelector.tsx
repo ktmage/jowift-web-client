@@ -27,7 +27,7 @@ export default function MultipleTagSelector(props: MultipleTagSelectorProps) {
 			options={data ? data : []}
 			getOptionLabel={(option) => option.name}
 			value={getTagsFromValues(value)}
-			onChange={(e, value) => setValue(value)}
+			onChange={(_e, value) => setValue(value)}
 			renderInput={(params) => (
 				<TextField
 					{...params}
