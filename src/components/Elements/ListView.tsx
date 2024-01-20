@@ -1,32 +1,55 @@
-import { Box, List, ListItemButton, Tooltip, Typography } from '@mui/material';
+import { Box, Divider, IconButton, List, ListItemButton, Tooltip, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { ListItem } from '@/types';
+import { ListHeaderItem, ListItem } from '@/types';
 import { useOverflowDetect } from '@/hooks';
 
 type ListViewProps = {
 	items: ListItem[];
+	headerItems?: ListHeaderItem[];
 };
 
 export default function ListView(props: ListViewProps) {
 	return (
 		<Box
 			bgcolor={'background.paper'}
-			height={'100%'}
 			display={'flex'}
 			flexDirection={'column'}
-			overflow={'visible'}
-			sx={{
-				overflowX: 'hidden',
-			}}
+			height={'100%'}
 		>
-			<List>
-				{props.items.map((item: ListItem, index: number) => (
-					<ListViewItem
+			<Box
+				display={'flex'}
+				flexDirection={'row-reverse'}
+				padding={1}
+			>
+				{props.headerItems?.map((item: ListHeaderItem, index: number) => (
+					<IconButton
 						key={index}
-						{...item}
-					/>
+						onClick={item.onClick}
+					>
+						{item.icon}
+					</IconButton>
 				))}
-			</List>
+			</Box>
+			<Divider />
+			<Box
+				height={'100%'}
+				display={'flex'}
+				flexGrow={1}
+				flexDirection={'column'}
+				overflow={'visible'}
+				sx={{
+					overflowX: 'hidden',
+				}}
+			>
+				<List>
+					{props.items.map((item: ListItem, index: number) => (
+						<ListViewItem
+							key={index}
+							{...item}
+						/>
+					))}
+				</List>
+			</Box>
 		</Box>
 	);
 }
