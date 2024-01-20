@@ -1,5 +1,7 @@
 import { useNoteList } from '@/hooks';
 import { ListDetailLayout } from '..';
+import { useNavigate } from 'react-router-dom';
+import AddIcon from '@mui/icons-material/Add';
 
 interface NoteLayoutProps {
 	children: React.ReactNode;
@@ -7,6 +9,8 @@ interface NoteLayoutProps {
 
 export default function NoteLayout(props: NoteLayoutProps) {
 	const { data } = useNoteList();
+	const navigate = useNavigate();
+
 	return (
 		<ListDetailLayout
 			items={
@@ -15,6 +19,12 @@ export default function NoteLayout(props: NoteLayoutProps) {
 					to: `/app/note/${note.id}`,
 				})) ?? []
 			}
+			listHeaderItems={[
+				{
+					icon: <AddIcon />,
+					onClick: () => navigate('/app/note'),
+				},
+			]}
 		>
 			{props.children}
 		</ListDetailLayout>
