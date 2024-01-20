@@ -2,11 +2,12 @@ import { ListView } from '@/components/Elements';
 import { useResponsive } from '@/hooks';
 import { Box, ButtonBase } from '@mui/material';
 import { useState } from 'react';
-import { ListItem } from '@/types';
+import { ListHeaderItem, ListItem } from '@/types';
 
 interface ListDetailLayoutProps {
 	items: ListItem[];
 	children: React.ReactNode;
+	listHeaderItems?: ListHeaderItem[];
 }
 
 export default function ListDetailLayout(props: ListDetailLayoutProps) {
@@ -28,7 +29,10 @@ export default function ListDetailLayout(props: ListDetailLayoutProps) {
 					display: isListOpen ? 'block' : 'none',
 				}}
 			>
-				<ListView items={props.items} />
+				<ListView
+					items={props.items}
+					headerItems={props.listHeaderItems}
+				/>
 			</Box>
 			<ButtonBase
 				sx={{
