@@ -2,6 +2,7 @@ export { default as useResponsive } from './useResponsive';
 export { default as useNotification } from './useNotification';
 export { default as useLocalStorage } from './useLocalStorage';
 export { default as useSetting } from './useSetting';
+export { default as useOverflowDetect } from './useOverflowDetect';
 
 export { default as useAuth } from './useAuth';
 
