@@ -10,7 +10,7 @@ interface ListDetailLayoutProps {
 }
 
 export default function ListDetailLayout(props: ListDetailLayoutProps) {
-	const { isMobile, isTablet } = useResponsive();
+	const { isMobile, isTablet, isDesktop } = useResponsive();
 	const [isListOpen, setIsListOpen] = useState<boolean>(true);
 	const toggleListOpen = () => setIsListOpen(!isListOpen);
 
@@ -24,7 +24,7 @@ export default function ListDetailLayout(props: ListDetailLayoutProps) {
 		>
 			<Box
 				sx={{
-					width: '30%',
+					width: isDesktop ? '300px' : isListOpen ? '100%' : '0px',
 					display: isListOpen ? 'block' : 'none',
 				}}
 			>
@@ -41,7 +41,8 @@ export default function ListDetailLayout(props: ListDetailLayoutProps) {
 
 			<Box
 				sx={{
-					flexGrow: 1,
+					flexGrow: isDesktop ? 1 : isListOpen ? 0 : 1,
+					display: isDesktop ? 'block' : isListOpen ? 'none' : 'block',
 				}}
 			>
 				{props.children}
