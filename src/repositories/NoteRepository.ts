@@ -37,12 +37,18 @@ export default class NoteRepository {
 		}
 		const json = await response.json();
 		return json.notes.map(
-			(note: Note) =>
+			// jsonの型をどこかでまとめて定義したい
+			(note: {
+				id: string;
+				title: string;
+				content: string;
+				tags: { tag: { id: string; name: string } }[];
+			}) =>
 				new Note(
 					note.id,
 					note.title,
 					note.content,
-					note.tags.map((tag: Tag) => new Tag(tag.id, tag.name)),
+					note.tags.map((tag) => new Tag(tag.tag.id, tag.tag.name)),
 				),
 		);
 	}
