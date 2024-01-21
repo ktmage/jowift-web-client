@@ -24,14 +24,15 @@ export default function NavigationPanel() {
 					display: isMobile ? 'none' : isTablet ? 'none' : 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
-					paddingY: 4,
+					paddingY: 3,
 				}}
 			>
 				<img
-					src='/vite.svg'
+					// src='/vite.svg'
+					src='/jowift.webp'
 					alt='logo'
-					width={60}
-					height={30}
+					width={45}
+					height={45}
 				/>
 			</Box>
 
@@ -70,7 +71,7 @@ export default function NavigationPanel() {
 				{/* calc( 画面の縦幅 - ( すべてのdividerの高さ + iconを表示するBoxの高さ + Tabの高さ * Tabの数 ) ) */}
 				<Tab
 					disabled
-					sx={{ height: 'calc(100vh - ( 1px + 94px +  60px * 4 ))' }}
+					sx={{ height: 'calc(100vh - ( 1px + 93px +  60px * 4 ))' }}
 				/>
 				{panelItems.sub.map(
 					(
