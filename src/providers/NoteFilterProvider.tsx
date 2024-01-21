@@ -25,6 +25,10 @@ export const NoteFilterProvider = ({ children }: { children: ReactNode }) => {
 
 	useEffect(() => {
 		filterNotesByTagId();
+	}, [data]);
+
+	useEffect(() => {
+		filterNotesByTagId();
 		setIsFiltered(selectedTags.length > 0);
 	}, [selectedTags]);
 
