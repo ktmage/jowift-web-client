@@ -6,3 +6,4 @@ export { default as FormLayout } from './FormLayout';
 export { default as SettingLayout } from './SettingLayout';
 export { default as AccountLayout } from './AccountLayout';
 export { default as InformationLayout } from './InformationLayout';
+export { default as WindowLayout } from './WindowLayout';
