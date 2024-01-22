@@ -6,3 +6,4 @@ export { default as TagCreate } from './TagCreate';
 export { default as Setting } from './Setting';
 export { default as Account } from './Account';
 export { default as Information } from './Information';
+export { default as Auth } from './Auth';
