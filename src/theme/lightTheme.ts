@@ -12,10 +12,15 @@ const lightTheme = createTheme({
 			paper: '#fafaf5',
 		},
 		divider: '#b5b5b0',
-		scrollbar: {
-			idol: '#dddddd',
-			hover: '#cccccc',
-			active: '#e6e6e6',
+		splitter: {
+			idol: '#cccccc',
+			hover: '#dddddd',
+		},
+		text: {
+			primary: '#333333',
+		},
+		action: {
+			active: '#333333',
 		},
 	},
 	breakpoints: {
@@ -36,23 +41,14 @@ const lightTheme = createTheme({
 				},
 				// スクロールバーを描画する範囲
 				'::-webkit-scrollbar': {
-					width: '20px',
+					width: '10px',
 				},
 				// スクロールバーの掴むやつ
 				'::-webkit-scrollbar-thumb': {
-					backgroundColor: '#dddddd',
-					borderRight: '5px solid transparent',
-					borderLeft: '5px solid transparent',
-					borderTop: '5px solid transparent',
-					borderBottom: '5px solid transparent',
-					borderRadius: '10px',
-					backgroundClip: 'padding-box',
-				},
-				'::-webkit-scrollbar-thumb:hover': {
 					backgroundColor: '#cccccc',
 				},
-				'::-webkit-scrollbar-thumb:active': {
-					backgroundColor: '#e6e6e6',
+				'::-webkit-scrollbar-thumb:hover': {
+					backgroundColor: '#dddddd',
 				},
 			},
 		},
@@ -70,6 +66,11 @@ const lightTheme = createTheme({
 						},
 					},
 				},
+			},
+		},
+		MuiButtonBase: {
+			defaultProps: {
+				disableRipple: true,
 			},
 		},
 	},

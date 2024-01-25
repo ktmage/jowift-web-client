@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ListHeaderItem, ListItem } from '@/types';
 
 interface ListDetailLayoutProps {
+	text: string;
 	items: ListItem[];
 	children: React.ReactNode;
 	listHeaderItems?: ListHeaderItem[];
@@ -25,11 +26,14 @@ export default function ListDetailLayout(props: ListDetailLayoutProps) {
 		>
 			<Box
 				sx={{
-					width: isDesktop ? '300px' : isListOpen ? '100%' : '0px',
+					width: isDesktop ? '35%' : isListOpen ? '100%' : '0px',
 					display: isListOpen ? 'block' : 'none',
+					borderRight: '1px solid',
+					borderRightColor: 'divider',
 				}}
 			>
 				<ListView
+					text={props.text}
 					items={props.items}
 					headerItems={props.listHeaderItems}
 				/>
@@ -38,7 +42,10 @@ export default function ListDetailLayout(props: ListDetailLayoutProps) {
 				sx={{
 					height: '100%',
 					width: '20px',
-					bgcolor: 'divider',
+					bgcolor: 'splitter.idol',
+					':hover': {
+						bgcolor: 'splitter.hover',
+					},
 				}}
 				onClick={toggleListOpen}
 			/>
@@ -47,6 +54,8 @@ export default function ListDetailLayout(props: ListDetailLayoutProps) {
 				sx={{
 					flexGrow: isDesktop ? 1 : isListOpen ? 0 : 1,
 					display: isDesktop ? 'block' : isListOpen ? 'none' : 'block',
+					borderLeft: '1px solid',
+					borderLeftColor: 'divider',
 				}}
 			>
 				{props.children}

@@ -4,6 +4,7 @@ import { ListHeaderItem, ListItem } from '@/types';
 import { useOverflowDetect } from '@/hooks';
 
 type ListViewProps = {
+	text: string;
 	items: ListItem[];
 	headerItems?: ListHeaderItem[];
 };
@@ -18,9 +19,28 @@ export default function ListView(props: ListViewProps) {
 		>
 			<Box
 				display={'flex'}
-				flexDirection={'row-reverse'}
-				padding={1}
+				paddingY={1}
+				paddingX={2}
 			>
+				<Box
+					display={'flex'}
+					alignItems={'center'}
+					flexGrow={1}
+					sx={{ overflow: 'hidden' }}
+				>
+					<Typography
+						color={'text.secondary'}
+						variant={'subtitle1'}
+						sx={{
+							fontWeight: 600,
+							overflow: 'hidden',
+							textOverflow: 'ellipsis',
+							whiteSpace: 'nowrap',
+						}}
+					>
+						{props.text}
+					</Typography>
+				</Box>
 				{props.headerItems?.map((item: ListHeaderItem, index: number) => (
 					<IconButton
 						key={index}

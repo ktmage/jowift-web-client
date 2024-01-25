@@ -13,6 +13,7 @@ export default function TagLayout(props: TagLayoutProps) {
 
 	return (
 		<ListDetailLayout
+			text={'タグ一覧'}
 			items={
 				data?.map((tag) => ({
 					text: tag.name,

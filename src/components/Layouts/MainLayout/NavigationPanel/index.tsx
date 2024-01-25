@@ -1,12 +1,37 @@
 import { Box, Divider, Tab, Tabs } from '@mui/material';
-import { useResponsive } from '@/hooks';
+import { useResponsive, useSetting } from '@/hooks';
 import { Link } from 'react-router-dom';
 import { panelItems } from './config';
 import usePanelRouteMatcher from './usePanelRouteMatcher';
+import { LogoSvg } from '@/components/UI';
+import { useEffect, useRef, useState } from 'react';
 
 export default function NavigationPanel() {
 	const currentPanel = usePanelRouteMatcher(panelItems);
 	const { isMobile, isTablet } = useResponsive();
+	const { themeConfig } = useSetting();
+
+	const tagHeight = 60;
+
+	const ref = useRef<HTMLDivElement>(null);
+	const [logoBoxHeight, setLogoBoxHeight] = useState<number>(0);
+
+	useEffect(() => {
+		if (ref.current) {
+			setLogoBoxHeight(ref.current.clientHeight);
+		}
+		console.log(panelItems.main.length);
+	}, [ref]);
+
+	{
+		/* calc( 画面の縦幅 - ( すべてのdividerの高さ + iconを表示するBoxの高さ + Tabの高さ * Tabの数 ) ) */
+	}
+	const CalcTabSpacerHeight = () => {
+		const calc = `calc(100vh - ( 1px + ${logoBoxHeight}px +  ${tagHeight}px * ${
+			panelItems.main.length + panelItems.sub.length
+		} ))`;
+		return calc;
+	};
 
 	return (
 		<Box
@@ -20,6 +45,7 @@ export default function NavigationPanel() {
 		>
 			{/* ロゴ */}
 			<Box
+				ref={ref}
 				sx={{
 					display: isMobile ? 'none' : isTablet ? 'none' : 'flex',
 					alignItems: 'center',
@@ -27,12 +53,11 @@ export default function NavigationPanel() {
 					paddingY: 3,
 				}}
 			>
-				<img
-					// src='/vite.svg'
-					src='/jowift.webp'
-					alt='logo'
-					width={45}
-					height={45}
+				<LogoSvg
+					style={{ width: 45, height: 45 }}
+					color={
+						themeConfig.value === 'light' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.6)'
+					}
 				/>
 			</Box>
 
@@ -51,43 +76,31 @@ export default function NavigationPanel() {
 				}}
 				centered={isMobile ? true : isTablet ? true : false}
 			>
-				{panelItems.main.map(
-					(
-						item,
-						i, // Fix the type of item
-					) => (
-						<Tab
-							key={i}
-							value={item.to}
-							to={item.to}
-							component={Link}
-							icon={<>{item.icon}</>}
-							sx={{ minWidth: 0, height: 60 }}
-						/>
-					),
-				)}
-
-				{/* TODO: ハードコーディングすな。 */}
-				{/* calc( 画面の縦幅 - ( すべてのdividerの高さ + iconを表示するBoxの高さ + Tabの高さ * Tabの数 ) ) */}
+				{panelItems.main.map((item, i) => (
+					<Tab
+						key={i}
+						value={item.to}
+						to={item.to}
+						component={Link}
+						icon={<>{item.icon}</>}
+						sx={{ minWidth: 0, height: tagHeight }}
+					/>
+				))}
+				{/* Tabsの仕様上これが最適？ */}
 				<Tab
 					disabled
-					sx={{ height: 'calc(100vh - ( 1px + 93px +  60px * 4 ))' }}
+					sx={{ height: CalcTabSpacerHeight() }}
 				/>
-				{panelItems.sub.map(
-					(
-						item,
-						i, // Fix the type of item
-					) => (
-						<Tab
-							key={i}
-							value={item.to}
-							to={item.to}
-							component={Link}
-							icon={<>{item.icon}</>}
-							sx={{ minWidth: 0, height: 60 }}
-						/>
-					),
-				)}
+				{panelItems.sub.map((item, i) => (
+					<Tab
+						key={i}
+						value={item.to}
+						to={item.to}
+						component={Link}
+						icon={<>{item.icon}</>}
+						sx={{ minWidth: 0, height: 60 }}
+					/>
+				))}
 			</Tabs>
 		</Box>
 	);

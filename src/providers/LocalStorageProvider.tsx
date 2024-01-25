@@ -6,14 +6,14 @@ interface SettingContextProps {
 		value: 'light' | 'dark';
 		setValue: (value: 'light' | 'dark') => void;
 	};
-	language: {
-		value: 'en' | 'jp';
-		setValue: (value: 'en' | 'jp') => void;
-	};
-	isHappiness: {
-		value: boolean;
-		setValue: (value: boolean) => void;
-	};
+	// language: {
+	// 	value: 'en' | 'jp';
+	// 	setValue: (value: 'en' | 'jp') => void;
+	// };
+	// isHappiness: {
+	// 	value: boolean;
+	// 	setValue: (value: boolean) => void;
+	// };
 }
 
 export const SettingContext = createContext({} as SettingContextProps);
@@ -26,20 +26,20 @@ export const SettingProvider = ({ children }: { children: ReactNode }) => {
 			return value === 'light' || value === 'dark';
 		},
 	);
-	const { value: language, setValue: setLanguage } = useLocalStorage<'en' | 'jp'>(
-		'language',
-		'en',
-		(value) => {
-			return value === 'en' || value === 'jp';
-		},
-	);
-	const { value: isHappiness, setValue: setIsHappiness } = useLocalStorage<boolean>(
-		'isHappiness',
-		false,
-		(value) => {
-			return typeof value === 'boolean';
-		},
-	);
+	// const { value: language, setValue: setLanguage } = useLocalStorage<'en' | 'jp'>(
+	// 	'language',
+	// 	'en',
+	// 	(value) => {
+	// 		return value === 'en' || value === 'jp';
+	// 	},
+	// );
+	// const { value: isHappiness, setValue: setIsHappiness } = useLocalStorage<boolean>(
+	// 	'isHappiness',
+	// 	false,
+	// 	(value) => {
+	// 		return typeof value === 'boolean';
+	// 	},
+	// );
 
 	return (
 		<SettingContext.Provider
@@ -48,14 +48,14 @@ export const SettingProvider = ({ children }: { children: ReactNode }) => {
 					value: theme,
 					setValue: setTheme,
 				},
-				language: {
-					value: language,
-					setValue: setLanguage,
-				},
-				isHappiness: {
-					value: isHappiness,
-					setValue: setIsHappiness,
-				},
+				// language: {
+				// 	value: language,
+				// 	setValue: setLanguage,
+				// },
+				// isHappiness: {
+				// 	value: isHappiness,
+				// 	setValue: setIsHappiness,
+				// },
 			}}
 		>
 			{children}

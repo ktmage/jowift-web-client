@@ -1,11 +1,26 @@
-import { Backdrop, Button, CircularProgress, Divider, Stack, Typography } from '@mui/material';
+import {
+	Backdrop,
+	Box,
+	Button,
+	CircularProgress,
+	Divider,
+	Modal,
+	Paper,
+	Stack,
+	Typography,
+} from '@mui/material';
 import { FormLayout } from '../Layouts';
 import { useAuth, useDeleteUser, useUser } from '@/hooks';
+import { useState } from 'react';
 
 export default function AccountForm() {
 	const { data, isLoading } = useUser();
 	const { deleteUser } = useDeleteUser();
 	const { logout } = useAuth();
+
+	const [open, setOpen] = useState(false);
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
 
 	return (
 		<>
@@ -34,15 +49,59 @@ export default function AccountForm() {
 						variant='outlined'
 						onClick={() => logout()}
 					>
-						Logout
+						ログアウト
 					</Button>
+
 					<Button
 						variant='outlined'
 						color='error'
-						onClick={() => deleteUser()}
+						onClick={handleOpen}
 					>
-						Delete
+						アカウントを削除
 					</Button>
+					<Modal
+						open={open}
+						onClose={handleClose}
+						sx={{
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							height: '100vh',
+							width: '100vw',
+						}}
+					>
+						<Paper
+							sx={{
+								display: 'flex',
+								gap: 2,
+								flexDirection: 'column',
+								alignItems: 'center',
+								width: '50%',
+								bgcolor: 'background.paper',
+								p: 2,
+							}}
+						>
+							<Typography variant='h6'>本当にアカウントを削除しますか？</Typography>
+							<Box
+								display={'flex'}
+								gap={2}
+							>
+								<Button
+									variant='outlined'
+									color='error'
+									onClick={() => deleteUser()}
+								>
+									削除
+								</Button>
+								<Button
+									variant='outlined'
+									onClick={handleClose}
+								>
+									キャンセル
+								</Button>
+							</Box>
+						</Paper>
+					</Modal>
 				</Stack>
 			</FormLayout>
 		</>
