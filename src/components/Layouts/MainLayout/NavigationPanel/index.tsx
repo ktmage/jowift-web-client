@@ -1,12 +1,14 @@
 import { Box, Divider, Tab, Tabs } from '@mui/material';
-import { useResponsive } from '@/hooks';
+import { useResponsive, useSetting } from '@/hooks';
 import { Link } from 'react-router-dom';
 import { panelItems } from './config';
 import usePanelRouteMatcher from './usePanelRouteMatcher';
+import { LogoSvg } from '@/components/UI';
 
 export default function NavigationPanel() {
 	const currentPanel = usePanelRouteMatcher(panelItems);
 	const { isMobile, isTablet } = useResponsive();
+	const { themeConfig } = useSetting();
 
 	return (
 		<Box
@@ -27,12 +29,11 @@ export default function NavigationPanel() {
 					paddingY: 3,
 				}}
 			>
-				<img
-					// src='/vite.svg'
-					src='/jowift.webp'
-					alt='logo'
-					width={45}
-					height={45}
+				<LogoSvg
+					style={{ width: 45, height: 45 }}
+					color={
+						themeConfig.value === 'light' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.6)'
+					}
 				/>
 			</Box>
 
