@@ -15,6 +15,7 @@ export default function NoteLayout(props: NoteLayoutProps) {
 
 	return (
 		<ListDetailLayout
+			text={'ノート一覧'}
 			items={
 				data?.map((note) => ({
 					text: note.title,
