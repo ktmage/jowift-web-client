@@ -1,17 +1,15 @@
 declare module '@mui/material/styles' {
 	interface Palette {
-		scrollbar: {
+		splitter: {
 			idol: string;
 			hover: string;
-			active: string;
 		};
 	}
 
 	interface PaletteOptions {
-		scrollbar?: {
+		splitter?: {
 			idol: string;
 			hover: string;
-			active: string;
 		};
 	}
 }

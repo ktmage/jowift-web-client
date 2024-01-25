@@ -8,13 +8,12 @@ const darkTheme = createTheme({
 			contrastText: '#ffffff',
 		},
 		background: {
-			paper: '#2a2929',
+			paper: '#33333a',
 		},
-		divider: '#191919',
-		scrollbar: {
-			idol: '#dddddd',
-			hover: '#cccccc',
-			active: '#e6e6e6',
+		divider: '#202023',
+		splitter: {
+			idol: '#242426',
+			hover: '#272729',
 		},
 		text: {
 			primary: '#d5d6d6',
@@ -41,23 +40,14 @@ const darkTheme = createTheme({
 				},
 				// スクロールバーを描画する範囲
 				'::-webkit-scrollbar': {
-					width: '20px',
+					width: '10px',
 				},
 				// スクロールバーの掴むやつ
 				'::-webkit-scrollbar-thumb': {
-					backgroundColor: '#191919',
-					borderRight: '5px solid transparent',
-					borderLeft: '5px solid transparent',
-					borderTop: '5px solid transparent',
-					borderBottom: '5px solid transparent',
-					borderRadius: '10px',
-					backgroundClip: 'padding-box',
+					backgroundColor: '#242426',
 				},
 				'::-webkit-scrollbar-thumb:hover': {
-					backgroundColor: '#1b1b1b',
-				},
-				'::-webkit-scrollbar-thumb:active': {
-					backgroundColor: '#1b1b1b',
+					backgroundColor: '#272729',
 				},
 			},
 		},
@@ -75,6 +65,11 @@ const darkTheme = createTheme({
 						},
 					},
 				},
+			},
+		},
+		MuiButtonBase: {
+			defaultProps: {
+				disableRipple: true,
 			},
 		},
 	},
