@@ -68,7 +68,6 @@ export const NoteFilterProvider = ({ children }: { children: ReactNode }) => {
 						setValue={setSelectedTags}
 					/>
 					<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-						<Button onClick={filterNotesByTagId}>絞り込み</Button>
 						<Button
 							onClick={() => setSelectedTags([])}
 							disabled={!isFiltered}
