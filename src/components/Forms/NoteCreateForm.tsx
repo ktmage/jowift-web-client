@@ -20,7 +20,7 @@ export default function NoteCreateForm() {
 	});
 
 	useEffect(() => {
-		setIsChanged(title !== '' || content !== '' || tags.length > 0);
+		setIsChanged(title !== '' && content !== '' && tags.length > 0);
 	}, [title, content, tags]);
 
 	return (
