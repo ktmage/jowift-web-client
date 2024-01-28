@@ -2,7 +2,7 @@ import { FormLayout } from '@/components/Layouts';
 import { usePostNote } from '@/hooks';
 import SaveIcon from '@mui/icons-material/Save';
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MultipleTagSelector } from '../UI';
 import { Tag } from '@/models';
 
@@ -11,11 +11,17 @@ export default function NoteCreateForm() {
 	const [tags, setTags] = useState<Tag[]>([]);
 	const [content, setContent] = useState<string>('');
 
+	const [isChanged, setIsChanged] = useState<boolean>(false);
+
 	const { postNote, isLoading } = usePostNote({
 		title,
 		content,
 		tags,
 	});
+
+	useEffect(() => {
+		setIsChanged(title !== '' || content !== '' || tags.length > 0);
+	}, [title, content, tags]);
 
 	return (
 		<>
@@ -27,7 +33,7 @@ export default function NoteCreateForm() {
 					{
 						icon: <SaveIcon />,
 						onClick: () => postNote(),
-						disabled: isLoading,
+						disabled: isLoading || !isChanged,
 					},
 				]}
 			>
