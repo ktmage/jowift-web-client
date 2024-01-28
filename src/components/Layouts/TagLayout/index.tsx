@@ -1,6 +1,6 @@
 import { ListDetailLayout } from '..';
 import { useTagList } from '@/hooks';
-import { useNavigate } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 
 interface TagLayoutProps {
@@ -10,6 +10,7 @@ interface TagLayoutProps {
 export default function TagLayout(props: TagLayoutProps) {
 	const { data } = useTagList();
 	const navigate = useNavigate();
+	const matchCreate = useMatch('/app/tag/');
 
 	return (
 		<ListDetailLayout
@@ -24,6 +25,7 @@ export default function TagLayout(props: TagLayoutProps) {
 				{
 					icon: <AddIcon />,
 					onClick: () => navigate('/app/tag'),
+					disabled: !!matchCreate,
 				},
 			]}
 		>

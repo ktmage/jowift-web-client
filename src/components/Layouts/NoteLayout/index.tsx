@@ -1,6 +1,6 @@
 import { useNoteFilter } from '@/hooks';
 import { ListDetailLayout } from '..';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useMatch } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
@@ -12,6 +12,7 @@ interface NoteLayoutProps {
 export default function NoteLayout(props: NoteLayoutProps) {
 	const { filteredNotes: data, handleOpen, isFiltered } = useNoteFilter();
 	const navigate = useNavigate();
+	const matchCreate = useMatch('/app/note/');
 
 	return (
 		<ListDetailLayout
@@ -26,6 +27,7 @@ export default function NoteLayout(props: NoteLayoutProps) {
 				{
 					icon: <AddIcon />,
 					onClick: () => navigate('/app/note'),
+					disabled: !!matchCreate,
 				},
 				{
 					icon: isFiltered ? <FilterAltIcon /> : <FilterAltOffIcon />,

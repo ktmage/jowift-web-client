@@ -45,6 +45,7 @@ export default function ListView(props: ListViewProps) {
 					<IconButton
 						key={index}
 						onClick={item.onClick}
+						disabled={item.disabled}
 					>
 						{item.icon}
 					</IconButton>
