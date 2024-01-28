@@ -20,7 +20,6 @@ export default function NavigationPanel() {
 		if (ref.current) {
 			setLogoBoxHeight(ref.current.clientHeight);
 		}
-		console.log(panelItems.main.length);
 	}, [ref]);
 
 	{

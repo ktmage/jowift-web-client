@@ -23,16 +23,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			method: 'GET',
 			mode: 'cors',
 			credentials: 'include',
-		})
-			.then((res) => {
-				if (res.ok) {
-					setIsAuth(true);
-				}
-				setIsLoading(false);
-				return res.json();
-			})
-			.then((data) => console.log(data))
-			.catch((err) => console.log(err));
+		}).then((res) => {
+			if (res.ok) {
+				setIsAuth(true);
+			}
+			setIsLoading(false);
+			return res.json();
+		});
 	}, []);
 
 	// ユーザー登録
