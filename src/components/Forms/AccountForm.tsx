@@ -39,6 +39,7 @@ export default function AccountForm() {
 					<Typography variant='h6'>アカウント情報</Typography>
 					<Typography variant='body1'>ユーザー名: {data?.name}</Typography>
 					<Typography variant='body1'>メールアドレス: {data?.email}</Typography>
+					<Typography variant='body1'>アカウントタイプ: {data?.authMethod}</Typography>
 				</Stack>
 				<Divider />
 				<Stack
