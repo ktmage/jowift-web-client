@@ -1,6 +1,8 @@
 import { useAuth } from '@/hooks';
-import { Box, Button, Stack, Tab, Tabs, TextField } from '@mui/material';
+import { Box, Button, Divider, Stack, Tab, Tabs, TextField } from '@mui/material';
 import { useState } from 'react';
+import GoogleIcon from '@mui/icons-material/Google';
+import { API_URL } from '@/config';
 
 export default function AuthForm() {
 	const [value, setValue] = useState(0);
@@ -55,35 +57,55 @@ const LoginForm = () => {
 				height={'100%'}
 			>
 				<Stack
+					py={2}
 					spacing={2}
-					py={4}
+				>
+					<Stack
+						spacing={2}
+						flexGrow={1}
+					>
+						<TextField
+							type='email'
+							label='Email'
+							variant='outlined'
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+						<TextField
+							type='password'
+							label='Password'
+							variant='outlined'
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+						/>
+					</Stack>
+					<Stack
+						direction={'row-reverse'}
+						spacing={2}
+					>
+						<Button
+							variant='contained'
+							disableElevation
+							onClick={handleClick}
+						>
+							ログイン
+						</Button>
+					</Stack>
+				</Stack>
+				<Divider />
+				<Stack
+					spacing={2}
+					py={2}
 					flexGrow={1}
 				>
-					<TextField
-						type='email'
-						label='Email'
-						variant='outlined'
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-					<TextField
-						type='password'
-						label='Password'
-						variant='outlined'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-				</Stack>
-				<Stack
-					direction={'row-reverse'}
-					spacing={2}
-				>
 					<Button
-						variant='contained'
-						disableElevation
-						onClick={handleClick}
+						variant='outlined'
+						startIcon={<GoogleIcon />}
+						onClick={() => {
+							window.location.href = API_URL + '/auth/google';
+						}}
 					>
-						Login
+						Googleでログイン
 					</Button>
 				</Stack>
 			</Box>
@@ -110,42 +132,61 @@ const SignUpForm = () => {
 				height={'100%'}
 			>
 				<Stack
+					py={2}
 					spacing={2}
-					py={4}
+				>
+					<Stack
+						spacing={2}
+						flexGrow={1}
+					>
+						<TextField
+							label='Name'
+							variant='outlined'
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						/>
+						<TextField
+							type='email'
+							label='Email'
+							variant='outlined'
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+						<TextField
+							type='password'
+							label='Password'
+							variant='outlined'
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+						/>
+					</Stack>
+					<Stack
+						direction={'row-reverse'}
+						spacing={2}
+					>
+						<Button
+							variant='contained'
+							disableElevation
+							onClick={handleClick}
+						>
+							新規登録
+						</Button>
+					</Stack>
+				</Stack>
+				<Divider />
+				<Stack
+					spacing={2}
+					py={2}
 					flexGrow={1}
 				>
-					<TextField
-						type='text'
-						label='Name'
-						variant='outlined'
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-					/>
-					<TextField
-						type='email'
-						label='Email'
-						variant='outlined'
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-					<TextField
-						type='password'
-						label='Password'
-						variant='outlined'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-				</Stack>
-				<Stack
-					direction={'row-reverse'}
-					spacing={2}
-				>
 					<Button
-						variant='contained'
-						disableElevation
-						onClick={handleClick}
+						variant='outlined'
+						startIcon={<GoogleIcon />}
+						onClick={() => {
+							window.location.href = API_URL + '/auth/google';
+						}}
 					>
-						Signup
+						Googleで登録
 					</Button>
 				</Stack>
 			</Box>

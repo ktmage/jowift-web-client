@@ -3,6 +3,7 @@ import { API_URL } from '@/config';
 interface User {
 	name: string;
 	email: string;
+	authMethod: string;
 }
 
 interface IUserRepository {
@@ -27,6 +28,7 @@ const UserRepository: IUserRepository = {
 		const user: User = {
 			name: json.data.username,
 			email: json.data.email,
+			authMethod: json.data.authMethod,
 		};
 		return user;
 	},
