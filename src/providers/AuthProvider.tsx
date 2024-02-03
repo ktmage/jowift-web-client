@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			method: 'GET',
 			mode: 'cors',
 			credentials: 'include',
-			cache: 'no-cache',
+			cache: 'no-store',
 		}).then((res) => {
 			if (res.ok) {
 				setIsAuth(true);
