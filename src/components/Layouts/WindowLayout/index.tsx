@@ -20,7 +20,7 @@ export default function WindowLayout(props: WindowLayoutProps) {
 		>
 			<Paper
 				sx={{
-					width: isDesktop ? '50%' : '90%',
+					width: isDesktop ? '500px' : '90%',
 					bgcolor: 'background.paper',
 					p: 2,
 				}}
