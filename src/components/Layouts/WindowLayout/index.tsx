@@ -6,7 +6,7 @@ interface WindowLayoutProps {
 }
 
 export default function WindowLayout(props: WindowLayoutProps) {
-	const { isDesktop } = useResponsive();
+	const { isDesktop, isTablet } = useResponsive();
 
 	return (
 		<Box
@@ -20,7 +20,7 @@ export default function WindowLayout(props: WindowLayoutProps) {
 		>
 			<Paper
 				sx={{
-					width: isDesktop ? '500px' : '90%',
+					width: isDesktop ? '500px' : isTablet ? '80%' : '90%',
 					bgcolor: 'background.paper',
 					p: 2,
 				}}
