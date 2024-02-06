@@ -41,10 +41,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 	// データを更新する処理
 	const handlePutNote = async () => {
 		await putNote({ title, content, tags });
-		if (!error) {
-			console.log('更新しました');
-			setIsLocked(true);
-		}
+		if (!error) setIsLocked(true);
 	};
 
 	// 参照元のデータと比較して変更があったかどうかを判定、変更があった場合はフラグを立てる。

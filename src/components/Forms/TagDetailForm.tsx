@@ -40,10 +40,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 
 	const handlePutTag = async () => {
 		await putTag(name);
-		if (!error) {
-			console.log('更新しました');
-			setIsLocked(true);
-		}
+		if (!error) setIsLocked(true);
 	};
 
 	return (
