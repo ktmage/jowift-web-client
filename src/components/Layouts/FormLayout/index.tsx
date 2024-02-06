@@ -1,3 +1,4 @@
+import { useResponsive } from '@/hooks';
 import { Box, IconButton, Stack } from '@mui/material';
 
 interface headerItems {
@@ -14,6 +15,7 @@ interface FormLayoutProps {
 
 export default function FormLayout(props: FormLayoutProps) {
 	const { children, disableHeader = false, headerItems } = props;
+	const { isDesktop, isTablet } = useResponsive();
 
 	return (
 		<Box
@@ -41,7 +43,7 @@ export default function FormLayout(props: FormLayoutProps) {
 
 			<Stack
 				spacing={4}
-				paddingX={'15%'}
+				paddingX={isDesktop ? '15%' : isTablet ? '10%' : '5%'}
 				paddingY={8}
 				flexGrow={1}
 				sx={{
