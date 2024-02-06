@@ -16,7 +16,7 @@ interface NoteDetailFormProps {
 
 export default function NoteDetailForm(props: NoteDetailFormProps) {
 	const { data, isLoading: isLoadingGet } = useNote(props.id || '');
-	const { putNote, isLoading: isLoadingPut } = usePutNote(props.id);
+	const { putNote, isLoading: isLoadingPut, error } = usePutNote(props.id);
 	const { deleteNote, isLoading: isLoadingDelete } = useDeleteNote(props.id);
 
 	const [title, setTitle] = useState<string>('');
@@ -38,6 +38,15 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 		initialize();
 	}, [data]);
 
+	// データを更新する処理
+	const handlePutNote = async () => {
+		await putNote({ title, content, tags });
+		if (!error) {
+			console.log('更新しました');
+			setIsLocked(true);
+		}
+	};
+
 	// 参照元のデータと比較して変更があったかどうかを判定、変更があった場合はフラグを立てる。
 	useEffect(() => {
 		const tagsChanged =
@@ -57,7 +66,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 				headerItems={[
 					{
 						icon: <SaveIcon />,
-						onClick: () => putNote({ title, content, tags }),
+						onClick: () => handlePutNote(),
 						disabled: !isChanged,
 					},
 					{
