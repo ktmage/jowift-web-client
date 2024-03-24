@@ -27,7 +27,7 @@ const LoginForm = () => {
 
 	const handleClick = (isGuest: boolean = false) => {
 		if (isGuest) {
-			login('', '');
+			login('guest1@email.com', 'Rp8tNQmh');
 		} else {
 			login(email, password);
 		}
