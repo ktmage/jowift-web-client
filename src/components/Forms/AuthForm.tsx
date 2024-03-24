@@ -74,14 +74,14 @@ const LoginForm = () => {
 							window.location.href = API_URL + '/auth/google';
 						}}
 					>
-						Googleでログイン
+						Googleで続行
 					</Button>
 					<Button
 						variant='outlined'
 						startIcon={<AccountBoxIcon />}
 						onClick={() => handleClick(true)}
 					>
-						ゲストとしてログイン
+						ゲストとして続行
 					</Button>
 				</Stack>
 			</Stack>
