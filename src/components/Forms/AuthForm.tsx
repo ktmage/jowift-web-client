@@ -1,15 +1,11 @@
 import { useAuth } from '@/hooks';
-import { Box, Button, Divider, Stack, Tab, Tabs, TextField } from '@mui/material';
+import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 import GoogleIcon from '@mui/icons-material/Google';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { API_URL } from '@/config';
 
 export default function AuthForm() {
-	const [value, setValue] = useState(0);
-	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-		setValue(newValue);
-	};
-
 	return (
 		<Box
 			sx={{
@@ -18,84 +14,57 @@ export default function AuthForm() {
 				height: '100%',
 			}}
 		>
-			<Tabs
-				value={value}
-				onChange={handleChange}
-			>
-				<Tab
-					label='Login'
-					value={0}
-				/>
-				<Tab
-					label='Signup'
-					value={1}
-				/>
-			</Tabs>
-			<Box flexGrow={1}>
-				{value === 0 && <LoginForm />}
-				{value === 1 && <SignUpForm />}
-			</Box>
+			<LoginForm />
 		</Box>
 	);
 }
 
 const LoginForm = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [email] = useState('');
+	const [password] = useState('');
 
 	const { login } = useAuth();
-	const handleClick = () => {
-		login(email, password);
+
+	const handleClick = (isGuest: boolean = false) => {
+		if (isGuest) {
+			login('guest1@email.com', 'Rp8tNQmh');
+		} else {
+			login(email, password);
+		}
 	};
 
 	return (
 		<>
-			<Box
+			<Stack
 				px={2}
 				display={'flex'}
 				flexDirection={'column'}
 				height={'100%'}
+				spacing={2}
 			>
-				<Stack
-					py={2}
-					spacing={2}
+				<Box
+					display={'flex'}
+					flexDirection={'column'}
+					alignItems={'center'}
+					justifyContent={'center'}
+					height={'150px'}
 				>
-					<Stack
-						spacing={2}
-						flexGrow={1}
+					<img
+						src='jowift.webp'
+						alt='Next.js E-Commerce'
+						style={{ width: 100, height: 100, margin: '0 auto' }}
+					/>
+					<Typography
+						variant='h5'
+						align='center'
 					>
-						<TextField
-							type='email'
-							label='Email'
-							variant='outlined'
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-						<TextField
-							type='password'
-							label='Password'
-							variant='outlined'
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-					</Stack>
-					<Stack
-						direction={'row-reverse'}
-						spacing={2}
-					>
-						<Button
-							variant='contained'
-							disableElevation
-							onClick={handleClick}
-						>
-							ログイン
-						</Button>
-					</Stack>
-				</Stack>
+						Welcome to Jowift
+					</Typography>
+				</Box>
 				<Divider />
 				<Stack
 					spacing={2}
-					py={2}
+					mt={'auto'}
 					flexGrow={1}
 				>
 					<Button
@@ -107,89 +76,15 @@ const LoginForm = () => {
 					>
 						Googleでログイン
 					</Button>
-				</Stack>
-			</Box>
-		</>
-	);
-};
-
-const SignUpForm = () => {
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-
-	const { signUp } = useAuth();
-	const handleClick = () => {
-		signUp(name, email, password);
-	};
-
-	return (
-		<>
-			<Box
-				px={2}
-				display={'flex'}
-				flexDirection={'column'}
-				height={'100%'}
-			>
-				<Stack
-					py={2}
-					spacing={2}
-				>
-					<Stack
-						spacing={2}
-						flexGrow={1}
-					>
-						<TextField
-							label='Name'
-							variant='outlined'
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-						/>
-						<TextField
-							type='email'
-							label='Email'
-							variant='outlined'
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-						<TextField
-							type='password'
-							label='Password'
-							variant='outlined'
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-					</Stack>
-					<Stack
-						direction={'row-reverse'}
-						spacing={2}
-					>
-						<Button
-							variant='contained'
-							disableElevation
-							onClick={handleClick}
-						>
-							新規登録
-						</Button>
-					</Stack>
-				</Stack>
-				<Divider />
-				<Stack
-					spacing={2}
-					py={2}
-					flexGrow={1}
-				>
 					<Button
 						variant='outlined'
-						startIcon={<GoogleIcon />}
-						onClick={() => {
-							window.location.href = API_URL + '/auth/google';
-						}}
+						startIcon={<AccountBoxIcon />}
+						onClick={() => handleClick(true)}
 					>
-						Googleで登録
+						ゲストとしてログイン
 					</Button>
 				</Stack>
-			</Box>
+			</Stack>
 		</>
 	);
 };
