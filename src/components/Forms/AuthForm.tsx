@@ -68,7 +68,8 @@ const LoginForm = () => {
 					flexGrow={1}
 				>
 					<Button
-						variant='outlined'
+						variant='contained'
+						disableElevation
 						startIcon={<GoogleIcon />}
 						onClick={() => {
 							window.location.href = API_URL + '/auth/google';
