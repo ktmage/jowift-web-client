@@ -23,6 +23,10 @@ export default function useUser() {
 				message: '削除に成功しました。',
 			});
 		} catch (e) {
+			dispatchNotification({
+				severity: 'error',
+				message: '削除に失敗しました。',
+			});
 			setError(e as Error);
 		} finally {
 			setIsLoading(false);
