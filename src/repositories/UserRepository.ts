@@ -26,7 +26,7 @@ const UserRepository: IUserRepository = {
 		}
 		const json = await response.json();
 		const user: User = {
-			name: json.data.username,
+			name: json.data.name,
 			email: json.data.email,
 			authMethod: json.data.authMethod,
 		};
