@@ -1,37 +1,38 @@
 import { TagRepository } from '@/repositories';
 import { useState } from 'react';
-import useNotification from '../../useNotification';
-import useTag from './useTag';
+import useNotification from '../useNotification';
 import useTagList from './useTagList';
+import { useNavigate } from 'react-router-dom';
 
-export default function usePutTag(id: string) {
+export default function useDeleteTag(id: string) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 	const tagRepository = new TagRepository();
 	const { dispatchNotification } = useNotification();
 
-	const { mutate: mutateTag } = useTag(id);
 	const { mutate: mutateTagList } = useTagList();
+	const Navigate = useNavigate();
 
+	// 削除の副作用
 	const effect = async () => {
-		await mutateTag();
 		await mutateTagList();
+		Navigate('/app/tag');
 	};
 
-	const putTag = async (name: string) => {
+	const deleteTag = async () => {
 		setIsLoading(true);
 		try {
-			await tagRepository.put(id, name);
+			await tagRepository.delete(id);
 			setError(null);
 			await effect();
 			dispatchNotification({
 				severity: 'success',
-				message: '送信に成功しました。',
+				message: '削除に成功しました。',
 			});
 		} catch (e) {
 			dispatchNotification({
 				severity: 'error',
-				message: '送信に失敗しました。',
+				message: '削除に失敗しました。',
 			});
 			setError(e as Error);
 		} finally {
@@ -39,5 +40,5 @@ export default function usePutTag(id: string) {
 		}
 	};
 
-	return { putTag, isLoading, error };
+	return { deleteTag, isLoading, error };
 }

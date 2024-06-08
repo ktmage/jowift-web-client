@@ -1,29 +1,29 @@
 import { TagRepository } from '@/repositories';
 import { useState } from 'react';
-import useNotification from '../../useNotification';
+import useNotification from '../useNotification';
+import useTag from './useTag';
 import useTagList from './useTagList';
-import { useNavigate } from 'react-router-dom';
 
-export default function usePostTag() {
+export default function usePutTag(id: string) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 	const tagRepository = new TagRepository();
 	const { dispatchNotification } = useNotification();
 
+	const { mutate: mutateTag } = useTag(id);
 	const { mutate: mutateTagList } = useTagList();
-	const Navigate = useNavigate();
 
-	const effect = async (id: string) => {
+	const effect = async () => {
+		await mutateTag();
 		await mutateTagList();
-		Navigate(`/app/tag/${id}`);
 	};
 
-	const postTag = async (name: string) => {
+	const putTag = async (name: string) => {
 		setIsLoading(true);
 		try {
-			const result = await tagRepository.post(name);
+			await tagRepository.put(id, name);
 			setError(null);
-			await effect(result.id);
+			await effect();
 			dispatchNotification({
 				severity: 'success',
 				message: '送信に成功しました。',
@@ -39,5 +39,5 @@ export default function usePostTag() {
 		}
 	};
 
-	return { postTag, isLoading, error };
+	return { putTag, isLoading, error };
 }

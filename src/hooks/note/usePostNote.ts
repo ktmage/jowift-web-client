@@ -1,7 +1,7 @@
 import { Tag } from '@/models';
 import { NoteRepository } from '@/repositories';
 import { useState } from 'react';
-import useNotification from '../../useNotification';
+import useNotification from '../useNotification';
 
 import useNoteList from './useNoteList';
 import { useNavigate } from 'react-router-dom';

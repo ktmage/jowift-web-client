@@ -1,51 +1,38 @@
 import { NoteRepository } from '@/repositories';
 import { useState } from 'react';
-import useNotification from '../../useNotification';
-import useNote from './useNote';
+import useNotification from '../useNotification';
 import useNoteList from './useNoteList';
-import { Tag } from '@/models';
+import { useNavigate } from 'react-router-dom';
 
-export default function usePutNote(id: string) {
+export default function useDeleteNote(id: string) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 	const noteRepository = new NoteRepository();
 	const { dispatchNotification } = useNotification();
 
-	const { mutate: mutateNote } = useNote(id);
 	const { mutate: mutateNoteList } = useNoteList();
+	const Navigate = useNavigate();
 
+	// 削除の副作用
 	const effect = async () => {
-		await mutateNote();
 		await mutateNoteList();
+		Navigate('/app/note');
 	};
 
-	const putNote = async ({
-		title,
-		content,
-		tags,
-	}: {
-		title: string;
-		content: string;
-		tags: Tag[];
-	}) => {
+	const deleteNote = async () => {
 		setIsLoading(true);
 		try {
-			await noteRepository.put(
-				id,
-				title,
-				content,
-				tags.map((tag: Tag) => tag.id),
-			);
+			await noteRepository.delete(id);
 			setError(null);
 			await effect();
 			dispatchNotification({
 				severity: 'success',
-				message: '送信に成功しました。',
+				message: '削除に成功しました。',
 			});
 		} catch (e) {
 			dispatchNotification({
 				severity: 'error',
-				message: '送信に失敗しました。',
+				message: '削除に失敗しました。',
 			});
 			setError(e as Error);
 		} finally {
@@ -53,5 +40,5 @@ export default function usePutNote(id: string) {
 		}
 	};
 
-	return { putNote, isLoading, error };
+	return { deleteNote, isLoading, error };
 }
