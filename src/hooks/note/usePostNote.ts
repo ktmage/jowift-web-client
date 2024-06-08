@@ -1,4 +1,4 @@
-import { Tag } from '@/models';
+import { TagModel } from '@/models';
 import { NoteRepository } from '@/repositories';
 import { useState } from 'react';
 import useNotification from '../useNotification';
@@ -13,7 +13,7 @@ export default function usePostNote({
 }: {
 	title: string;
 	content: string;
-	tags: Tag[];
+	tags: TagModel[];
 }) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
@@ -34,7 +34,7 @@ export default function usePostNote({
 			const result = await noteRepository.post(
 				title,
 				content,
-				tags.map((tag: Tag) => tag.id),
+				tags.map((tag: TagModel) => tag.id),
 			);
 			setError(null);
 			await effect(result.id);

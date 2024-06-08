@@ -3,7 +3,7 @@ import { useState } from 'react';
 import useNotification from '../useNotification';
 import useNote from './useNote';
 import useNoteList from './useNoteList';
-import { Tag } from '@/models';
+import { TagModel } from '@/models';
 
 export default function usePutNote(id: string) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,7 +26,7 @@ export default function usePutNote(id: string) {
 	}: {
 		title: string;
 		content: string;
-		tags: Tag[];
+		tags: TagModel[];
 	}) => {
 		setIsLoading(true);
 		try {
@@ -34,7 +34,7 @@ export default function usePutNote(id: string) {
 				id,
 				title,
 				content,
-				tags.map((tag: Tag) => tag.id),
+				tags.map((tag: TagModel) => tag.id),
 			);
 			setError(null);
 			await effect();

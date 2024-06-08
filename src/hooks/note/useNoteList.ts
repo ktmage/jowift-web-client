@@ -1,5 +1,5 @@
 import { SWR_NOTE_LIST_REFRESH_INTERVAL_MINUTES } from '@/config';
-import { Note } from '@/models';
+import { NoteModel } from '@/models';
 import { NoteRepository } from '@/repositories';
 import CacheKeyGenerator from '@/util/CacheKeyGenerator';
 import useSWR from 'swr';
@@ -7,7 +7,7 @@ import useSWR from 'swr';
 export default function useNoteList() {
 	const repository = new NoteRepository();
 
-	const { data, isLoading, error, mutate } = useSWR<Note[]>(
+	const { data, isLoading, error, mutate } = useSWR<NoteModel[]>(
 		CacheKeyGenerator.generateNoteListKey(),
 		() => repository.getAll(),
 		{

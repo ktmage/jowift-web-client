@@ -1,4 +1,4 @@
-export default class Tag {
+export default class TagModel {
 	private _id: string;
 	get id(): string {
 		return this._id;

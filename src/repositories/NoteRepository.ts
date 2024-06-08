@@ -1,8 +1,8 @@
 import { API_URL } from '@/config';
-import { Note, Tag } from '@/models';
+import { NoteModel, TagModel } from '@/models';
 
 export default class NoteRepository {
-	async get(id: string): Promise<Note> {
+	async get(id: string): Promise<NoteModel> {
 		const response = await fetch(API_URL + '/note/' + id, {
 			method: 'GET',
 			mode: 'cors',
@@ -15,15 +15,15 @@ export default class NoteRepository {
 			throw new Error('Failed to fetch');
 		}
 		const json = await response.json();
-		return new Note(
+		return new NoteModel(
 			json.note.id,
 			json.note.title,
 			json.note.content,
-			json.note.tags.map((tag: { tag: Tag }) => new Tag(tag.tag.id, tag.tag.name)),
+			json.note.tags.map((tag: { tag: TagModel }) => new TagModel(tag.tag.id, tag.tag.name)),
 		);
 	}
 
-	async getAll(): Promise<Note[]> {
+	async getAll(): Promise<NoteModel[]> {
 		const response = await fetch(API_URL + '/note', {
 			method: 'GET',
 			mode: 'cors',
@@ -44,16 +44,16 @@ export default class NoteRepository {
 				content: string;
 				tags: { tag: { id: string; name: string } }[];
 			}) =>
-				new Note(
+				new NoteModel(
 					note.id,
 					note.title,
 					note.content,
-					note.tags.map((tag) => new Tag(tag.tag.id, tag.tag.name)),
+					note.tags.map((tag) => new TagModel(tag.tag.id, tag.tag.name)),
 				),
 		);
 	}
 
-	async post(title: string, content: string, tagIds: string[]): Promise<Note> {
+	async post(title: string, content: string, tagIds: string[]): Promise<NoteModel> {
 		const response = await fetch(API_URL + '/note', {
 			method: 'POST',
 			mode: 'cors',

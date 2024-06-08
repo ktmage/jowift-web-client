@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Note, Tag } from '@/models';
+import { NoteModel, TagModel } from '@/models';
 
-export default function useFilteredNotes(data: Note[] | undefined, selectedTags: Tag[]) {
-	const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
+export default function useFilteredNotes(data: NoteModel[] | undefined, selectedTags: TagModel[]) {
+	const [filteredNotes, setFilteredNotes] = useState<NoteModel[]>([]);
 	const [isFiltered, setIsFiltered] = useState(false);
 
 	useEffect(() => {

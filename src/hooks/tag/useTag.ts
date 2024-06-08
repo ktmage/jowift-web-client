@@ -1,5 +1,5 @@
 import TagRepository from '@/repositories/TagRepository';
-import Tag from '@/models/Tag';
+import { TagModel } from '@/models';
 import useSWR from 'swr';
 import { SWR_TAG_DEDUPING_INTERVAL_MINUTES } from '@/config';
 import CacheKeyGenerator from '@/util/CacheKeyGenerator';
@@ -7,7 +7,7 @@ import CacheKeyGenerator from '@/util/CacheKeyGenerator';
 export default function useTag(id: string) {
 	const tagRepository = new TagRepository();
 
-	const { data, isLoading, error, mutate } = useSWR<Tag>(
+	const { data, isLoading, error, mutate } = useSWR<TagModel>(
 		CacheKeyGenerator.generateTagKey(id),
 		() => tagRepository.get(id),
 		{
