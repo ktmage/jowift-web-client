@@ -1,43 +1,17 @@
 import { TagRepository } from '@/repositories';
-import { useState } from 'react';
-import useNotification from '../useNotification';
-import useTagList from './useTagList';
-import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@/hooks';
+import { TagModel } from '@/models';
 
-export default function usePostTag() {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [error, setError] = useState<Error | null>(null);
+export default function usePostTag(name: string) {
 	const tagRepository = new TagRepository();
-	const { dispatchNotification } = useNotification();
 
-	const { mutate: mutateTagList } = useTagList();
-	const Navigate = useNavigate();
+	const { mutate, isLoading, error } = useMutation<TagModel>(
+		async () => {
+			return await tagRepository.post(name);
+		},
+		'送信に成功しました',
+		'送信に失敗しました',
+	);
 
-	const effect = async (id: string) => {
-		await mutateTagList();
-		Navigate(`/app/tag/${id}`);
-	};
-
-	const postTag = async (name: string) => {
-		setIsLoading(true);
-		try {
-			const result = await tagRepository.post(name);
-			setError(null);
-			await effect(result.id);
-			dispatchNotification({
-				severity: 'success',
-				message: '送信に成功しました。',
-			});
-		} catch (e) {
-			dispatchNotification({
-				severity: 'error',
-				message: '送信に失敗しました。',
-			});
-			setError(e as Error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	return { postTag, isLoading, error };
+	return { postTag: mutate, isLoading, error };
 }

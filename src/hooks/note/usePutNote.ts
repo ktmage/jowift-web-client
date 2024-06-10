@@ -1,57 +1,22 @@
 import { NoteRepository } from '@/repositories';
-import { useState } from 'react';
-import useNotification from '../useNotification';
-import useNote from './useNote';
-import useNoteList from './useNoteList';
 import { TagModel } from '@/models';
+import { useMutation } from '@/hooks';
 
-export default function usePutNote(id: string) {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [error, setError] = useState<Error | null>(null);
+export default function usePutNote(id: string, title: string, content: string, tags: TagModel[]) {
 	const noteRepository = new NoteRepository();
-	const { dispatchNotification } = useNotification();
 
-	const { mutate: mutateNote } = useNote(id);
-	const { mutate: mutateNoteList } = useNoteList();
-
-	const effect = async () => {
-		await mutateNote();
-		await mutateNoteList();
-	};
-
-	const putNote = async ({
-		title,
-		content,
-		tags,
-	}: {
-		title: string;
-		content: string;
-		tags: TagModel[];
-	}) => {
-		setIsLoading(true);
-		try {
-			await noteRepository.put(
+	const { mutate, isLoading, error } = useMutation(
+		async () => {
+			return await noteRepository.put(
 				id,
 				title,
 				content,
 				tags.map((tag: TagModel) => tag.id),
 			);
-			setError(null);
-			await effect();
-			dispatchNotification({
-				severity: 'success',
-				message: '送信に成功しました。',
-			});
-		} catch (e) {
-			dispatchNotification({
-				severity: 'error',
-				message: '送信に失敗しました。',
-			});
-			setError(e as Error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+		},
+		'送信に成功しました',
+		'送信に失敗しました',
+	);
 
-	return { putNote, isLoading, error };
+	return { putNote: mutate, isLoading, error };
 }
