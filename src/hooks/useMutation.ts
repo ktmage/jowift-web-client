@@ -2,11 +2,7 @@
 import { useState } from 'react';
 import useNotification from './useNotification';
 
-export default function useMutation<T>(
-	mutationFunction: () => Promise<T>,
-	successMessage: string,
-	errorMessage: string,
-) {
+export default function useMutation<T>(mutationFunction: () => Promise<T>) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<Error | null>(null);
 	const { dispatchNotification } = useNotification();
@@ -18,14 +14,15 @@ export default function useMutation<T>(
 			setError(null);
 			dispatchNotification({
 				severity: 'success',
-				message: successMessage,
 			});
-		} catch (e) {
-			setError(e as Error);
-			dispatchNotification({
-				severity: 'error',
-				message: errorMessage,
-			});
+		} catch (error) {
+			if (error instanceof Error) {
+				setError(error);
+				dispatchNotification({
+					severity: 'error',
+					message: error.message,
+				});
+			}
 		} finally {
 			setIsLoading(false);
 		}
