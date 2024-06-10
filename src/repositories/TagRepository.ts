@@ -1,8 +1,8 @@
 import { API_URL } from '@/config';
-import Tag from '@/models/Tag';
+import { TagModel } from '@/models';
 
 export default class TagRepository {
-	async get(id: string): Promise<Tag> {
+	async get(id: string): Promise<TagModel> {
 		const response = await fetch(API_URL + '/tag/' + id, {
 			method: 'GET',
 			mode: 'cors',
@@ -11,14 +11,19 @@ export default class TagRepository {
 				'Content-Type': 'application/json',
 			},
 		});
-		if (!response.ok) {
-			throw new Error('Failed to fetch');
-		}
 		const json = await response.json();
-		return new Tag(json.tag.id, json.tag.name);
+		if (!response.ok) {
+			throw new Error(json.message);
+		}
+		return new TagModel({
+			id: json.id,
+			name: json.name,
+			createdAt: json.createdAt,
+			updatedAt: json.updatedAt,
+		});
 	}
 
-	async getAll(): Promise<Tag[]> {
+	async getAll(): Promise<TagModel[]> {
 		const response = await fetch(API_URL + '/tag', {
 			method: 'GET',
 			mode: 'cors',
@@ -27,14 +32,22 @@ export default class TagRepository {
 				'Content-Type': 'application/json',
 			},
 		});
-		if (!response.ok) {
-			throw new Error('Failed to fetch');
-		}
 		const json = await response.json();
-		return json.tags.map((tag: Tag) => new Tag(tag.id, tag.name));
+		if (!response.ok) {
+			throw new Error(json.message);
+		}
+		return json.map(
+			(tag: TagModel) =>
+				new TagModel({
+					id: tag.id,
+					name: tag.name,
+					createdAt: tag.createdAt,
+					updatedAt: tag.updatedAt,
+				}),
+		);
 	}
 
-	async post(name: string): Promise<Tag> {
+	async post(name: string): Promise<TagModel> {
 		const response = await fetch(API_URL + '/tag', {
 			method: 'POST',
 			mode: 'cors',
@@ -44,14 +57,19 @@ export default class TagRepository {
 			},
 			body: JSON.stringify({ name }),
 		});
-		if (!response.ok) {
-			throw new Error('Failed to fetch');
-		}
 		const json = await response.json();
-		return json;
+		if (!response.ok) {
+			throw new Error(json.message);
+		}
+		return new TagModel({
+			id: json.id,
+			name: json.name,
+			createdAt: json.createdAt,
+			updatedAt: json.updatedAt,
+		});
 	}
 
-	async put(id: string, name: string): Promise<void> {
+	async put(id: string, name: string): Promise<TagModel> {
 		const response = await fetch(API_URL + '/tag/' + id, {
 			method: 'PUT',
 			mode: 'cors',
@@ -61,12 +79,19 @@ export default class TagRepository {
 			},
 			body: JSON.stringify({ name }),
 		});
+		const json = await response.json();
 		if (!response.ok) {
-			throw new Error('Failed to fetch');
+			throw new Error(json.message);
 		}
+		return new TagModel({
+			id: json.id,
+			name: json.name,
+			createdAt: json.createdAt,
+			updatedAt: json.updatedAt,
+		});
 	}
 
-	async delete(id: string): Promise<void> {
+	async delete(id: string): Promise<string> {
 		const response = await fetch(API_URL + '/tag/' + id, {
 			method: 'DELETE',
 			mode: 'cors',
@@ -75,8 +100,10 @@ export default class TagRepository {
 				'Content-Type': 'application/json',
 			},
 		});
+		const json = await response.json();
 		if (!response.ok) {
-			throw new Error('Failed to fetch');
+			throw new Error(json.message);
 		}
+		return json.id;
 	}
 }

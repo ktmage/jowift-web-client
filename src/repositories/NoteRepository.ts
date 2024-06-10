@@ -11,16 +11,26 @@ export default class NoteRepository {
 				'Content-Type': 'application/json',
 			},
 		});
-		if (!response.ok) {
-			throw new Error('Failed to fetch');
-		}
 		const json = await response.json();
-		return new NoteModel(
-			json.note.id,
-			json.note.title,
-			json.note.content,
-			json.note.tags.map((tag: { tag: TagModel }) => new TagModel(tag.tag.id, tag.tag.name)),
-		);
+		if (!response.ok) {
+			throw new Error(json.message);
+		}
+		return new NoteModel({
+			id: json.id,
+			title: json.title,
+			content: json.content,
+			tags: json.tags.map(
+				(tag: TagModel) =>
+					new TagModel({
+						id: tag.id,
+						name: tag.name,
+						createdAt: tag.createdAt,
+						updatedAt: tag.updatedAt,
+					}),
+			),
+			createdAt: json.createdAt,
+			updatedAt: json.updatedAt,
+		});
 	}
 
 	async getAll(): Promise<NoteModel[]> {
@@ -32,24 +42,28 @@ export default class NoteRepository {
 				'Content-Type': 'application/json',
 			},
 		});
-		if (!response.ok) {
-			throw new Error('Failed to fetch');
-		}
 		const json = await response.json();
-		return json.notes.map(
-			// jsonの型をどこかでまとめて定義したい
-			(note: {
-				id: string;
-				title: string;
-				content: string;
-				tags: { tag: { id: string; name: string } }[];
-			}) =>
-				new NoteModel(
-					note.id,
-					note.title,
-					note.content,
-					note.tags.map((tag) => new TagModel(tag.tag.id, tag.tag.name)),
-				),
+		if (!response.ok) {
+			throw new Error(json.message);
+		}
+		return json.map(
+			(note: NoteModel) =>
+				new NoteModel({
+					id: note.id,
+					title: note.title,
+					content: note.content,
+					tags: note.tags.map(
+						(tag: TagModel) =>
+							new TagModel({
+								id: tag.id,
+								name: tag.name,
+								createdAt: tag.createdAt,
+								updatedAt: tag.updatedAt,
+							}),
+					),
+					createdAt: note.createdAt,
+					updatedAt: note.updatedAt,
+				}),
 		);
 	}
 
@@ -67,14 +81,29 @@ export default class NoteRepository {
 				tagId: tagIds,
 			}),
 		});
-		if (!response.ok) {
-			throw new Error('Failed to fetch');
-		}
 		const json = await response.json();
-		return json;
+		if (!response.ok) {
+			throw new Error(json.message);
+		}
+		return new NoteModel({
+			id: json.id,
+			title: json.title,
+			content: json.content,
+			tags: json.tags.map(
+				(tag: TagModel) =>
+					new TagModel({
+						id: tag.id,
+						name: tag.name,
+						createdAt: tag.createdAt,
+						updatedAt: tag.updatedAt,
+					}),
+			),
+			createdAt: json.createdAt,
+			updatedAt: json.updatedAt,
+		});
 	}
 
-	async put(id: string, title: string, content: string, tagIds: string[]): Promise<void> {
+	async put(id: string, title: string, content: string, tagIds: string[]): Promise<NoteModel> {
 		const response = await fetch(API_URL + '/note/' + id, {
 			method: 'PUT',
 			mode: 'cors',
@@ -84,12 +113,29 @@ export default class NoteRepository {
 			},
 			body: JSON.stringify({ title, content, tagId: tagIds }),
 		});
+		const json = await response.json();
 		if (!response.ok) {
 			throw new Error('Failed to fetch');
 		}
+		return new NoteModel({
+			id: json.id,
+			title: json.title,
+			content: json.content,
+			tags: json.tags.map(
+				(tag: TagModel) =>
+					new TagModel({
+						id: tag.id,
+						name: tag.name,
+						createdAt: tag.createdAt,
+						updatedAt: tag.updatedAt,
+					}),
+			),
+			createdAt: json.createdAt,
+			updatedAt: json.updatedAt,
+		});
 	}
 
-	async delete(id: string): Promise<void> {
+	async delete(id: string): Promise<string> {
 		const response = await fetch(API_URL + '/note/' + id, {
 			method: 'DELETE',
 			mode: 'cors',
@@ -98,8 +144,10 @@ export default class NoteRepository {
 				'Content-Type': 'application/json',
 			},
 		});
+		const json = await response.json();
 		if (!response.ok) {
-			throw new Error('Failed to fetch');
+			throw new Error(json.message);
 		}
+		return json.id;
 	}
 }
