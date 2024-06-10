@@ -7,14 +7,11 @@ export default function useNote(id: string) {
 	const noteRepository = new NoteRepository();
 
 	const { data, isLoading, error, mutate } = useDataFetcher<NoteModel>(
+		CacheKeyGenerator.generateNoteKey(id),
+		() => noteRepository.get(id),
 		{
-			key: CacheKeyGenerator.generateNoteKey(id),
-			fetcher: () => noteRepository.get(id),
-			options: {
-				dedupingInterval: 1000 * 60 * 5,
-			},
+			dedupingInterval: 1000 * 60 * 5,
 		},
-		'ノートの取得に失敗しました',
 	);
 
 	return { data, isLoading, error, mutate };

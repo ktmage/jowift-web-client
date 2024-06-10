@@ -8,14 +8,11 @@ export default function useTag(id: string) {
 	const tagRepository = new TagRepository();
 
 	const { data, isLoading, error, mutate } = useDataFetcher<TagModel>(
+		CacheKeyGenerator.generateTagKey(id),
+		() => tagRepository.get(id),
 		{
-			key: CacheKeyGenerator.generateTagKey(id),
-			fetcher: () => tagRepository.get(id),
-			options: {
-				dedupingInterval: 1000 * 60 * SWR_TAG_DEDUPING_INTERVAL_MINUTES,
-			},
+			dedupingInterval: 1000 * 60 * SWR_TAG_DEDUPING_INTERVAL_MINUTES,
 		},
-		'タグの取得に失敗しました',
 	);
 
 	return { data, isLoading, error, mutate };

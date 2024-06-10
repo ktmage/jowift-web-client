@@ -8,14 +8,11 @@ export default function useTagList() {
 	const tagRepository = new TagRepository();
 
 	const { data, isLoading, error, mutate } = useDataFetcher<TagModel[]>(
+		CacheKeyGenerator.generateTagListKey(),
+		() => tagRepository.getAll(),
 		{
-			key: CacheKeyGenerator.generateTagListKey(),
-			fetcher: () => tagRepository.getAll(),
-			options: {
-				dedupingInterval: 1000 * 60 * SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES,
-			},
+			dedupingInterval: 1000 * 60 * SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES,
 		},
-		'タグ一覧の取得に失敗しました',
 	);
 
 	return { data, isLoading, error, mutate };
