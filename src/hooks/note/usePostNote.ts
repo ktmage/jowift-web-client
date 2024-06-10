@@ -1,11 +1,11 @@
 import { NoteModel, TagModel } from '@/models';
 import { NoteRepository } from '@/repositories';
-import useMutation from '../useMutation';
+import { useMutation } from '@/hooks';
 
 export default function usePostNote(title: string, content: string, tagIds: TagModel[]) {
 	const noteRepository = new NoteRepository();
 
-	const { mutate, isLoading, error } = useMutation<NoteModel>(async () => {
+	const { data, mutate, isLoading, error } = useMutation<NoteModel>(async () => {
 		return await noteRepository.post(
 			title,
 			content,
@@ -13,5 +13,5 @@ export default function usePostNote(title: string, content: string, tagIds: TagM
 		);
 	});
 
-	return { postNote: mutate, isLoading, error };
+	return { createdNote: data, postNote: mutate, isLoading, error };
 }

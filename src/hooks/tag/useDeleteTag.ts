@@ -4,9 +4,9 @@ import { useMutation } from '@/hooks';
 export default function useDeleteTag(id: string) {
 	const tagRepository = new TagRepository();
 
-	const { mutate, isLoading, error } = useMutation<void>(async () => {
+	const { data, mutate, isLoading, error } = useMutation<string>(async () => {
 		return await tagRepository.delete(id);
 	});
 
-	return { deleteTag: mutate, isLoading, error };
+	return { deletedTagId: data, deleteTag: mutate, isLoading, error };
 }

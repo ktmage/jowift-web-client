@@ -1,11 +1,11 @@
 import { NoteRepository } from '@/repositories';
-import { TagModel } from '@/models';
+import { NoteModel, TagModel } from '@/models';
 import { useMutation } from '@/hooks';
 
 export default function usePutNote(id: string, title: string, content: string, tags: TagModel[]) {
 	const noteRepository = new NoteRepository();
 
-	const { mutate, isLoading, error } = useMutation(async () => {
+	const { data, mutate, isLoading, error } = useMutation<NoteModel>(async () => {
 		return await noteRepository.put(
 			id,
 			title,
@@ -14,5 +14,5 @@ export default function usePutNote(id: string, title: string, content: string, t
 		);
 	});
 
-	return { putNote: mutate, isLoading, error };
+	return { updatedNote: data, putNote: mutate, isLoading, error };
 }

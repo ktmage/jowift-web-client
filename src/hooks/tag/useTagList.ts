@@ -1,7 +1,7 @@
-import TagRepository from '@/repositories/TagRepository';
+import { TagRepository } from '@/repositories';
 import { TagModel } from '@/models';
 import { SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES } from '@/config';
-import CacheKeyGenerator from '@/util/CacheKeyGenerator';
+import { CacheKeyGenerator } from '@/util';
 import { useDataFetcher } from '@/hooks';
 
 export default function useTagList() {
@@ -15,5 +15,5 @@ export default function useTagList() {
 		},
 	);
 
-	return { data, isLoading, error, mutate };
+	return { tagList: data, isLoading, error, mutateTagList: mutate };
 }

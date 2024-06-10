@@ -4,9 +4,9 @@ import { useMutation } from '@/hooks';
 export default function useDeleteNote(id: string) {
 	const noteRepository = new NoteRepository();
 
-	const { mutate, isLoading, error } = useMutation<void>(async () => {
+	const { data, mutate, isLoading, error } = useMutation<string>(async () => {
 		return await noteRepository.delete(id);
 	});
 
-	return { deleteNote: mutate, isLoading, error };
+	return { deletedNoteId: data, deleteNote: mutate, isLoading, error };
 }
