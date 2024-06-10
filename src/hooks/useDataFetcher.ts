@@ -3,14 +3,12 @@ import useSWR, { Fetcher, SWRConfiguration } from 'swr';
 import useNotification from './useNotification';
 import { useEffect, useState } from 'react';
 
-interface SWR<T> {
-	key: string | null;
-	fetcher: Fetcher<T>;
-	options?: Partial<SWRConfiguration<T, Error>>;
-}
-
-export default function useDataFetcher<T>(swr: SWR<T>, errorMessage: string) {
-	const { data, error, isLoading, mutate } = useSWR<T>(swr.key, swr.fetcher);
+export default function useDataFetcher<T>(
+	key: string | null,
+	fetcher: Fetcher<T>,
+	options?: Partial<SWRConfiguration<T, Error>>,
+) {
+	const { data, error, isLoading, mutate } = useSWR<T>(key, fetcher, options);
 	const { dispatchNotification } = useNotification();
 	const [notified, setNotified] = useState(false);
 
@@ -18,14 +16,14 @@ export default function useDataFetcher<T>(swr: SWR<T>, errorMessage: string) {
 		if (error && !notified) {
 			dispatchNotification({
 				severity: 'error',
-				message: errorMessage,
+				message: error.message,
 			});
 			setNotified(true);
 		}
 		if (!error && notified) {
 			setNotified(false);
 		}
-	}, [error, dispatchNotification, errorMessage, notified]);
+	}, [error, dispatchNotification, notified]);
 
 	return { data, error, isLoading, mutate };
 }
