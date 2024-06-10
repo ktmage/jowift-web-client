@@ -5,12 +5,13 @@ import useNotification from './useNotification';
 export default function useMutation<T>(mutationFunction: () => Promise<T>) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<Error | null>(null);
+	const [data, setData] = useState<T | null>(null);
 	const { dispatchNotification } = useNotification();
 
 	const mutate = async () => {
 		setIsLoading(true);
 		try {
-			await mutationFunction();
+			setData(await mutationFunction());
 			setError(null);
 			dispatchNotification({
 				severity: 'success',
@@ -28,5 +29,5 @@ export default function useMutation<T>(mutationFunction: () => Promise<T>) {
 		}
 	};
 
-	return { mutate, isLoading, error };
+	return { data, mutate, isLoading, error };
 }
