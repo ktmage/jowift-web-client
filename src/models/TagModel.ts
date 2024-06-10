@@ -9,9 +9,32 @@ export default class TagModel {
 		return this._name;
 	}
 
-	constructor(id: string, name: string) {
+	private _createdAt: string;
+	get createdAt(): string {
+		return this._createdAt;
+	}
+
+	private _updatedAt: string;
+	get updatedAt(): string {
+		return this._updatedAt;
+	}
+
+	constructor({
+		id,
+		name,
+		createdAt,
+		updatedAt,
+	}: {
+		id: string;
+		name: string;
+		createdAt: string;
+		updatedAt: string;
+	}) {
 		this._id = id;
 		this._name = name;
+		// TODO: 日時はDate型に変換したい
+		this._createdAt = createdAt;
+		this._updatedAt = updatedAt;
 	}
 
 	updateName(name: string) {
