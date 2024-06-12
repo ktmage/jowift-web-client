@@ -4,19 +4,23 @@ import SaveIcon from '@mui/icons-material/Save';
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { MultipleTagSelector } from '../UI';
-import { Tag } from '@/models';
+import { TagModel } from '@/models';
+import { useNavigate } from 'react-router-dom';
 
 export default function NoteCreateForm() {
+	const navigate = useNavigate();
+
 	const [title, setTitle] = useState<string>('');
-	const [tags, setTags] = useState<Tag[]>([]);
+	const [tags, setTags] = useState<TagModel[]>([]);
 	const [content, setContent] = useState<string>('');
 
 	const [isChanged, setIsChanged] = useState<boolean>(false);
 
-	const { postNote, isLoading } = usePostNote({
-		title,
-		content,
-		tags,
+	const { postNote, isLoading } = usePostNote(title, content, tags, {
+		onSuccess(createdNote) {
+			// 作成に成功した場合、作成したNoteの詳細ページに遷移
+			navigate(`/app/note/${createdNote.id}`);
+		},
 	});
 
 	useEffect(() => {

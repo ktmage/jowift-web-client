@@ -1,58 +1,71 @@
-import { FormLayout } from '../Layouts';
+import { Backdrop, CircularProgress, TextField } from '@mui/material';
+import { FormLayout } from '@/components/Layouts';
 import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import AutorenewIcon from '@mui/icons-material/Autorenew';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Backdrop, CircularProgress, TextField } from '@mui/material';
+import { MultipleTagSelector } from '@/components/UI';
 import { useEffect, useState } from 'react';
-import { useDeleteNote, useNote, usePutNote } from '@/hooks';
-import { Tag } from '@/models';
-import { MultipleTagSelector } from '../UI';
+import { TagModel } from '@/models';
+import { useCachedNote, useDeleteNote, usePutNote } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
 
 interface NoteDetailFormProps {
 	id: string;
 }
 
 export default function NoteDetailForm(props: NoteDetailFormProps) {
-	const { data, isLoading: isLoadingGet } = useNote(props.id || '');
-	const { putNote, isLoading: isLoadingPut, error } = usePutNote(props.id);
-	const { deleteNote, isLoading: isLoadingDelete } = useDeleteNote(props.id);
+	const navigate = useNavigate();
+
+	// ノートの取得
+	const { note, isLoading: isLoadingGet } = useCachedNote(props.id);
 
 	const [title, setTitle] = useState<string>('');
-	const [tags, setTags] = useState<Tag[]>([]);
 	const [content, setContent] = useState<string>('');
+	const [tags, setTags] = useState<TagModel[]>([]);
 
+	// 取得したNoteListから該当するNoteのデータを取得
+	useEffect(() => {
+		setTitle(note?.title || '');
+		setContent(note?.content || '');
+		setTags(note?.tags || []);
+	}, [note, props.id]);
+
+	// ----------------------------------------------------------------------------------------------------
+
+	// ロック状態
 	const [isLocked, setIsLocked] = useState<boolean>(true);
+
+	const { deleteNote, isLoading: isLoadingDelete } = useDeleteNote(props.id, {
+		onSuccess: () => {
+			// 削除に成功した場合、一覧ページに遷移
+			navigate('/app/note');
+		},
+	});
+
+	// ----------------------------------------------------------------------------------------------------
+
+	// 元の状態から変更されているかどうか
 	const [isChanged, setIsChanged] = useState<boolean>(false);
 
-	// 初期化処理
-	const initialize = () => {
-		setTitle(data?.title || '');
-		setTags(data?.tags.map((tag) => tag) || []);
-		setContent(data?.content || '');
-	};
-
-	// dataが変更されたら初期化処理を実行
+	// 変更されたかどうかを判定
 	useEffect(() => {
-		initialize();
-	}, [data]);
+		if (note) {
+			setIsChanged(
+				title !== note.title ||
+					content !== note.content ||
+					tags.length !== note.tags.length ||
+					tags.some((tag: TagModel, index: number) => tag.id !== note.tags[index].id),
+			);
+		}
+	}, [note, title, content, tags, props.id]);
 
-	// データを更新する処理
-	const handlePutNote = async () => {
-		await putNote({ title, content, tags });
-		if (!error) setIsLocked(true);
-	};
-
-	// 参照元のデータと比較して変更があったかどうかを判定、変更があった場合はフラグを立てる。
-	useEffect(() => {
-		const tagsChanged =
-			JSON.stringify(data?.tags.map((tag) => tag.name)) !==
-			JSON.stringify(tags.map((tag) => tag.name));
-		const titleChanged = data?.title !== title;
-		const contentChanged = data?.content !== content;
-		setIsChanged(tagsChanged || titleChanged || contentChanged);
-	}, [title, tags, content, data?.title, data?.tags, data?.content]);
+	const { putNote, isLoading: isLoadingPut } = usePutNote(props.id, title, content, tags, {
+		onSuccess: () => {
+			// 更新に成功した場合、編集ロック状態にする
+			setIsLocked(true);
+		},
+	});
 
 	return (
 		<>
@@ -63,13 +76,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 				headerItems={[
 					{
 						icon: <SaveIcon />,
-						onClick: () => handlePutNote(),
-						disabled: !isChanged,
-					},
-					{
-						// 任意のタイミングで初期化処理を実行
-						icon: <AutorenewIcon />,
-						onClick: () => initialize(),
+						onClick: () => putNote(),
 						disabled: !isChanged,
 					},
 					{
@@ -87,12 +94,12 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 						sx: { fontSize: '1.5rem', fontWeight: 'bold' },
 						readOnly: isLocked,
 					}}
-					value={title}
-					placeholder={data ? 'タイトル' : ''}
+					value={title || ''}
+					placeholder={title ? 'タイトル' : ''}
 					onChange={(e) => setTitle(e.target.value)}
 				/>
 				<MultipleTagSelector
-					value={tags}
+					value={tags || []}
 					setValue={setTags}
 					readonly={isLocked}
 				/>
@@ -100,7 +107,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 					inputProps={{ readOnly: isLocked }}
 					multiline
 					value={content}
-					placeholder={data ? '内容' : ''}
+					placeholder={content ? '内容' : ''}
 					onChange={(e) => setContent(e.target.value)}
 				/>
 			</FormLayout>
