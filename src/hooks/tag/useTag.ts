@@ -1,13 +1,13 @@
-import TagRepository from '@/repositories/TagRepository';
-import Tag from '@/models/Tag';
-import useSWR from 'swr';
+import { TagRepository } from '@/repositories';
+import { TagModel } from '@/models';
 import { SWR_TAG_DEDUPING_INTERVAL_MINUTES } from '@/config';
-import CacheKeyGenerator from '@/util/CacheKeyGenerator';
+import { CacheKeyGenerator } from '@/util';
+import { useDataFetcher } from '@/hooks';
 
 export default function useTag(id: string) {
 	const tagRepository = new TagRepository();
 
-	const { data, isLoading, error, mutate } = useSWR<Tag>(
+	const { data, isLoading, error, mutate } = useDataFetcher<TagModel>(
 		CacheKeyGenerator.generateTagKey(id),
 		() => tagRepository.get(id),
 		{
@@ -15,5 +15,5 @@ export default function useTag(id: string) {
 		},
 	);
 
-	return { data, isLoading, error, mutate };
+	return { tag: data, isLoading, error, mutateTag: mutate };
 }

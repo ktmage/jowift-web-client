@@ -1,2 +1,3 @@
-export { default as Tag } from './Tag';
-export { default as Note } from './Note';
+export { default as TagModel } from './TagModel';
+export { default as NoteModel } from './NoteModel';
+export { default as UserModel } from './UserModel';

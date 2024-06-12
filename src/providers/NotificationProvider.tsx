@@ -3,7 +3,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react';
 
 interface Notification {
 	severity: 'success' | 'info' | 'warning' | 'error';
-	message: string;
+	message?: string;
 }
 
 interface NotificationContextProps {
@@ -44,7 +44,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
 						key={index}
 						elevation={6}
 					>
-						{notification.message}
+						{notification.message ? notification.message : notification.severity}
 					</Alert>
 				))}
 			</Stack>
