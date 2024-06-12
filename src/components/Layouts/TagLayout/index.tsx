@@ -8,7 +8,7 @@ interface TagLayoutProps {
 }
 
 export default function TagLayout(props: TagLayoutProps) {
-	const { data } = useTagList();
+	const { tagList } = useTagList();
 	const navigate = useNavigate();
 	const matchCreate = useMatch('/app/tag/');
 
@@ -16,9 +16,9 @@ export default function TagLayout(props: TagLayoutProps) {
 		<ListDetailLayout
 			text={'タグ一覧'}
 			items={
-				data?.map((tag) => ({
-					text: tag.name,
-					to: `/app/tag/${tag.id}`,
+				tagList?.map((item) => ({
+					text: item.name,
+					to: `/app/tag/${item.id}`,
 				})) ?? []
 			}
 			listHeaderItems={[

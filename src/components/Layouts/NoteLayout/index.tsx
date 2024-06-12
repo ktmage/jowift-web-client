@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import { useState } from 'react';
-import { Tag } from '@/models';
+import { TagModel } from '@/models';
 import { Box, Button, Modal, Stack } from '@mui/material';
 import { MultipleTagSelector } from '@/components/UI';
 
@@ -15,9 +15,9 @@ interface NoteLayoutProps {
 
 export default function NoteLayout(props: NoteLayoutProps) {
 	const { isDesktop } = useResponsive();
-	const { data } = useNoteList();
-	const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
-	const { filteredNotes, isFiltered } = useFilteredNotes(data, selectedTags);
+	const { noteList } = useNoteList();
+	const [selectedTags, setSelectedTags] = useState<TagModel[]>([]);
+	const { filteredNotes, isFiltered } = useFilteredNotes(noteList, selectedTags);
 
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
