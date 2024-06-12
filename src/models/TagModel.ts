@@ -37,7 +37,7 @@ export default class TagModel {
 		this._updatedAt = updatedAt;
 	}
 
-	updateName(name: string) {
-		this._name = name;
-	}
+	// updateName(name: string) {
+	// 	this._name = name;
+	// }
 }
