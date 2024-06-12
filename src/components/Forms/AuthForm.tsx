@@ -1,6 +1,6 @@
 // import { useAuth } from '@/hooks';
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+// import { useState } from 'react';
 import GoogleIcon from '@mui/icons-material/Google';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { API_URL } from '@/config';
@@ -21,19 +21,20 @@ export default function AuthForm() {
 }
 
 const LoginForm = () => {
-	const [email] = useState('');
-	const [password] = useState('');
+	// const [email] = useState('');
+	// const [password] = useState('');
 
-	const { login } = useLogin(email, password);
-	const { login: guestLogin } = useLogin('guest1@email.com', 'Rp8tNQmh');
+	// const { login } = useLogin(email, password, {
+	//     onSuccess: () => {
+	//         navigate('/app/note');
+	//     }
+	// });
 
-	const handleClick = (isGuest: boolean = false) => {
-		if (isGuest) {
-			guestLogin();
-		} else {
-			login();
-		}
-	};
+	const { login: guestLogin } = useLogin('guest1@email.com', 'Rp8tNQmh', {
+		onSuccess: () => {
+			window.location.reload();
+		},
+	});
 
 	return (
 		<>
@@ -82,7 +83,7 @@ const LoginForm = () => {
 					<Button
 						variant='outlined'
 						startIcon={<AccountBoxIcon />}
-						onClick={() => handleClick(true)}
+						onClick={guestLogin}
 					>
 						ゲストとして続行
 					</Button>
