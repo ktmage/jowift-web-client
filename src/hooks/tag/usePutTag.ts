@@ -1,13 +1,37 @@
 import { TagRepository } from '@/repositories';
-import { useMutation } from '@/hooks';
+import { useMutation, useTagList } from '@/hooks';
 import { TagModel } from '@/models';
+import { MutationOptions } from '@/types';
 
-export default function usePutTag(id: string, name: string) {
+export default function usePutTag(
+	id: string,
+	name: string,
+	options: MutationOptions<TagModel> = {},
+) {
 	const tagRepository = new TagRepository();
+	const { tagList, mutateTagList } = useTagList();
 
-	const { data, mutate, isLoading, error } = useMutation<TagModel>(async () => {
-		return await tagRepository.put(id, name);
-	});
+	const { mutate, isLoading, error } = useMutation<TagModel>(
+		async () => {
+			return await tagRepository.put(id, name);
+		},
+		{
+			...options,
+			onSuccess: (updatedTag: TagModel) => {
+				// 更新に成功した場合
+				// TagList(キャッシュ)の該当するTagを更新 サーバー側と同期する。
+				const newTagList = tagList?.map((tag: TagModel) => {
+					if (tag.id === id) {
+						return updatedTag;
+					}
+					return tag;
+				});
+				mutateTagList(newTagList, false);
 
-	return { updatedTag: data, putTag: mutate, isLoading, error };
+				options.onSuccess?.(updatedTag);
+			},
+		},
+	);
+
+	return { putTag: mutate, isLoading, error };
 }

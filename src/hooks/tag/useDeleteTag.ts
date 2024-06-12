@@ -1,12 +1,27 @@
 import { TagRepository } from '@/repositories';
-import { useMutation } from '@/hooks';
+import { useMutation, useTagList } from '@/hooks';
+import { MutationOptions } from '@/types';
 
-export default function useDeleteTag(id: string) {
+export default function useDeleteTag(id: string, options: MutationOptions<string> = {}) {
 	const tagRepository = new TagRepository();
+	const { tagList, mutateTagList } = useTagList();
 
-	const { data, mutate, isLoading, error } = useMutation<string>(async () => {
-		return await tagRepository.delete(id);
-	});
+	const { mutate, isLoading, error } = useMutation<string>(
+		async () => {
+			return await tagRepository.delete(id);
+		},
+		{
+			...options,
+			onSuccess: (deletedTagId: string) => {
+				// 削除に成功した場合
+				// TagList(キャッシュ)の該当するTagを削除 サーバー側と同期する。
+				const newTagList = tagList?.filter((tag) => tag.id !== deletedTagId);
+				mutateTagList(newTagList, false);
 
-	return { deletedTagId: data, deleteTag: mutate, isLoading, error };
+				options.onSuccess?.(deletedTagId);
+			},
+		},
+	);
+
+	return { deleteTag: mutate, isLoading, error };
 }
