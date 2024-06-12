@@ -16,8 +16,8 @@ import { useState } from 'react';
 
 export default function AccountForm() {
 	const { profile, isLoading } = useProfile();
-	const { deleteUser } = useDeleteUser();
-	const { logout } = useLogout();
+	const { deleteUser } = useDeleteUser({ onSuccess: () => window.location.reload() });
+	const { logout } = useLogout({ onSuccess: () => window.location.reload() });
 
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
@@ -49,7 +49,7 @@ export default function AccountForm() {
 				>
 					<Button
 						variant='outlined'
-						onClick={() => logout()}
+						onClick={logout}
 					>
 						ログアウト
 					</Button>
@@ -91,7 +91,7 @@ export default function AccountForm() {
 								<Button
 									variant='outlined'
 									color='error'
-									onClick={() => deleteUser()}
+									onClick={deleteUser}
 								>
 									削除
 								</Button>

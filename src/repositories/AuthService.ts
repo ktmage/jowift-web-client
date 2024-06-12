@@ -102,7 +102,7 @@ export default class AuthService {
 		});
 	}
 
-	async delete(): Promise<boolean> {
+	async delete(): Promise<string> {
 		const response = await fetch(API_URL + '/auth/user', {
 			method: 'DELETE',
 			mode: 'cors',
