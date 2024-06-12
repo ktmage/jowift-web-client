@@ -1,4 +1,4 @@
-import { AuthProvider } from './AuthProvider';
+// import { AuthProvider } from './AuthProvider';
 import { NotificationProvider } from './NotificationProvider';
 import { SettingProvider } from './LocalStorageProvider';
 import ThemeProvider from './ThemeProvider';
@@ -11,9 +11,7 @@ export default function AppProvider(props: AppProviderProps) {
 	return (
 		<SettingProvider>
 			<ThemeProvider>
-				<NotificationProvider>
-					<AuthProvider>{props.children}</AuthProvider>
-				</NotificationProvider>
+				<NotificationProvider>{props.children}</NotificationProvider>
 			</ThemeProvider>
 		</SettingProvider>
 	);

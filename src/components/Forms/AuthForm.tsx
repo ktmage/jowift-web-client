@@ -1,9 +1,10 @@
-import { useAuth } from '@/hooks';
+// import { useAuth } from '@/hooks';
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 import GoogleIcon from '@mui/icons-material/Google';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { API_URL } from '@/config';
+import { useLogin } from '@/hooks';
 
 export default function AuthForm() {
 	return (
@@ -23,13 +24,14 @@ const LoginForm = () => {
 	const [email] = useState('');
 	const [password] = useState('');
 
-	const { login } = useAuth();
+	const { login } = useLogin(email, password);
+	const { login: guestLogin } = useLogin('guest1@email.com', 'Rp8tNQmh');
 
 	const handleClick = (isGuest: boolean = false) => {
 		if (isGuest) {
-			login('guest1@email.com', 'Rp8tNQmh');
+			guestLogin();
 		} else {
-			login(email, password);
+			login();
 		}
 	};
 
