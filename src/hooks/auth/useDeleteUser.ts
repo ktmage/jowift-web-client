@@ -1,12 +1,18 @@
 import { AuthService } from '@/repositories';
 import { useMutation } from '@/hooks';
+import { MutationOptions } from '@/types';
 
-export default function useDeleteUser() {
+export default function useDeleteUser(options: MutationOptions<string> = {}) {
 	const authService = new AuthService();
 
-	const { data, mutate, isLoading, error } = useMutation<boolean>(async () => {
-		return await authService.delete();
-	});
+	const { mutate, isLoading, error } = useMutation<string>(
+		async () => {
+			return await authService.delete();
+		},
+		{
+			...options,
+		},
+	);
 
-	return { data, deleteUser: mutate, isLoading, error };
+	return { deleteUser: mutate, isLoading, error };
 }
