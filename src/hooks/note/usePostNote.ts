@@ -25,7 +25,6 @@ export default function usePostNote(
 			onSuccess: (createdNote: NoteModel) => {
 				// 作成に成功した場合
 				// NoteList(キャッシュ)に新しいNoteを追加 サーバー側と同期する。
-				// ここでは、追加するだけなので、NoteListのキャッシュを更新するだけ
 				const newNoteList = noteList ? [...noteList, createdNote] : [createdNote];
 				noteListMutate(newNoteList, false);
 

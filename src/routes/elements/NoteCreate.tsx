@@ -1,5 +1,5 @@
-import { NoteLayout } from '@/components/Layouts';
-import { NoteCreateForm } from '@/components/Forms';
+import { NoteLayout } from '@/components/layouts';
+import { NoteCreateForm } from '@/components/forms';
 
 export default function NoteCreate() {
 	return (

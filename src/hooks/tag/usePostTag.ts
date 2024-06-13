@@ -16,7 +16,6 @@ export default function usePostTag(name: string, options: MutationOptions<TagMod
 			onSuccess: (createdTag: TagModel) => {
 				// 作成に成功した場合
 				// TagList(キャッシュ)に新しいTagを追加 サーバー側と同期する。
-				// ここでは、追加するだけなので、TagListのキャッシュを更新するだけ
 				const newTagList = tagList ? [...tagList, createdTag] : [createdTag];
 				mutateTagList(newTagList, false);
 

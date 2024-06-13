@@ -1,5 +1,5 @@
-import { TagLayout } from '@/components/Layouts';
-import { TagCreateForm } from '@/components/Forms';
+import { TagLayout } from '@/components/layouts';
+import { TagCreateForm } from '@/components/forms';
 
 export default function TagCreate() {
 	return (

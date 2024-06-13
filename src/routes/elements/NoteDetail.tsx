@@ -1,6 +1,6 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { NoteLayout } from '@/components/Layouts';
-import { NoteDetailForm } from '@/components/Forms';
+import { NoteLayout } from '@/components/layouts';
+import { NoteDetailForm } from '@/components/forms';
 
 export default function NoteDetail() {
 	const { id } = useParams<{ id: string }>();

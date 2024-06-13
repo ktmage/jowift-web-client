@@ -7,7 +7,7 @@ import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import { useState } from 'react';
 import { TagModel } from '@/models';
 import { Box, Button, Modal, Stack } from '@mui/material';
-import { MultipleTagSelector } from '@/components/UI';
+import { MultipleTagSelector } from '@/components/ui';
 
 interface NoteLayoutProps {
 	children: React.ReactNode;

@@ -1,6 +1,5 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
-// import InfoIcon from '@mui/icons-material/Info';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 
@@ -39,10 +38,5 @@ export const panelItems: Config = {
 			routes: ['/app/setting'],
 			icon: <SettingsIcon />,
 		},
-		// {
-		// 	to: '/app/info',
-		// 	routes: ['/app/info'],
-		// 	icon: <InfoIcon />,
-		// },
 	],
 };

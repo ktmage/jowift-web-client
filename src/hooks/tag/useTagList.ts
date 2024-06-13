@@ -1,7 +1,7 @@
 import { TagRepository } from '@/repositories';
 import { TagModel } from '@/models';
 import { SWR_TAG_LIST_REFRESH_INTERVAL_MINUTES } from '@/config';
-import { CacheKeyGenerator } from '@/util';
+import { CacheKeyGenerator } from '@/utilities';
 import { useDataFetcher } from '@/hooks';
 
 export default function useTagList() {

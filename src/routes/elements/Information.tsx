@@ -1,5 +1,5 @@
-import { InformationForm } from '@/components/Forms';
-import { InformationLayout } from '@/components/Layouts';
+import { InformationForm } from '@/components/forms';
+import { InformationLayout } from '@/components/layouts';
 
 export default function Information() {
 	return (

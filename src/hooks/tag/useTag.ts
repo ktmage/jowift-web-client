@@ -1,7 +1,7 @@
 import { TagRepository } from '@/repositories';
 import { TagModel } from '@/models';
 import { SWR_TAG_DEDUPING_INTERVAL_MINUTES } from '@/config';
-import { CacheKeyGenerator } from '@/util';
+import { CacheKeyGenerator } from '@/utilities';
 import { useDataFetcher } from '@/hooks';
 
 export default function useTag(id: string) {
