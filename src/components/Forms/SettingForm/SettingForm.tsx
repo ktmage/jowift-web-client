@@ -4,11 +4,7 @@ import { useSetting } from '@/hooks';
 import { SelectItem } from '@/components/elements';
 
 export default function SettingForm() {
-	const {
-		themeConfig,
-		// languageConfig,
-		// isHappinessConfig
-	} = useSetting();
+	const { themeConfig } = useSetting();
 
 	return (
 		<>
@@ -26,19 +22,6 @@ export default function SettingForm() {
 					onChange={(e) => themeConfig.setValue(e.target.value as 'light' | 'dark')}
 					selectValues={themeConfig.options}
 				/>
-				{/* <SelectItem
-					id='language'
-					label='Language'
-					value={languageConfig.value}
-					onChange={(e) => languageConfig.setValue(e.target.value as 'en' | 'jp')}
-					SelectValues={languageConfig.options}
-				/> */}
-				{/* <SwitchItem
-					id='isHappiness'
-					label='Happiness'
-					checked={isHappinessConfig.value}
-					onChange={(e) => isHappinessConfig.setValue(e.target.checked)}
-				/> */}
 			</FormLayout>
 		</>
 	);

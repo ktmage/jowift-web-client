@@ -32,12 +32,7 @@ export default class TagModel {
 	}) {
 		this._id = id;
 		this._name = name;
-		// TODO: 日時はDate型に変換したい
 		this._createdAt = createdAt;
 		this._updatedAt = updatedAt;
 	}
-
-	// updateName(name: string) {
-	// 	this._name = name;
-	// }
 }
