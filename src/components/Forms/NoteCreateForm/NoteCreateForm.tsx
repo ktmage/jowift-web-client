@@ -3,7 +3,7 @@ import { usePostNote } from '@/hooks';
 import SaveIcon from '@mui/icons-material/Save';
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { MultipleTagSelector } from '../ui';
+import { MultipleTagSelector } from '@/components/ui';
 import { TagModel } from '@/models';
 import { useNavigate } from 'react-router-dom';
 

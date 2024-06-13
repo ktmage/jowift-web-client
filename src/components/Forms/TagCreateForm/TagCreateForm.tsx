@@ -1,5 +1,5 @@
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
-import { FormLayout } from '../layouts';
+import { FormLayout } from '@/components/layouts';
 import SaveIcon from '@mui/icons-material/Save';
 import { useEffect, useState } from 'react';
 import { usePostTag } from '@/hooks';

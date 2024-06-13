@@ -1,7 +1,7 @@
 import { Backdrop, CircularProgress } from '@mui/material';
-import { FormLayout } from '../layouts';
+import { FormLayout } from '@/components/layouts';
 import { useSetting } from '@/hooks';
-import { SelectItem } from '../elements';
+import { SelectItem } from '@/components/elements';
 
 export default function SettingForm() {
 	const {

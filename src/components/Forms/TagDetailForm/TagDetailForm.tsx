@@ -1,4 +1,4 @@
-import { FormLayout } from '../layouts';
+import { FormLayout } from '@/components/layouts';
 import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';

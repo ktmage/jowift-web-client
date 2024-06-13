@@ -9,7 +9,7 @@ import {
 	Stack,
 	Typography,
 } from '@mui/material';
-import { FormLayout } from '../layouts';
+import { FormLayout } from '@/components/layouts';
 // import { useAuth, useDeleteUser, useProfile } from '@/hooks';
 import { useDeleteUser, useProfile, useLogout } from '@/hooks';
 import { useState } from 'react';
