@@ -1,10 +1,10 @@
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
-import { FormLayout } from '@/components/Layouts';
+import { FormLayout } from '@/components/layouts';
 import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MultipleTagSelector } from '@/components/UI';
+import { MultipleTagSelector } from '@/components/ui';
 import { useEffect, useState } from 'react';
 import { TagModel } from '@/models';
 import { useCachedNote, useDeleteNote, usePutNote } from '@/hooks';

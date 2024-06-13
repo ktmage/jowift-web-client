@@ -1,9 +1,9 @@
-import { FormLayout } from '@/components/Layouts';
+import { FormLayout } from '@/components/layouts';
 import { usePostNote } from '@/hooks';
 import SaveIcon from '@mui/icons-material/Save';
 import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { MultipleTagSelector } from '../UI';
+import { MultipleTagSelector } from '../ui';
 import { TagModel } from '@/models';
 import { useNavigate } from 'react-router-dom';
 

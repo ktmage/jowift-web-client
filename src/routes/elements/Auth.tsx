@@ -1,5 +1,5 @@
-import { AuthForm } from '@/components/Forms';
-import { WindowLayout } from '@/components/Layouts';
+import { AuthForm } from '@/components/forms';
+import { WindowLayout } from '@/components/layouts';
 
 export default function Auth() {
 	return (

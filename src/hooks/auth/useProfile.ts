@@ -1,4 +1,4 @@
-import { CacheKeyGenerator } from '@/util';
+import { CacheKeyGenerator } from '@/utilities';
 import { useDataFetcher } from '@/hooks';
 import { SWR_USER_DEDUPING_INTERVAL_MINUTES } from '@/config';
 import { UserModel } from '@/models';

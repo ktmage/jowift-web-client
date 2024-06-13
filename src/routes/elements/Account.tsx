@@ -1,5 +1,5 @@
-import { AccountForm } from '@/components/Forms';
-import { AccountLayout } from '@/components/Layouts';
+import { AccountForm } from '@/components/forms';
+import { AccountLayout } from '@/components/layouts';
 
 export default function Account() {
 	return (

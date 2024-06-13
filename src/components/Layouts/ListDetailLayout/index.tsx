@@ -1,4 +1,4 @@
-import { ListView } from '@/components/Elements';
+import { ListView } from '@/components/elements';
 import { useResponsive } from '@/hooks';
 import { Box, ButtonBase } from '@mui/material';
 import { useState } from 'react';

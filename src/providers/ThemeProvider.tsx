@@ -1,5 +1,5 @@
 import { useSetting } from '@/hooks';
-import { darkTheme, lightTheme } from '@/theme';
+import { darkTheme, lightTheme } from '@/themes';
 import { ThemeProvider as _ThemeProvider } from '@emotion/react';
 import { Theme } from '@mui/material';
 import { useEffect, useState } from 'react';

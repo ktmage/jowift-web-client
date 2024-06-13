@@ -1,6 +1,6 @@
 import { NoteModel } from '@/models';
 import { NoteRepository } from '@/repositories';
-import { CacheKeyGenerator } from '@/util';
+import { CacheKeyGenerator } from '@/utilities';
 import { useDataFetcher } from '@/hooks';
 import { SWR_NOTE_DEDUPING_INTERVAL_MINUTES } from '@/config';
 

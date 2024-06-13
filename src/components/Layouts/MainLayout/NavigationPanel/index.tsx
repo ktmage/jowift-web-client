@@ -3,7 +3,7 @@ import { useResponsive, useSetting } from '@/hooks';
 import { Link } from 'react-router-dom';
 import { panelItems } from './config';
 import usePanelRouteMatcher from './usePanelRouteMatcher';
-import { LogoSvg } from '@/components/UI';
+import { LogoSvg } from '@/components/ui';
 import { useEffect, useRef, useState } from 'react';
 
 export default function NavigationPanel() {

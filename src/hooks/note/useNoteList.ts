@@ -1,7 +1,7 @@
 import { SWR_NOTE_LIST_REFRESH_INTERVAL_MINUTES } from '@/config';
 import { NoteModel } from '@/models';
 import { NoteRepository } from '@/repositories';
-import { CacheKeyGenerator } from '@/util';
+import { CacheKeyGenerator } from '@/utilities';
 import { useDataFetcher } from '@/hooks';
 
 export default function useNoteList() {

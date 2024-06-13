@@ -1,5 +1,5 @@
 import { Backdrop, CircularProgress } from '@mui/material';
-import { FormLayout } from '../Layouts';
+import { FormLayout } from '../layouts';
 
 export default function InformationForm() {
 	return (

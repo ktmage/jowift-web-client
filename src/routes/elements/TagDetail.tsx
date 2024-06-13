@@ -1,6 +1,6 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { TagLayout } from '@/components/Layouts';
-import { TagDetailForm } from '@/components/Forms';
+import { TagLayout } from '@/components/layouts';
+import { TagDetailForm } from '@/components/forms';
 
 export default function TagDetail() {
 	const { id } = useParams<{ id: string }>();
