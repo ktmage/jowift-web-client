@@ -9,8 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
-    "eslint": "eslint --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
-    "eslintfix": "eslint --fix --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'"
+    "eslint": "eslint --ignore-path .gitignore \"./**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
