@@ -24,7 +24,7 @@ export default function SettingForm() {
 					label='Theme'
 					value={themeConfig.value}
 					onChange={(e) => themeConfig.setValue(e.target.value as 'light' | 'dark')}
-					SelectValues={themeConfig.options}
+					selectValues={themeConfig.options}
 				/>
 				{/* <SelectItem
 					id='language'

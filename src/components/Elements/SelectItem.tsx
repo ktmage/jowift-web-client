@@ -5,7 +5,7 @@ interface SelectItemProps {
 	label: string;
 	value: string;
 	onChange: (event: SelectChangeEvent<string>) => void;
-	SelectValues: string[];
+	selectValues: string[];
 }
 
 export default function SelectItem(props: SelectItemProps) {
@@ -18,7 +18,7 @@ export default function SelectItem(props: SelectItemProps) {
 					value={props.value}
 					onChange={props.onChange}
 				>
-					{props.SelectValues.map((value: string, index: number) => (
+					{props.selectValues.map((value: string, index: number) => (
 						<MenuItem
 							key={index}
 							value={value}
