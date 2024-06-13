@@ -1,6 +1,4 @@
-// import { useAuth } from '@/hooks';
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
-// import { useState } from 'react';
 import GoogleIcon from '@mui/icons-material/Google';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { API_URL } from '@/config';

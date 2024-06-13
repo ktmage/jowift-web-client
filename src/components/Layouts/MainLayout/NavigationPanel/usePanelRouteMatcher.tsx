@@ -1,5 +1,5 @@
 import { matchPath, useLocation } from 'react-router-dom';
-import { Config } from './config';
+import { Config } from '@/components/layouts/MainLayout/NavigationPanel/config';
 
 export default function usePanelRouteMatcher(config: Config) {
 	const routes: string[] = [...config.main, ...config.sub].reduce(

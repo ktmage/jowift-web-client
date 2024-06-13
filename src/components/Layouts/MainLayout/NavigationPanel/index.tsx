@@ -1,8 +1,8 @@
 import { Box, Divider, Tab, Tabs } from '@mui/material';
 import { useResponsive, useSetting } from '@/hooks';
 import { Link } from 'react-router-dom';
-import { panelItems } from './config';
-import usePanelRouteMatcher from './usePanelRouteMatcher';
+import { panelItems } from '@/components/layouts/MainLayout/NavigationPanel/config';
+import usePanelRouteMatcher from '@/components/layouts/MainLayout/NavigationPanel/usePanelRouteMatcher';
 import { LogoSvg } from '@/components/ui';
 import { useEffect, useRef, useState } from 'react';
 
