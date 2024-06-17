@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode development",
-    "build": "tsc && vite build --mode production",
+    "vite:dev": "vite --mode development",
+    "vite:build": "vite build --mode production",
+    "vite:preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
     "eslint": "eslint --ignore-path .gitignore \"./**/*.{js,jsx,ts,tsx}\"",
     "storybook:rundev": "storybook dev -p 6006",
