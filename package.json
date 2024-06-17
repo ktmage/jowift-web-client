@@ -10,9 +10,11 @@
     "preview": "vite preview",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
     "eslint": "eslint --ignore-path .gitignore \"./**/*.{js,jsx,ts,tsx}\"",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "test-storybook": "test-storybook"
+    "storybook:rundev": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
+    "storybook:test": "test-storybook",
+    "vitest:test": "vitest run",
+    "vitest:watch": "vitest"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
