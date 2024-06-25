@@ -1,13 +1,18 @@
 import { FormLayout } from '@/components/layouts';
-import { usePostNote } from '@/hooks';
+import { usePostNote, usePostTag, useTagList } from '@/hooks';
 import SaveIcon from '@mui/icons-material/Save';
-import { Backdrop, CircularProgress, TextField } from '@mui/material';
+import { Backdrop, CircularProgress } from '@mui/material';
+import TextField from '@/components/ui/TextField/TextField';
 import { useEffect, useState } from 'react';
-import { MultipleTagSelector } from '@/components/ui';
+// import { MultipleTagSelector } from '@/components/ui';
+import MultipleSelector from '@/components/elements/MultipleSelector/MultipleSelector';
 import { TagModel } from '@/models';
 import { useNavigate } from 'react-router-dom';
 
 export default function NoteCreateForm() {
+	const { tagList } = useTagList();
+	const { postTag } = usePostTag();
+
 	const navigate = useNavigate();
 
 	const [title, setTitle] = useState<string>('');
@@ -16,7 +21,7 @@ export default function NoteCreateForm() {
 
 	const [isChanged, setIsChanged] = useState<boolean>(false);
 
-	const { postNote, isLoading } = usePostNote(title, content, tags, {
+	const { postNote, isLoading } = usePostNote({
 		onSuccess(createdNote) {
 			// 作成に成功した場合、作成したNoteの詳細ページに遷移
 			navigate(`/app/note/${createdNote.id}`);
@@ -36,31 +41,47 @@ export default function NoteCreateForm() {
 				headerItems={[
 					{
 						icon: <SaveIcon />,
-						onClick: () => postNote(),
+						onClick: () =>
+							postNote({
+								title,
+								content,
+								tags,
+							}),
 						disabled: isLoading || !isChanged,
 					},
 				]}
 			>
 				<TextField
-					inputProps={{
-						sx: { fontSize: '1.5rem', fontWeight: 'bold' },
-						readOnly: isLoading,
-					}}
 					value={title}
+					typography='title'
 					placeholder='タイトル'
 					onChange={(e) => setTitle(e.target.value)}
+					readOnly={isLoading}
 				/>
-				<MultipleTagSelector
-					value={tags}
-					setValue={setTags}
-					readonly={isLoading}
+				<MultipleSelector
+					options={tagList?.map((tag) => tag.name) ?? []}
+					value={tags.map((tag) => tag.name)}
+					placeholder='タグ'
+					onChange={(newTags) => {
+						const updatedTags = newTags.map((newTag) => {
+							const existingTag = tagList?.find((tag) => tag.name === newTag);
+							if (existingTag) {
+								return existingTag;
+							} else {
+								return { id: '', name: newTag } as TagModel;
+							}
+						});
+						setTags(updatedTags);
+					}}
+					onCreate={(newTag) => postTag(newTag)}
+					readOnly={isLoading}
 				/>
 				<TextField
-					inputProps={{ readOnly: isLoading }}
-					multiline
 					value={content}
+					typography='body'
 					placeholder='内容'
 					onChange={(e) => setContent(e.target.value)}
+					readOnly={isLoading}
 				/>
 			</FormLayout>
 		</>

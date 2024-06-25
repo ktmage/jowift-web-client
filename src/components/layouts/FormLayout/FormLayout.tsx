@@ -1,5 +1,7 @@
 import { useResponsive } from '@/hooks';
-import { Box, IconButton, Stack } from '@mui/material';
+// import { Box, IconButton, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
+import IconButton from '@/components/ui/IconButton/IconButton';
 
 interface headerItems {
 	icon: React.ReactNode;
@@ -29,10 +31,14 @@ export default function FormLayout(props: FormLayoutProps) {
 				direction={'row'}
 				justifyContent={'flex-end'}
 				paddingX={2}
+				paddingY={1}
+				spacing={1}
 			>
 				{headerItems.map((item, index) => (
 					<IconButton
 						key={index}
+						size='small'
+						variant='ghost'
 						onClick={item.onClick}
 						disabled={item.disabled}
 					>

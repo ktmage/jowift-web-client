@@ -12,7 +12,7 @@ export default function TagCreateForm() {
 
 	const [isChanged, setIsChanged] = useState<boolean>(false);
 
-	const { postTag, isLoading } = usePostTag(name, {
+	const { postTag, isLoading } = usePostTag({
 		onSuccess(createdTag) {
 			// 作成に成功した場合、作成したTagの詳細ページに遷移
 			navigate(`/app/tag/${createdTag.id}`);
@@ -32,7 +32,7 @@ export default function TagCreateForm() {
 				headerItems={[
 					{
 						icon: <SaveIcon />,
-						onClick: () => postTag(),
+						onClick: () => postTag(name),
 						disabled: isLoading || !isChanged,
 					},
 				]}

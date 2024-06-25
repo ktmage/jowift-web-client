@@ -4,7 +4,7 @@ import clsx from 'clsx';
 /**
  * Props for the TextField component.
  */
-interface TextFieldProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextFieldProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 	/**
 	 * The value of the TextField.
 	 * @default 'body'

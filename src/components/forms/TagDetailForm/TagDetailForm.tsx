@@ -30,7 +30,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 	// ロック状態
 	const [isLocked, setIsLocked] = useState<boolean>(true);
 
-	const { deleteTag, isLoading: isLoadingDelete } = useDeleteTag(props.id, {
+	const { deleteTag, isLoading: isLoadingDelete } = useDeleteTag({
 		onSuccess: () => {
 			navigate('/app/tag');
 		},
@@ -46,7 +46,7 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 		setIsChanged(tag?.name !== name);
 	}, [name, tag?.name]);
 
-	const { putTag, isLoading: isLoadingPut } = usePutTag(props.id, name, {
+	const { putTag, isLoading: isLoadingPut } = usePutTag({
 		onSuccess: () => {
 			setIsLocked(true);
 		},
@@ -61,12 +61,12 @@ export default function TagDetailForm(props: TagDetailFormProps) {
 				headerItems={[
 					{
 						icon: <SaveIcon />,
-						onClick: () => putTag(),
+						onClick: () => putTag(props.id, name),
 						disabled: !isChanged,
 					},
 					{
 						icon: <DeleteIcon />,
-						onClick: () => deleteTag(),
+						onClick: () => deleteTag(props.id),
 					},
 					{
 						icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
