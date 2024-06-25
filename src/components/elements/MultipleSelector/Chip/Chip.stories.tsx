@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import Chip from './Chip';
 
 const meta = {
-	title: 'elements/Autocomplete/Chip',
+	title: 'elements/MultipleSelector/Chip',
 	component: Chip,
 	parameters: {
 		layout: 'centered',
@@ -11,7 +11,7 @@ const meta = {
 	argTypes: {
 		label: { control: 'text' },
 		onDelete: { action: 'deleted' },
-		readonly: { control: 'boolean' },
+		readOnly: { control: 'boolean' },
 	},
 } satisfies Meta<typeof Chip>;
 
@@ -23,7 +23,7 @@ export const Default: Story = {
 	args: {
 		label: 'React',
 		onDelete: () => {},
-		readonly: false,
+		readOnly: false,
 	},
 };
 
@@ -31,6 +31,6 @@ export const Readonly: Story = {
 	args: {
 		label: 'React',
 		onDelete: () => {},
-		readonly: true,
+		readOnly: true,
 	},
 };
