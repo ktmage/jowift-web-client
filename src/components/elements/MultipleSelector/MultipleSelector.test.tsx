@@ -1,10 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Autocomplete from './Autocomplete';
+import MultipleSelector from './MultipleSelector';
 
 describe('Autocomplete', () => {
 	it('renders correctly', () => {
-		render(<Autocomplete />);
+		render(
+			<MultipleSelector
+				options={[]}
+				value={[]}
+				placeholder='Select...'
+				onChange={() => {}}
+			/>,
+		);
 		expect(screen.getByRole('textbox')).toBeInTheDocument();
 	});
 });
