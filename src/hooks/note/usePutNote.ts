@@ -3,13 +3,14 @@ import { NoteModel, TagModel } from '@/models';
 import { useMutation, useNoteList } from '@/hooks';
 import { MutationOptions } from '@/types';
 
-export default function usePutNote(
-	id: string,
-	title: string,
-	content: string,
-	tags: TagModel[],
-	options: MutationOptions<NoteModel> = {},
-) {
+type MutationFunctionArgs = {
+	id: string;
+	title: string;
+	content: string;
+	tags: TagModel[];
+};
+
+export default function usePutNote(options: MutationOptions<NoteModel> = {}) {
 	const noteRepository = new NoteRepository();
 	const { noteList, mutate: noteListMutate } = useNoteList();
 
@@ -17,8 +18,8 @@ export default function usePutNote(
 		mutate: mutationMutate,
 		isLoading,
 		error,
-	} = useMutation<NoteModel>(
-		async () => {
+	} = useMutation<NoteModel, MutationFunctionArgs[]>(
+		async ({ id, title, content, tags }: MutationFunctionArgs) => {
 			return await noteRepository.put(
 				id,
 				title,
@@ -32,7 +33,7 @@ export default function usePutNote(
 				// 更新に成功した場合
 				// NoteList(キャッシュ)の該当するNoteを更新 サーバー側と同期する。
 				const newNoteList = noteList?.map((note: NoteModel) => {
-					if (note.id === id) {
+					if (note.id === updatedNote.id) {
 						return updatedNote;
 					}
 					return note;

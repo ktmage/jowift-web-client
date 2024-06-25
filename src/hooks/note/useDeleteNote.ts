@@ -3,12 +3,12 @@ import { useMutation, useNoteList } from '@/hooks';
 import { NoteModel } from '@/models';
 import { MutationOptions } from '@/types';
 
-export default function useDeleteNote(id: string, options: MutationOptions<string> = {}) {
+export default function useDeleteNote(options: MutationOptions<string> = {}) {
 	const noteRepository = new NoteRepository();
 	const { noteList, mutate: noteListMutate } = useNoteList();
 
-	const { mutate, isLoading, error } = useMutation<string>(
-		async () => {
+	const { mutate, isLoading, error } = useMutation<string, string[]>(
+		async (id: string) => {
 			return await noteRepository.delete(id);
 		},
 		{

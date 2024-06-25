@@ -3,12 +3,12 @@ import { useMutation, useTagList } from '@/hooks';
 import { TagModel } from '@/models';
 import { MutationOptions } from '@/types';
 
-export default function usePostTag(name: string, options: MutationOptions<TagModel> = {}) {
+export default function usePostTag(options: MutationOptions<TagModel> = {}) {
 	const tagRepository = new TagRepository();
 	const { tagList, mutateTagList } = useTagList();
 
-	const { mutate, isLoading, error } = useMutation<TagModel>(
-		async () => {
+	const { mutate, isLoading, error } = useMutation<TagModel, string[]>(
+		async (name: string) => {
 			return await tagRepository.post(name);
 		},
 		{
