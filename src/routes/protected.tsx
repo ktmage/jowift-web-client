@@ -1,40 +1,37 @@
-import { Navigate, RouteObject } from 'react-router-dom';
-import { Account, Main, NoteCreate, NoteDetail, Setting, TagCreate, TagDetail } from './elements';
+import { Navigate, Outlet, RouteObject } from 'react-router-dom';
+import { MainLayout } from '@/components/layouts';
+import { NoteCreateForm, NoteDetailForm, AccountForm, SettingForm } from '@/components/forms';
 
 const protectedRoutes: RouteObject[] = [
 	{
-		path: '/app',
-		element: <Main />,
+		path: '/',
+		element: (
+			<MainLayout>
+				<Outlet />
+			</MainLayout>
+		),
 		children: [
 			{
-				path: '/app/note',
-				element: <NoteCreate />,
+				path: '/',
+				element: <NoteCreateForm />,
 			},
 			{
-				path: '/app/note/:id',
-				element: <NoteDetail />,
+				path: '/:id',
+				element: <NoteDetailForm />,
 			},
 			{
-				path: '/app/tag',
-				element: <TagCreate />,
+				path: '/account',
+				element: <AccountForm />,
 			},
 			{
-				path: '/app/tag/:id',
-				element: <TagDetail />,
-			},
-			{
-				path: '/app/account',
-				element: <Account />,
-			},
-			{
-				path: '/app/setting',
-				element: <Setting />,
+				path: '/setting',
+				element: <SettingForm />,
 			},
 		],
 	},
 	{
 		path: '*',
-		element: <Navigate to='/app/note' />,
+		element: <Navigate to='/' />,
 	},
 ];
 

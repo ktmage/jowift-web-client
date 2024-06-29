@@ -1,13 +1,24 @@
-import { Navigate, RouteObject } from 'react-router-dom';
-import { Auth } from './elements';
+import { Navigate, Outlet, RouteObject } from 'react-router-dom';
+import { WindowLayout } from '@/components/layouts';
+import { AuthForm } from '@/components/forms';
 const publicRoutes: RouteObject[] = [
 	{
 		path: '/',
-		element: <Auth />,
-	},
-	{
-		path: '*',
-		element: <Navigate to='/' />,
+		element: (
+			<WindowLayout>
+				<Outlet />
+			</WindowLayout>
+		),
+		children: [
+			{
+				path: '/',
+				element: <AuthForm />,
+			},
+			{
+				path: '*',
+				element: <Navigate to='/' />,
+			},
+		],
 	},
 ];
 
