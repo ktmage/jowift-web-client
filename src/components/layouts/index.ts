@@ -7,3 +7,4 @@ export { default as SettingLayout } from './SettingLayout/SettingLayout';
 export { default as AccountLayout } from './AccountLayout/AccountLayout';
 export { default as InformationLayout } from './InformationLayout/InformationLayout';
 export { default as WindowLayout } from './WindowLayout/WindowLayout';
+export { default as SplitViewLayout } from './SplitViewLayout/SplitViewLayout';
