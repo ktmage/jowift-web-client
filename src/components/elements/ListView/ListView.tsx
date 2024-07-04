@@ -1,15 +1,24 @@
 import { Box, Divider, IconButton, List, ListItemButton, Tooltip, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { ListHeaderItem, ListItem } from '@/types';
-import { useOverflowDetect } from '@/hooks';
+import { Link, useNavigate } from 'react-router-dom';
+import { ListHeaderItem } from '@/types';
+import { useNoteList } from '@/hooks';
+import AddIcon from '@mui/icons-material/Add';
 
-type ListViewProps = {
-	text: string;
-	items: ListItem[];
-	headerItems?: ListHeaderItem[];
-};
+export default function ListView() {
+	const navigate = useNavigate();
 
-export default function ListView(props: ListViewProps) {
+	const { noteList } = useNoteList();
+
+	const headerItems: ListHeaderItem[] = [
+		{
+			icon: <AddIcon />,
+			onClick: () => {
+				navigate('/');
+			},
+			disabled: false,
+		},
+	];
+
 	return (
 		<Box
 			bgcolor={'background.paper'}
@@ -38,10 +47,10 @@ export default function ListView(props: ListViewProps) {
 							whiteSpace: 'nowrap',
 						}}
 					>
-						{props.text}
+						Overview
 					</Typography>
 				</Box>
-				{props.headerItems?.map((item: ListHeaderItem, index: number) => (
+				{headerItems?.map((item: ListHeaderItem, index: number) => (
 					<IconButton
 						key={index}
 						onClick={item.onClick}
@@ -63,43 +72,33 @@ export default function ListView(props: ListViewProps) {
 				}}
 			>
 				<List>
-					{props.items.map((item: ListItem, index: number) => (
-						<ListViewItem
-							key={index}
-							{...item}
-						/>
+					{noteList?.map((note) => (
+						<Tooltip
+							title={note.title}
+							placement='right'
+							disableHoverListener={note.title.length < 20}
+						>
+							<ListItemButton
+								key={note.id}
+								component={Link}
+								to={`/${note.id}`}
+							>
+								<Typography
+									color='text.primary'
+									variant='subtitle1'
+									whiteSpace={'nowrap'}
+									sx={{
+										overflow: 'hidden',
+										textOverflow: 'ellipsis',
+									}}
+								>
+									{note.title}
+								</Typography>
+							</ListItemButton>
+						</Tooltip>
 					))}
 				</List>
 			</Box>
 		</Box>
-	);
-}
-
-function ListViewItem(item: ListItem) {
-	const [ref, isOverflowing] = useOverflowDetect();
-	return (
-		<Tooltip
-			title={item.text}
-			placement='right'
-			disableHoverListener={!isOverflowing}
-		>
-			<ListItemButton
-				component={Link}
-				to={item.to}
-			>
-				<Typography
-					ref={ref}
-					color='text.primary'
-					variant='subtitle1'
-					whiteSpace={'nowrap'}
-					sx={{
-						overflow: 'hidden',
-						textOverflow: 'ellipsis',
-					}}
-				>
-					{item.text}
-				</Typography>
-			</ListItemButton>
-		</Tooltip>
 	);
 }
