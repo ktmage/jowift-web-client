@@ -4,7 +4,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import { Backdrop, CircularProgress } from '@mui/material';
 import TextField from '@/components/ui/TextField/TextField';
 import { useEffect, useState } from 'react';
-// import { MultipleTagSelector } from '@/components/ui';
 import MultipleSelector from '@/components/elements/MultipleSelector/MultipleSelector';
 import { TagModel } from '@/models';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +23,7 @@ export default function NoteCreateForm() {
 	const { postNote, isLoading } = usePostNote({
 		onSuccess(createdNote) {
 			// 作成に成功した場合、作成したNoteの詳細ページに遷移
-			navigate(`/app/note/${createdNote.id}`);
+			navigate(`/${createdNote.id}`);
 		},
 	});
 
@@ -38,18 +37,32 @@ export default function NoteCreateForm() {
 				<CircularProgress />
 			</Backdrop>
 			<FormLayout
-				headerItems={[
-					{
-						icon: <SaveIcon />,
-						onClick: () =>
-							postNote({
-								title,
-								content,
-								tags,
-							}),
-						disabled: isLoading || !isChanged,
-					},
-				]}
+				headerItems={{
+					right: [
+						{
+							icon: <SaveIcon />,
+							onClick: () =>
+								postNote({
+									title,
+									content,
+									tags,
+								}),
+							disabled: isLoading || !isChanged,
+						},
+					],
+					left: [
+						{
+							icon: <SaveIcon />,
+							onClick: () =>
+								postNote({
+									title,
+									content,
+									tags,
+								}),
+							disabled: isLoading || !isChanged,
+						},
+					],
+				}}
 			>
 				<TextField
 					value={title}
