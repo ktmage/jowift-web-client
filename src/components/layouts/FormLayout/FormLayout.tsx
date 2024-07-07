@@ -1,5 +1,4 @@
 import { useResponsive } from '@/hooks';
-// import { Box, IconButton, Stack } from '@mui/material';
 import { Box, Stack } from '@mui/material';
 import IconButton from '@/components/ui/IconButton/IconButton';
 
@@ -11,7 +10,10 @@ interface headerItems {
 
 interface FormLayoutProps {
 	children: React.ReactNode;
-	headerItems: headerItems[];
+	headerItems: {
+		right: headerItems[];
+		left: headerItems[];
+	};
 	disableHeader?: boolean;
 }
 
@@ -26,26 +28,52 @@ export default function FormLayout(props: FormLayoutProps) {
 			height={'100%'}
 			bgcolor={'background.paper'}
 		>
-			<Stack
-				display={disableHeader ? 'none' : 'flex'}
-				direction={'row'}
-				justifyContent={'flex-end'}
-				paddingX={2}
-				paddingY={1}
-				spacing={1}
+			<Box
+				display={'flex'}
+				flexDirection={'row'}
+				justifyContent={'space-between'}
 			>
-				{headerItems.map((item, index) => (
-					<IconButton
-						key={index}
-						size='small'
-						variant='ghost'
-						onClick={item.onClick}
-						disabled={item.disabled}
-					>
-						{item.icon}
-					</IconButton>
-				))}
-			</Stack>
+				<Stack
+					display={disableHeader ? 'none' : 'flex'}
+					direction={'row'}
+					justifyContent={'flex-end'}
+					paddingX={2}
+					paddingY={1}
+					spacing={1}
+				>
+					{headerItems.left.map((item, index) => (
+						<IconButton
+							key={index}
+							size='small'
+							variant='ghost'
+							onClick={item.onClick}
+							disabled={item.disabled}
+						>
+							{item.icon}
+						</IconButton>
+					))}
+				</Stack>
+				<Stack
+					display={disableHeader ? 'none' : 'flex'}
+					direction={'row'}
+					justifyContent={'flex-end'}
+					paddingX={2}
+					paddingY={1}
+					spacing={1}
+				>
+					{headerItems.right.map((item, index) => (
+						<IconButton
+							key={index}
+							size='small'
+							variant='ghost'
+							onClick={item.onClick}
+							disabled={item.disabled}
+						>
+							{item.icon}
+						</IconButton>
+					))}
+				</Stack>
+			</Box>
 
 			<Stack
 				spacing={4}
