@@ -10,17 +10,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useEffect, useState } from 'react';
 import { TagModel } from '@/models';
 import { useCachedNote, useDeleteNote, usePutNote, useTagList, usePostTag } from '@/hooks';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
-interface NoteDetailFormProps {
-	id: string;
-}
+export default function NoteDetailForm() {
+	const { id } = useParams();
 
-export default function NoteDetailForm(props: NoteDetailFormProps) {
 	const navigate = useNavigate();
 
 	// ノートの取得
-	const { note, isLoading: isLoadingGet } = useCachedNote(props.id);
+	const { note, isLoading: isLoadingGet } = useCachedNote(id ?? '');
 	const { tagList } = useTagList();
 	const { postTag } = usePostTag();
 
@@ -33,7 +31,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 		setTitle(note?.title || '');
 		setContent(note?.content || '');
 		setTags(note?.tags || []);
-	}, [note, props.id]);
+	}, [note, id]);
 
 	// ----------------------------------------------------------------------------------------------------
 
@@ -62,7 +60,7 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 					tags.some((tag: TagModel, index: number) => tag.id !== note.tags[index].id),
 			);
 		}
-	}, [note, title, content, tags, props.id]);
+	}, [note, title, content, tags, id]);
 
 	const { putNote, isLoading: isLoadingPut } = usePutNote({
 		onSuccess: () => {
@@ -71,27 +69,34 @@ export default function NoteDetailForm(props: NoteDetailFormProps) {
 		},
 	});
 
+	if (!id) {
+		return <Navigate to='/app/note' />;
+	}
+
 	return (
 		<>
 			<Backdrop open={isLoadingGet || isLoadingPut || isLoadingDelete}>
 				<CircularProgress />
 			</Backdrop>
 			<FormLayout
-				headerItems={[
-					{
-						icon: <SaveIcon />,
-						onClick: () => putNote({ id: props.id, title, content, tags }),
-						disabled: !isChanged,
-					},
-					{
-						icon: <DeleteIcon />,
-						onClick: () => deleteNote(props.id),
-					},
-					{
-						icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
-						onClick: () => setIsLocked(!isLocked),
-					},
-				]}
+				headerItems={{
+					right: [
+						{
+							icon: <SaveIcon />,
+							onClick: () => putNote({ id: id, title, content, tags }),
+							disabled: !isChanged,
+						},
+						{
+							icon: <DeleteIcon />,
+							onClick: () => deleteNote(id),
+						},
+						{
+							icon: isLocked ? <LockIcon /> : <LockOpenIcon />,
+							onClick: () => setIsLocked(!isLocked),
+						},
+					],
+					left: [],
+				}}
 			>
 				<TextField
 					typography='title'
