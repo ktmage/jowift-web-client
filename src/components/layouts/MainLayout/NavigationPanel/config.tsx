@@ -1,6 +1,6 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+// import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 
 export interface PanelItem {
@@ -21,11 +21,11 @@ export const panelItems: Config = {
 			routes: ['/app/note', '/app/note/:id'],
 			icon: <TextSnippetIcon />,
 		},
-		{
-			to: '/app/tag',
-			routes: ['/app/tag', '/app/tag/:id'],
-			icon: <LocalOfferIcon />,
-		},
+		// {
+		// 	to: '/app/tag',
+		// 	routes: ['/app/tag', '/app/tag/:id'],
+		// 	icon: <LocalOfferIcon />,
+		// },
 	],
 	sub: [
 		{

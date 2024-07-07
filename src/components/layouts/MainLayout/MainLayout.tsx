@@ -1,41 +1,55 @@
-import { Box } from '@mui/material';
+import { ListView } from '@/components/elements';
 import { useResponsive } from '@/hooks';
-import NavigationPanel from './NavigationPanel';
+import { Box, ButtonBase } from '@mui/material';
+import { useState } from 'react';
 
 interface MainLayoutProps {
 	children: React.ReactNode;
 }
 
 export default function MainLayout(props: MainLayoutProps) {
-	const { isMobile, isTablet } = useResponsive();
+	const { isMobile, isTablet, isDesktop } = useResponsive();
+	const [isListOpen, setIsListOpen] = useState<boolean>(false);
+	const toggleListOpen = () => setIsListOpen(!isListOpen);
 
 	return (
 		<Box
 			sx={{
 				display: 'flex',
-				flexDirection: isMobile ? 'column-reverse' : isTablet ? 'column-reverse' : 'row',
-				Height: '100vh',
-				Width: '100vw',
+				flexDirection: 'row',
+				height: isMobile ? '100%' : isTablet ? '100%' : '100vh',
 			}}
 		>
 			<Box
-				height={isMobile ? '60px' : isTablet ? '60px' : '100vh'}
-				width={isMobile ? '100vw' : isTablet ? '100vw' : '80px'}
-				borderTop={isMobile ? 1 : isTablet ? 1 : 0}
-				borderRight={isMobile ? 0 : isTablet ? 0 : 1}
-				borderColor={'divider'}
+				sx={{
+					width: isDesktop ? '35%' : isListOpen ? '100%' : '0px',
+					display: isListOpen ? 'block' : 'none',
+					borderRight: '1px solid',
+					borderRightColor: 'divider',
+				}}
 			>
-				<NavigationPanel />
+				<ListView />
 			</Box>
+
+			<ButtonBase
+				sx={{
+					height: '100%',
+					width: '20px',
+					bgcolor: 'splitter.idol',
+					':hover': {
+						bgcolor: 'splitter.hover',
+					},
+				}}
+				onClick={toggleListOpen}
+			/>
+
 			<Box
-				flexGrow={1}
-				height={
-					isMobile
-						? 'calc(100vh - (60px + 0px))'
-						: isTablet
-							? 'calc(100vh - (60px + 0px))'
-							: '100vh'
-				}
+				sx={{
+					flexGrow: isDesktop ? 1 : isListOpen ? 0 : 1,
+					display: isDesktop ? 'block' : isListOpen ? 'none' : 'block',
+					borderLeft: '1px solid',
+					borderLeftColor: 'divider',
+				}}
 			>
 				{props.children}
 			</Box>
