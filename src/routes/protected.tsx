@@ -1,31 +1,26 @@
-import { Navigate, Outlet, RouteObject } from 'react-router-dom';
-import { MainLayout } from '@/components/layouts';
-import { NoteCreateForm, NoteDetailForm, AccountForm, SettingForm } from '@/components/forms';
+import { Navigate, RouteObject } from 'react-router-dom';
+import { MainPage, CreatePage, DetailPage, AccountPage, SettingsPage } from '@/components/pages';
 
 const protectedRoutes: RouteObject[] = [
 	{
 		path: '/',
-		element: (
-			<MainLayout>
-				<Outlet />
-			</MainLayout>
-		),
+		element: <MainPage />,
 		children: [
 			{
 				path: '/',
-				element: <NoteCreateForm />,
+				element: <CreatePage />,
 			},
 			{
 				path: '/:id',
-				element: <NoteDetailForm />,
+				element: <DetailPage />,
 			},
 			{
 				path: '/account',
-				element: <AccountForm />,
+				element: <AccountPage />,
 			},
 			{
-				path: '/setting',
-				element: <SettingForm />,
+				path: '/settings',
+				element: <SettingsPage />,
 			},
 		],
 	},
