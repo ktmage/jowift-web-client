@@ -1,3 +1,4 @@
+import React from 'react';
 import clsx from 'clsx';
 
 type SplitViewContent = {
@@ -15,20 +16,24 @@ type SplitViewDirection =
 type SplitViewLayoutProps = {
 	contents: SplitViewContent;
 	direction?: SplitViewDirection;
+	splitRatio: number;
+	onSplitRatioChange: (ratio: number) => void;
 };
 
 export default function SplitViewLayout(props: SplitViewLayoutProps) {
+	const { contents, direction, splitRatio } = props;
+
 	return (
 		<div
 			className={clsx('flex h-screen', {
-				'flex-row': props.direction === 'horizontal',
-				'flex-col': props.direction === 'vertical',
-				'flex-row-reverse': props.direction === 'horizontal-reverse',
-				'flex-col-reverse': props.direction === 'vertical-reverse',
+				'flex-row': direction === 'horizontal',
+				'flex-col': direction === 'vertical',
+				'flex-row-reverse': direction === 'horizontal-reverse',
+				'flex-col-reverse': direction === 'vertical-reverse',
 			})}
 		>
-			<div className='w-1/3'>{props.contents.primary}</div>
-			<div className='flex-grow'>{props.contents.secondary}</div>
+			<div style={{ width: `${splitRatio * 100}%` }}>{contents.primary}</div>
+			<div style={{ width: `${(1 - splitRatio) * 100}%` }}>{contents.secondary}</div>
 		</div>
 	);
 }
