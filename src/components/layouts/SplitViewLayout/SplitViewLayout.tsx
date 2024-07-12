@@ -17,7 +17,6 @@ type SplitViewLayoutProps = {
 	contents: SplitViewContent;
 	direction?: SplitViewDirection;
 	splitRatio: number;
-	onSplitRatioChange: (ratio: number) => void;
 };
 
 export default function SplitViewLayout(props: SplitViewLayoutProps) {
@@ -32,8 +31,18 @@ export default function SplitViewLayout(props: SplitViewLayoutProps) {
 				'flex-col-reverse': direction === 'vertical-reverse',
 			})}
 		>
-			<div style={{ width: `${splitRatio * 100}%` }}>{contents.primary}</div>
-			<div style={{ width: `${(1 - splitRatio) * 100}%` }}>{contents.secondary}</div>
+			<div
+				className='border-r-2 transition-all duration-300'
+				style={{ width: `${splitRatio * 100}%` }}
+			>
+				{contents.primary}
+			</div>
+			<div
+				className='transition-all duration-300'
+				style={{ width: `${(1 - splitRatio) * 100}%` }}
+			>
+				{contents.secondary}
+			</div>
 		</div>
 	);
 }
