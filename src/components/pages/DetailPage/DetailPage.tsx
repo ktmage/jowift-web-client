@@ -6,15 +6,18 @@ import SaveIcon from '@mui/icons-material/Save';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DehazeIcon from '@mui/icons-material/Dehaze';
 import { useEffect, useState } from 'react';
 import { TagModel } from '@/models';
 import { useCachedNote, useDeleteNote, usePutNote, useTagList, usePostTag } from '@/hooks';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 
 export default function DetailPage() {
 	const { id } = useParams();
 
 	const navigate = useNavigate();
+
+	const { toggleSplitRatio } = useOutletContext<{ toggleSplitRatio: () => void }>();
 
 	// ノートの取得
 	const { note, isLoading: isLoadingGet } = useCachedNote(id ?? '');
@@ -94,7 +97,12 @@ export default function DetailPage() {
 							onClick: () => setIsLocked(!isLocked),
 						},
 					],
-					left: [],
+					left: [
+						{
+							icon: <DehazeIcon />,
+							onClick: () => toggleSplitRatio(),
+						},
+					],
 				}}
 			>
 				<TextField

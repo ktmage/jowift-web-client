@@ -2,8 +2,12 @@ import { FormLayout } from '@/components/layouts';
 import { useDeleteUser, useProfile, useLogout } from '@/hooks';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import DehazeIcon from '@mui/icons-material/Dehaze';
 
 export default function AccountPage() {
+	const { toggleSplitRatio } = useOutletContext<{ toggleSplitRatio: () => void }>();
+
 	const { profile, isLoading } = useProfile();
 	const { deleteUser } = useDeleteUser({ onSuccess: () => window.location.reload() });
 	const { logout } = useLogout({ onSuccess: () => window.location.reload() });
@@ -18,10 +22,14 @@ export default function AccountPage() {
 				<CircularProgress />
 			</Backdrop>
 			<FormLayout
-				disableHeader
 				headerItems={{
 					right: [],
-					left: [],
+					left: [
+						{
+							icon: <DehazeIcon />,
+							onClick: () => toggleSplitRatio(),
+						},
+					],
 				}}
 			>
 				<div className='flex flex-col space-y-2 p-4'>
