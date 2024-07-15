@@ -1,12 +1,12 @@
 import { FormLayout } from '@/components/layouts';
-import { useDeleteUser, useProfile, useLogout } from '@/hooks';
+import { useDeleteUser, useProfile, useLogout, useSplitView } from '@/hooks';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 
 export default function AccountPage() {
-	const { toggleSplitRatio } = useOutletContext<{ toggleSplitRatio: () => void }>();
+	// const { toggleSplitRatio } = useOutletContext<{ toggleSplitRatio: () => void }>();
+	const { toggleSplitRatio } = useSplitView();
 
 	const { profile, isLoading } = useProfile();
 	const { deleteUser } = useDeleteUser({ onSuccess: () => window.location.reload() });

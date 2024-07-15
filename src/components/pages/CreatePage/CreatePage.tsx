@@ -1,5 +1,5 @@
 import { FormLayout } from '@/components/layouts';
-import { usePostNote, usePostTag, useTagList } from '@/hooks';
+import { usePostNote, usePostTag, useTagList, useSplitView } from '@/hooks';
 import SaveIcon from '@mui/icons-material/Save';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { Backdrop, CircularProgress } from '@mui/material';
@@ -7,10 +7,10 @@ import TextField from '@/components/ui/TextField/TextField';
 import { useEffect, useState } from 'react';
 import MultipleSelector from '@/components/elements/MultipleSelector/MultipleSelector';
 import { TagModel } from '@/models';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreatePage() {
-	const { toggleSplitRatio } = useOutletContext<{ toggleSplitRatio: () => void }>();
+	const { toggleSplitRatio } = useSplitView();
 
 	const { tagList } = useTagList();
 	const { postTag } = usePostTag();

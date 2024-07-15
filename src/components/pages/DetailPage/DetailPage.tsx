@@ -9,15 +9,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { useEffect, useState } from 'react';
 import { TagModel } from '@/models';
-import { useCachedNote, useDeleteNote, usePutNote, useTagList, usePostTag } from '@/hooks';
-import { Navigate, useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import {
+	useCachedNote,
+	useDeleteNote,
+	usePutNote,
+	useTagList,
+	usePostTag,
+	useSplitView,
+} from '@/hooks';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 export default function DetailPage() {
+	const { toggleSplitRatio } = useSplitView();
+
 	const { id } = useParams();
 
 	const navigate = useNavigate();
-
-	const { toggleSplitRatio } = useOutletContext<{ toggleSplitRatio: () => void }>();
 
 	// ノートの取得
 	const { note, isLoading: isLoadingGet } = useCachedNote(id ?? '');

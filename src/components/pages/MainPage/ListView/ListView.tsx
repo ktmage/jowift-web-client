@@ -1,16 +1,14 @@
 import { Box, Divider, List, ListItemButton, Tooltip, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { ListHeaderItem } from '@/types';
-import { useNoteList, useResponsive } from '@/hooks';
+import { useNoteList, useResponsive, useSplitView } from '@/hooks';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@/components/ui/IconButton/IconButton';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 
-type ListViewProps = {
-	toggleSplitRatio: () => void;
-};
+export default function ListView() {
+	const { toggleSplitRatio } = useSplitView();
 
-export default function ListView(props: ListViewProps) {
 	const navigate = useNavigate();
 
 	const { noteList } = useNoteList();
@@ -72,7 +70,7 @@ export default function ListView(props: ListViewProps) {
 				{/* Mobileだったら追加でIconButtonを表示 */}
 				{isMobile && (
 					<IconButton
-						onClick={props.toggleSplitRatio}
+						onClick={toggleSplitRatio}
 						variant='ghost'
 						size='small'
 					>

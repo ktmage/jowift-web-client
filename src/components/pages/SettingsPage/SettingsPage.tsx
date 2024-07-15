@@ -1,12 +1,11 @@
 import { Backdrop, CircularProgress } from '@mui/material';
 import { FormLayout } from '@/components/layouts';
-import { useSetting } from '@/hooks';
+import { useSetting, useSplitView } from '@/hooks';
 import { SelectItem } from '@/components/elements';
 import DehazeIcon from '@mui/icons-material/Dehaze';
-import { useOutletContext } from 'react-router-dom';
 
 export default function SettingsForm() {
-	const { toggleSplitRatio } = useOutletContext<{ toggleSplitRatio: () => void }>();
+	const { toggleSplitRatio } = useSplitView();
 
 	const { themeConfig } = useSetting();
 
