@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { useResponsive } from '@/hooks';
+
+type SplitViewContextProps = {
+	toggleSplitRatio: () => void;
+};
+
+export const SplitViewContext = createContext({} as SplitViewContextProps);
 
 type SplitViewContent = {
 	primary: React.ReactNode;
@@ -16,33 +23,58 @@ type SplitViewDirection =
 type SplitViewLayoutProps = {
 	contents: SplitViewContent;
 	direction?: SplitViewDirection;
-	splitRatio: number;
 };
 
-export default function SplitViewLayout(props: SplitViewLayoutProps) {
-	const { contents, direction, splitRatio } = props;
+export default function SplitViewLayout({ contents, direction = 'auto' }: SplitViewLayoutProps) {
+	const props = { contents, direction };
+
+	const { isMobile, isTablet, isDesktop } = useResponsive();
+
+	// 画面サイズに応じた初期のSplitRatioを取得
+	const getInitialSplitRatio = useCallback(
+		() => (isMobile ? 1 : isTablet ? 0.5 : isDesktop ? 0.3 : 0),
+		[isMobile, isTablet, isDesktop],
+	);
+
+	// 分割比率の状態を管理
+	const [splitRatio, setSplitRatio] = useState(getInitialSplitRatio());
+
+	// 画面リサイズ時に分割比率を再計算
+	useEffect(() => {
+		const handleResize = () => setSplitRatio(getInitialSplitRatio());
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, [isMobile, isTablet, isDesktop, getInitialSplitRatio]);
+
+	const toggleSplitRatio = () => {
+		if (isMobile) setSplitRatio((prev) => (prev === 0 ? 1 : 0));
+		else if (isTablet) setSplitRatio((prev) => (prev === 0 ? 0.5 : 0));
+		else if (isDesktop) setSplitRatio((prev) => (prev === 0 ? 0.3 : 0));
+	};
 
 	return (
-		<div
-			className={clsx('flex h-screen', {
-				'flex-row': direction === 'horizontal',
-				'flex-col': direction === 'vertical',
-				'flex-row-reverse': direction === 'horizontal-reverse',
-				'flex-col-reverse': direction === 'vertical-reverse',
-			})}
-		>
+		<SplitViewContext.Provider value={{ toggleSplitRatio }}>
 			<div
-				className='border-r-2 transition-all duration-300'
-				style={{ width: `${splitRatio * 100}%` }}
+				className={clsx('flex h-screen', {
+					'flex-row': props.direction === 'horizontal',
+					'flex-col': props.direction === 'vertical',
+					'flex-row-reverse': props.direction === 'horizontal-reverse',
+					'flex-col-reverse': props.direction === 'vertical-reverse',
+				})}
 			>
-				{contents.primary}
+				<div
+					className='border-r-2 transition-all duration-300'
+					style={{ width: `${splitRatio * 100}%` }}
+				>
+					{props.contents.primary}
+				</div>
+				<div
+					className='transition-all duration-300'
+					style={{ width: `${(1 - splitRatio) * 100}%` }}
+				>
+					{props.contents.secondary}
+				</div>
 			</div>
-			<div
-				className='transition-all duration-300'
-				style={{ width: `${(1 - splitRatio) * 100}%` }}
-			>
-				{contents.secondary}
-			</div>
-		</div>
+		</SplitViewContext.Provider>
 	);
 }
