@@ -4,6 +4,7 @@ export { default as useLocalStorage } from './useLocalStorage';
 export { default as useSetting } from './useSetting';
 export { default as useOverflowDetect } from './useOverflowDetect';
 export { default as useFilteredNotes } from './useFilteredNotes';
+export { default as useSplitView } from './useSplitView';
 
 export { default as useNote } from './note/useNote';
 export { default as useCachedNote } from './note/useCachedNote';
