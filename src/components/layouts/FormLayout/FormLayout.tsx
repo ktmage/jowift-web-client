@@ -1,45 +1,31 @@
 import { useResponsive } from '@/hooks';
-import { Box, Stack } from '@mui/material';
 import IconButton from '@/components/ui/IconButton/IconButton';
+import clsx from 'clsx';
 
-interface headerItems {
+type headerItems = {
 	icon: React.ReactNode;
 	onClick: () => void;
 	disabled?: boolean;
-}
+};
 
-interface FormLayoutProps {
+type FormLayoutProps = {
 	children: React.ReactNode;
 	headerItems: {
 		right: headerItems[];
 		left: headerItems[];
 	};
 	disableHeader?: boolean;
-}
+};
 
 export default function FormLayout(props: FormLayoutProps) {
 	const { children, disableHeader = false, headerItems } = props;
 	const { isDesktop, isTablet } = useResponsive();
 
 	return (
-		<Box
-			display={'flex'}
-			flexDirection={'column'}
-			height={'100%'}
-			bgcolor={'background.paper'}
-		>
-			<Box
-				display={'flex'}
-				flexDirection={'row'}
-				justifyContent={'space-between'}
-			>
-				<Stack
-					display={disableHeader ? 'none' : 'flex'}
-					direction={'row'}
-					justifyContent={'flex-end'}
-					paddingX={2}
-					paddingY={1}
-					spacing={1}
+		<div className='flex flex-col h-full bg-base-100'>
+			<div className='flex flex-row justify-between'>
+				<div
+					className={clsx('flex flex-row px-2 py-1 space-x-1', { hidden: disableHeader })}
 				>
 					{headerItems.left.map((item, index) => (
 						<IconButton
@@ -52,14 +38,9 @@ export default function FormLayout(props: FormLayoutProps) {
 							{item.icon}
 						</IconButton>
 					))}
-				</Stack>
-				<Stack
-					display={disableHeader ? 'none' : 'flex'}
-					direction={'row'}
-					justifyContent={'flex-end'}
-					paddingX={2}
-					paddingY={1}
-					spacing={1}
+				</div>
+				<div
+					className={clsx('flex flex-row px-2 py-1 space-x-1', { hidden: disableHeader })}
 				>
 					{headerItems.right.map((item, index) => (
 						<IconButton
@@ -72,20 +53,18 @@ export default function FormLayout(props: FormLayoutProps) {
 							{item.icon}
 						</IconButton>
 					))}
-				</Stack>
-			</Box>
+				</div>
+			</div>
 
-			<Stack
-				spacing={4}
-				paddingX={isDesktop ? '15%' : isTablet ? '10%' : '5%'}
-				paddingY={8}
-				flexGrow={1}
-				sx={{
-					overflowY: 'auto',
-				}}
+			<div
+				className={clsx(
+					'flex flex-col space-y-10',
+					'py-20 flex-grow overflow-y-auto',
+					isDesktop ? 'px-[15%]' : isTablet ? 'px-[10%]' : 'px-[5%]',
+				)}
 			>
 				{children}
-			</Stack>
-		</Box>
+			</div>
+		</div>
 	);
 }
