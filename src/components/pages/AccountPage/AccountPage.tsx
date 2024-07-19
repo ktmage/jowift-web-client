@@ -18,7 +18,7 @@ export default function AccountPage() {
 
 	return (
 		<>
-			<Backdrop open={!isLoading}>
+			<Backdrop open={isLoading}>
 				<span className='loading loading-spinner loading-lg'></span>
 			</Backdrop>
 			<FormLayout
