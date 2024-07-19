@@ -1,4 +1,3 @@
-import { Backdrop, CircularProgress } from '@mui/material';
 import TextField from '@/components/ui/TextField/TextField';
 import MultipleSelector from '@/components/elements/MultipleSelector/MultipleSelector';
 import { FormLayout } from '@/components/layouts';
@@ -18,6 +17,7 @@ import {
 	useSplitView,
 } from '@/hooks';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Backdrop } from '@/components/ui';
 
 export default function DetailPage() {
 	const { toggleSplitRatio } = useSplitView();
@@ -85,7 +85,7 @@ export default function DetailPage() {
 	return (
 		<>
 			<Backdrop open={isLoadingGet || isLoadingPut || isLoadingDelete}>
-				<CircularProgress />
+				<span className='loading loading-spinner loading-lg'></span>
 			</Backdrop>
 			<FormLayout
 				headerItems={{

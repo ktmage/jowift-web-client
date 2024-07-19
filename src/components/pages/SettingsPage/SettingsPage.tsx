@@ -1,8 +1,8 @@
-import { Backdrop, CircularProgress } from '@mui/material';
 import { FormLayout } from '@/components/layouts';
 import { useSetting, useSplitView } from '@/hooks';
 import { SelectItem } from '@/components/elements';
 import DehazeIcon from '@mui/icons-material/Dehaze';
+import { Backdrop } from '@/components/ui';
 
 export default function SettingsForm() {
 	const { toggleSplitRatio } = useSplitView();
@@ -12,7 +12,7 @@ export default function SettingsForm() {
 	return (
 		<>
 			<Backdrop open={false}>
-				<CircularProgress />
+				<span className='loading loading-spinner loading-lg'></span>
 			</Backdrop>
 			<FormLayout
 				headerItems={{

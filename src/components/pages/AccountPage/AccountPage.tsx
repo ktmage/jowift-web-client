@@ -1,6 +1,6 @@
 import { FormLayout } from '@/components/layouts';
+import { Backdrop } from '@/components/ui';
 import { useDeleteUser, useProfile, useLogout, useSplitView } from '@/hooks';
-import { Backdrop, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 
@@ -18,8 +18,8 @@ export default function AccountPage() {
 
 	return (
 		<>
-			<Backdrop open={isLoading}>
-				<CircularProgress />
+			<Backdrop open={!isLoading}>
+				<span className='loading loading-spinner loading-lg'></span>
 			</Backdrop>
 			<FormLayout
 				headerItems={{
