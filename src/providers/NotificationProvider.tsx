@@ -1,5 +1,10 @@
-import { Alert, Stack } from '@mui/material';
+import clsx from 'clsx';
 import { createContext, ReactNode, useEffect, useState } from 'react';
+
+import InfoIcon from '@mui/icons-material/Info';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import WarningIcon from '@mui/icons-material/Warning';
+import ErrorIcon from '@mui/icons-material/Error';
 
 interface Notification {
 	severity: 'success' | 'info' | 'warning' | 'error';
@@ -28,26 +33,28 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
 
 	return (
 		<NotificationContext.Provider value={{ dispatchNotification }}>
-			<Stack
-				position={'fixed'}
-				bottom={0}
-				left={0}
-				zIndex={999}
-				width={'100%'}
-				padding={1}
-				spacing={1}
-				alignItems={'end'}
-			>
+			<div className='fixed bottom-0 left-0 z-50 w-full p-1 flex flex-col items-end gap-2'>
 				{notifications.map((notification: Notification, index: number) => (
-					<Alert
-						severity={notification.severity}
+					<div
+						role='alert'
+						className={clsx('alert rounded-md w-fit py-3 px-4', {
+							'alert-success': notification.severity === 'success',
+							'alert-info': notification.severity === 'info',
+							'alert-warning': notification.severity === 'warning',
+							'alert-error': notification.severity === 'error',
+						})}
 						key={index}
-						elevation={6}
 					>
-						{notification.message ? notification.message : notification.severity}
-					</Alert>
+						{notification.severity === 'success' && <InfoIcon />}
+						{notification.severity === 'info' && <CheckCircleIcon />}
+						{notification.severity === 'warning' && <WarningIcon />}
+						{notification.severity === 'error' && <ErrorIcon />}
+						<span>
+							{notification.message ? notification.message : notification.severity}
+						</span>
+					</div>
 				))}
-			</Stack>
+			</div>
 			{children}
 		</NotificationContext.Provider>
 	);
