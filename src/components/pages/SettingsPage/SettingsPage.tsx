@@ -1,5 +1,5 @@
 import { FormLayout } from '@/components/layouts';
-import { useSetting, useSplitView } from '@/hooks';
+import { useSettings, useSplitView } from '@/hooks';
 import { SelectItem } from '@/components/elements';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { Backdrop } from '@/components/ui';
@@ -7,7 +7,7 @@ import { Backdrop } from '@/components/ui';
 export default function SettingsForm() {
 	const { toggleSplitRatio } = useSplitView();
 
-	const { themeConfig } = useSetting();
+	const { themeConfig } = useSettings();
 
 	return (
 		<>
