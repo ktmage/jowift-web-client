@@ -1,7 +1,6 @@
 // import { AuthProvider } from './AuthProvider';
 import { NotificationProvider } from './NotificationProvider';
-import { SettingProvider } from './LocalStorageProvider';
-import ThemeProvider from './ThemeProvider';
+import { LocalStorageProvider } from './LocalStorageProvider';
 
 interface AppProviderProps {
 	children: React.ReactNode;
@@ -9,10 +8,8 @@ interface AppProviderProps {
 
 export default function AppProvider(props: AppProviderProps) {
 	return (
-		<SettingProvider>
-			<ThemeProvider>
-				<NotificationProvider>{props.children}</NotificationProvider>
-			</ThemeProvider>
-		</SettingProvider>
+		<LocalStorageProvider>
+			<NotificationProvider>{props.children}</NotificationProvider>
+		</LocalStorageProvider>
 	);
 }
