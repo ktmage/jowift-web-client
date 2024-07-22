@@ -21,6 +21,9 @@ export const LocalStorageProvider = ({ children }: { children: ReactNode }) => {
 		},
 	);
 
+	// テーマの設定をHTMLのdata-theme属性に設定する
+	document.querySelector('html')?.setAttribute('data-theme', theme);
+
 	return (
 		<LocalStorageContext.Provider
 			value={{
