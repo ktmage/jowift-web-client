@@ -2,7 +2,7 @@ import { useRoutes } from 'react-router-dom';
 import protectedRoutes from './protected';
 import publicRoutes from './public';
 import { useSession } from '@/hooks';
-import { Backdrop, CircularProgress } from '@mui/material';
+import { Backdrop } from '@/components/ui';
 
 export default function AppRoutes() {
 	// 認証機能の呼び出し
@@ -12,8 +12,8 @@ export default function AppRoutes() {
 	// 認証が完了するまでローディングを表示する。
 	if (isLoading) {
 		return (
-			<Backdrop open>
-				<CircularProgress />
+			<Backdrop open={true}>
+				<span className='loading loading-spinner loading-lg'></span>
 			</Backdrop>
 		);
 	}
