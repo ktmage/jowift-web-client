@@ -2,7 +2,6 @@ export { default as useResponsive } from './useResponsive';
 export { default as useNotification } from './useNotification';
 export { default as useLocalStorage } from './useLocalStorage';
 export { default as useSettings } from './useSettings';
-export { default as useFilteredNotes } from './useFilteredNotes';
 export { default as useSplitView } from './useSplitView';
 
 export { default as useNote } from './note/useNote';
