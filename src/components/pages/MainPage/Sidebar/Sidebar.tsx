@@ -18,7 +18,7 @@ export default function Sidebar() {
 	const { tagList } = useTagList();
 
 	return (
-		<div className='h-full flex flex-col'>
+		<div className='h-full flex flex-col bg-base-200'>
 			<SidebarHeader />
 
 			<div className='flex-shrink-0'>

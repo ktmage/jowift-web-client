@@ -63,7 +63,7 @@ export default function SplitViewLayout({ contents, direction = 'auto' }: SplitV
 				})}
 			>
 				<div
-					className='border-r-2 transition-all duration-300'
+					className='border-r border-base-300 transition-all duration-300'
 					style={{ width: `${splitRatio * 100}%` }}
 				>
 					{props.contents.primary}

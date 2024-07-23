@@ -11,7 +11,7 @@ export default function Chip({ label, onDelete, readOnly, className }: ChipProps
 	return (
 		<div
 			className={clsx(
-				'flex items-center bg-gray-200 rounded-full px-4 py-1 text-sm',
+				'flex items-center bg-base-200 rounded-full px-4 py-1 text-sm',
 				className,
 			)}
 		>

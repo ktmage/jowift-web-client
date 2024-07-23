@@ -34,7 +34,7 @@ export default function SidebarHeader() {
 	];
 
 	return (
-		<div className='flex items-center justify-between py-2 px-4 border-b-2'>
+		<div className='flex items-center justify-between py-2 px-4 border-b border-base-300'>
 			<div className='text-lg font-semibold'>Jowift</div>
 			<div className='flex items-center space-x-2'>
 				{headerItems?.map((item: ListHeaderItem, index: number) => (
