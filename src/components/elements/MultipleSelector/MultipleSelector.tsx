@@ -9,6 +9,8 @@ interface MultipleSelectorProps {
 	onChange: (newValue: string[]) => void;
 	onCreate?: (newTag: string) => void;
 	readOnly?: boolean;
+	alwaysOpen?: boolean;
+	noElevation?: boolean;
 }
 
 export default function MultipleSelector({
@@ -18,6 +20,8 @@ export default function MultipleSelector({
 	onChange,
 	onCreate,
 	readOnly = false,
+	alwaysOpen = false,
+	noElevation = false,
 }: MultipleSelectorProps) {
 	const [inputValue, setInputValue] = useState<string>('');
 	const [filteredOptions, setFilteredOptions] = useState<string[]>(options);
@@ -103,13 +107,19 @@ export default function MultipleSelector({
 					placeholder={placeholder}
 				/>
 			</div>
-			{isOpen && !readOnly && (
-				<ul className='absolute w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto z-10'>
+			{(isOpen || alwaysOpen) && !readOnly && (
+				<ul
+					className={clsx(
+						noElevation ? '' : 'shadow-lg',
+						'w-full bg-base-200 border-base-300 mt-1 rounded-md overflow-auto z-10',
+						'min-h-60 max-h-60',
+					)}
+				>
 					{filteredOptions.map((option) => (
 						<li
 							key={option}
 							onClick={() => handleSelectItem(option)}
-							className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
+							className='px-4 py-2 hover:bg-base-300 cursor-pointer'
 						>
 							{option}
 						</li>
