@@ -3,8 +3,8 @@ import { useState } from 'react';
 import useNotification from './useNotification';
 import { MutationOptions } from '@/types';
 
-export default function useMutation<T>(
-	mutationFunction: () => Promise<T>,
+export default function useMutation<T, Args extends unknown[]>(
+	mutationFunction: (...args: Args) => Promise<T>,
 	options: MutationOptions<T> = {},
 ) {
 	const [isLoading, setIsLoading] = useState(false);
@@ -12,12 +12,12 @@ export default function useMutation<T>(
 	const [data, setData] = useState<T | null>(null);
 	const { dispatchNotification } = useNotification();
 
-	const mutate = async () => {
+	const mutate = async (...args: Args) => {
 		setIsLoading(true);
 		options.onStart?.();
 
 		try {
-			const result = await mutationFunction();
+			const result = await mutationFunction(...args);
 			setData(result);
 			setError(null);
 			dispatchNotification({

@@ -2,12 +2,12 @@ import { TagRepository } from '@/repositories';
 import { useMutation, useTagList } from '@/hooks';
 import { MutationOptions } from '@/types';
 
-export default function useDeleteTag(id: string, options: MutationOptions<string> = {}) {
+export default function useDeleteTag(options: MutationOptions<string> = {}) {
 	const tagRepository = new TagRepository();
 	const { tagList, mutateTagList } = useTagList();
 
-	const { mutate, isLoading, error } = useMutation<string>(
-		async () => {
+	const { mutate, isLoading, error } = useMutation<string, string[]>(
+		async (id: string) => {
 			return await tagRepository.delete(id);
 		},
 		{

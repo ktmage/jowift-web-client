@@ -1,9 +1,9 @@
 import { Navigate, RouteObject } from 'react-router-dom';
-import { Auth } from './elements';
+import { AuthenticationPage } from '@/components/pages';
 const publicRoutes: RouteObject[] = [
 	{
 		path: '/',
-		element: <Auth />,
+		element: <AuthenticationPage />,
 	},
 	{
 		path: '*',

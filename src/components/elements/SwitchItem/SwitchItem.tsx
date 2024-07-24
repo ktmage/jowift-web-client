@@ -1,5 +1,3 @@
-import { FormControlLabel, Switch } from '@mui/material';
-
 interface SwitchItemProps {
 	id: string;
 	label: string;
@@ -9,21 +7,16 @@ interface SwitchItemProps {
 
 export default function SwitchItem(props: SwitchItemProps) {
 	return (
-		<FormControlLabel
-			control={
-				<Switch
+		<div className='form-control'>
+			<label className='label cursor-pointer'>
+				<span className='label-text'>{props.label}</span>
+				<input
+					type='checkbox'
+					className='toggle'
 					checked={props.checked}
 					onChange={props.onChange}
-					name={props.id}
-					color='primary'
 				/>
-			}
-			label={props.label}
-			labelPlacement='start'
-			sx={{
-				width: '100%',
-				justifyContent: 'space-between',
-			}}
-		/>
+			</label>
+		</div>
 	);
 }

@@ -1,16 +1,18 @@
 import { useLocalStorage } from '@/hooks';
 import { ReactNode, createContext } from 'react';
 
-interface SettingContextProps {
+interface LocalStorageContextProps {
 	theme: {
 		value: 'light' | 'dark';
 		setValue: (value: 'light' | 'dark') => void;
 	};
 }
 
-export const SettingContext = createContext({} as SettingContextProps);
+export const LocalStorageContext = createContext({} as LocalStorageContextProps);
 
-export const SettingProvider = ({ children }: { children: ReactNode }) => {
+// ローカルストレージ内のデータを提供するProvider
+export const LocalStorageProvider = ({ children }: { children: ReactNode }) => {
+	// テーマの設定をローカルストレージから取得
 	const { value: theme, setValue: setTheme } = useLocalStorage<'light' | 'dark'>(
 		'theme',
 		'light',
@@ -19,8 +21,11 @@ export const SettingProvider = ({ children }: { children: ReactNode }) => {
 		},
 	);
 
+	// テーマの設定をHTMLのdata-theme属性に設定する
+	document.querySelector('html')?.setAttribute('data-theme', theme);
+
 	return (
-		<SettingContext.Provider
+		<LocalStorageContext.Provider
 			value={{
 				theme: {
 					value: theme,
@@ -29,6 +34,6 @@ export const SettingProvider = ({ children }: { children: ReactNode }) => {
 			}}
 		>
 			{children}
-		</SettingContext.Provider>
+		</LocalStorageContext.Provider>
 	);
 };

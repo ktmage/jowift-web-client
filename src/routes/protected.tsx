@@ -1,40 +1,32 @@
 import { Navigate, RouteObject } from 'react-router-dom';
-import { Account, Main, NoteCreate, NoteDetail, Setting, TagCreate, TagDetail } from './elements';
+import { MainPage, CreatePage, DetailPage, AccountPage, SettingsPage } from '@/components/pages';
 
 const protectedRoutes: RouteObject[] = [
 	{
-		path: '/app',
-		element: <Main />,
+		path: '/',
+		element: <MainPage />,
 		children: [
 			{
-				path: '/app/note',
-				element: <NoteCreate />,
+				path: '/',
+				element: <CreatePage />,
 			},
 			{
-				path: '/app/note/:id',
-				element: <NoteDetail />,
+				path: '/:id',
+				element: <DetailPage />,
 			},
 			{
-				path: '/app/tag',
-				element: <TagCreate />,
+				path: '/account',
+				element: <AccountPage />,
 			},
 			{
-				path: '/app/tag/:id',
-				element: <TagDetail />,
-			},
-			{
-				path: '/app/account',
-				element: <Account />,
-			},
-			{
-				path: '/app/setting',
-				element: <Setting />,
+				path: '/settings',
+				element: <SettingsPage />,
 			},
 		],
 	},
 	{
 		path: '*',
-		element: <Navigate to='/app/note' />,
+		element: <Navigate to='/' />,
 	},
 ];
 

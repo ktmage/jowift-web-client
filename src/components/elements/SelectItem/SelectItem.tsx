@@ -1,39 +1,32 @@
-import { FormControlLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-
 interface SelectItemProps {
 	id: string;
 	label: string;
 	value: string;
-	onChange: (event: SelectChangeEvent<string>) => void;
+	onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 	selectValues: string[];
 }
 
 export default function SelectItem(props: SelectItemProps) {
 	return (
-		<FormControlLabel
-			control={
-				<Select
-					name={props.id}
-					color='primary'
+		<div className='form-control'>
+			<label className='label'>
+				<span className='label-text'>{props.label}</span>
+				<select
+					className='select select-bordered w-full max-w-xs'
+					id={props.id}
+					onChange={(e) => props.onChange(e)}
 					value={props.value}
-					onChange={props.onChange}
 				>
 					{props.selectValues.map((value: string, index: number) => (
-						<MenuItem
+						<option
 							key={index}
 							value={value}
 						>
 							{value}
-						</MenuItem>
+						</option>
 					))}
-				</Select>
-			}
-			label={props.label}
-			labelPlacement='start'
-			sx={{
-				width: '100%',
-				justifyContent: 'space-between',
-			}}
-		/>
+				</select>
+			</label>
+		</div>
 	);
 }

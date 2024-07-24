@@ -3,21 +3,22 @@ import { NoteRepository } from '@/repositories';
 import { useMutation, useNoteList } from '@/hooks';
 import { MutationOptions } from '@/types';
 
-export default function usePostNote(
-	title: string,
-	content: string,
-	tagIds: TagModel[],
-	options: MutationOptions<NoteModel> = {},
-) {
+type MutationFunctionArgs = {
+	title: string;
+	content: string;
+	tags: TagModel[];
+};
+
+export default function usePostNote(options: MutationOptions<NoteModel> = {}) {
 	const noteRepository = new NoteRepository();
 	const { noteList, mutate: noteListMutate } = useNoteList();
 
-	const { mutate, isLoading, error } = useMutation<NoteModel>(
-		async () => {
+	const { mutate, isLoading, error } = useMutation<NoteModel, MutationFunctionArgs[]>(
+		async ({ title, content, tags }: MutationFunctionArgs) => {
 			return await noteRepository.post(
 				title,
 				content,
-				tagIds.map((tag: TagModel) => tag.id),
+				tags.map((tag: TagModel) => tag.id),
 			);
 		},
 		{
