@@ -55,7 +55,7 @@ export default function SplitViewLayout({ contents, direction = 'auto' }: SplitV
 	return (
 		<SplitViewContext.Provider value={{ toggleSplitRatio }}>
 			<div
-				className={clsx('flex h-screen', {
+				className={clsx('flex h-screen overflow-hidden', {
 					'flex-row': props.direction === 'horizontal',
 					'flex-col': props.direction === 'vertical',
 					'flex-row-reverse': props.direction === 'horizontal-reverse',
