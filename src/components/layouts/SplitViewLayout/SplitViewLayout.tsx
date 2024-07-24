@@ -32,7 +32,7 @@ export default function SplitViewLayout({ contents, direction = 'auto' }: SplitV
 
 	// 画面サイズに応じた初期のSplitRatioを取得
 	const getInitialSplitRatio = useCallback(
-		() => (isMobile ? 1 : isTablet ? 0.5 : isDesktop ? 0.3 : 0),
+		() => (isMobile ? 0 : isTablet ? 0.5 : isDesktop ? 0.3 : 0),
 		[isMobile, isTablet, isDesktop],
 	);
 

@@ -22,7 +22,7 @@ export default function FormLayout(props: FormLayoutProps) {
 	const { isDesktop, isTablet } = useResponsive();
 
 	return (
-		<div className='flex flex-col h-full bg-base-100'>
+		<div className='flex flex-col h-full bg-base-100 '>
 			<div className='flex flex-row justify-between'>
 				<div
 					className={clsx('flex flex-row px-2 py-1 space-x-1', { hidden: disableHeader })}

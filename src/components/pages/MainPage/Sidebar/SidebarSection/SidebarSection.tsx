@@ -13,12 +13,12 @@ export default function SidebarSection(props: SidebarSectionProps) {
 	const [isOpen, setIsOpen] = useState(true);
 
 	return (
-		<div className='overflow-y-hidden flex flex-col'>
+		<div className='overflow-x-hidden flex flex-col'>
 			<div
 				className='flex items-center justify-between cursor-pointer p-2'
 				onClick={() => setIsOpen(!isOpen)}
 			>
-				<div className='flex items-center gap-2 font-bold h-8 px-1 '>
+				<div className='flex items-center gap-2 font-bold h-8 px-1 text-nowrap'>
 					{props.icon}
 					<span>{props.label}</span>
 				</div>
@@ -29,7 +29,7 @@ export default function SidebarSection(props: SidebarSectionProps) {
 				)}
 			</div>
 			{isOpen && (
-				<div className='overflow-y-auto'>
+				<div className='overflow-y-auto overflow-x-hidden'>
 					<ul className='menu gap-1'>{props.children}</ul>
 				</div>
 			)}
